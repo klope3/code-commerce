@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import AccountInputArea from "./components/AccountInputArea/AccountInputArea";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>
+        <input type="radio" name="accountInputScreen" id="login-toggle" />
+        <label htmlFor="login-toggle">SIGN IN</label>
+        <input type="radio" name="accountInputScreen" id="create-account-toggle" />
+        <label htmlFor="create-account-toggle">CREATE ACCOUNT</label>
+      </div>
+      <AccountInputArea
+        type="email"
+        labelText="Your E-Mail Address" />
+      <AccountInputArea
+        type="text"
+        labelText="Create Password" />
+      <AccountInputArea
+        type="text"
+        labelText="Confirm Password" />
+      <AccountInputArea
+        type="text"
+        labelText="First Name" />
+      <AccountInputArea
+        type="text"
+        labelText="Surname" />
+      <AccountInputArea
+        type="number"
+        labelText="Postcode" />
+      <input type="submit" />
     </div>
   );
 }
