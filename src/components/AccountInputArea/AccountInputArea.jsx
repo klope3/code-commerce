@@ -18,6 +18,8 @@ class AccountInputArea extends React.Component {
                 fieldId,
                 subText, 
             },
+            changeFunction,
+            blurFunction,
         } = this.props;
         const errorText = "This is an error.";
         let typeToUse = type;
@@ -25,7 +27,7 @@ class AccountInputArea extends React.Component {
         return (
             <div className="account-input-area">
                 <label htmlFor={fieldId} className="field-label">{labelText}</label>
-                <input type={typeToUse} name={name} className="account-field" id={fieldId} />  
+                <input type={typeToUse} name={name} className="account-field" id={fieldId} onChange={changeFunction} onBlur={blurFunction} />  
                 {subText && <span className="field-sub-text">{subText}</span>}
                 {type === "password" && <button className="password-visibility-button" onClick={this.togglePasswordVisibility}></button>}
                 <span className="field-error-text">{errorText}</span>
