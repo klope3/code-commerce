@@ -3,8 +3,16 @@ import "./AccountInputArea.css";
 
 class AccountInputArea extends React.Component {
     render() {
-        const { fieldId, labelText, subText } = this.props;
+        console.log(this.props.params);
+        const { 
+            params: {
+                labelText,
+                fieldId,
+                subText, 
+            } 
+        } = this.props;
         const errorText = "This is an error.";
+        console.log(labelText);
         return (
             <div className="account-input-area">
                 <label htmlFor={fieldId} className="field-label">{labelText}</label>
