@@ -17,39 +17,43 @@ class AccountManagementBox extends React.Component {
         }
     }
 
+    createInputAreas = paramsArray => paramsArray.map(item => <AccountInputArea params={item} key={item.name}/>);
+
     createAccountForm = () => {
         const params = [
             {
+                name: "email",
                 type: "email",
                 labelText: "Your E-Mail Address",
             },
             {
-                type: "text",
+                name: "createPassword",
+                type: "password",
                 labelText: "Create Password",
                 subText: "Password must be 8-20 characters, including: at least one capital letter, at least one small letter, one number and one special character - ! @ # $ % ^ & * () _ +",
             },
             {
-                type: "text",
+                name: "confirmPassword",
+                type: "password",
                 labelText: "Confirm Password",
             },
             {
+                name: "firstName",
                 type: "text",
                 labelText: "First Name",
             },
             {
+                name: "surname",
                 type: "text",
                 labelText: "Surname",
             },
             {
+                name: "postcode",
                 type: "number",
                 labelText: "Postcode",
             }
         ];
-        return (
-            <form action="">
-                {params.map(item => <AccountInputArea params={item} />)}
-            </form>
-        )
+        return this.createInputAreas(params);
     }
 
     signInForm = () => {
@@ -63,12 +67,9 @@ class AccountManagementBox extends React.Component {
                 labelText: "Password",
             }
         ];
-        return (
-            <form>
-                {params.map(item => <AccountInputArea params={item} />)}
-            </form>
-        )
+        return this.createInputAreas(params);
     }
+
 
     render() {
         const { createAccountMode } = this.state;
@@ -80,7 +81,9 @@ class AccountManagementBox extends React.Component {
                     <input type="radio" name="accountInputToggle" id="create-account-toggle" onChange={this.handleChange} checked={createAccountMode} />
                     <label htmlFor="create-account-toggle">CREATE ACCOUNT</label>
                 </div>
-                {createAccountMode ? this.createAccountForm() : this.signInForm()}
+                <form action="">
+                    {createAccountMode ? this.createAccountForm() : this.signInForm()}
+                </form>
                 {/* <AccountInputArea
                     type="email"
                     labelText="Your E-Mail Address" />

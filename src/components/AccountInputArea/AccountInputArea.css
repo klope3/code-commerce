@@ -19,3 +19,11 @@
     top: 0;
     color: red;
 }
+
+.password-visibility-button {
+    position: absolute;
+    right: 0;
+    top: 27px;
+    height: 24px;
+    width: 24px;
+}

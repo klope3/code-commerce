@@ -2,23 +2,32 @@ import React from "react";
 import "./AccountInputArea.css";
 
 class AccountInputArea extends React.Component {
+    togglePasswordVisibility = event => {
+        event.preventDefault();
+        this.setState(prevState => ({
+            passwordVisible: prevState ? !prevState.passwordVisible : true,
+        }));
+    }
+
     render() {
-        console.log(this.props.params);
         const { 
             params: {
+                name,
+                type,
                 labelText,
                 fieldId,
                 subText, 
-            } 
+            },
         } = this.props;
         const errorText = "This is an error.";
-        console.log(labelText);
+        let typeToUse = type;
+        if (type === "password" && this.state && this.state.passwordVisible) {typeToUse = "text"}
         return (
             <div className="account-input-area">
                 <label htmlFor={fieldId} className="field-label">{labelText}</label>
-                <input {...this.props} className="account-field" id={fieldId} />  
-                {/* This input field is currently getting ALL props; fix!!!!!!! */}
+                <input type={typeToUse} name={name} className="account-field" id={fieldId} />  
                 {subText && <span className="field-sub-text">{subText}</span>}
+                {type === "password" && <button className="password-visibility-button" onClick={this.togglePasswordVisibility}></button>}
                 <span className="field-error-text">{errorText}</span>
             </div>
         )
