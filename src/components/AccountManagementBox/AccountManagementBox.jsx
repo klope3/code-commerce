@@ -30,7 +30,7 @@ class AccountManagementBox extends React.Component {
             ...prevState,
             [event.target.name]: event.target.value, 
         }));
-    }
+    };
 
     handleBlur = event => {
         const { target: { name, value }} = event;
@@ -43,6 +43,11 @@ class AccountManagementBox extends React.Component {
                 [errorKey]: inputError,
             }
         }))
+    };
+
+    handleSubmit = event => {
+        event.preventDefault();
+        
     }
 
     buildInputAreas = paramsArray => {
@@ -128,8 +133,8 @@ class AccountManagementBox extends React.Component {
                 </div>
                 <form action="">
                     {createAccountMode ? this.createAccountForm() : this.signInForm()}
+                    <input type="submit" value={createAccountMode ? "SAVE" : "SIGN IN"} onClick={this.handleSubmit} />
                 </form>
-                <input type="submit" />
             </div>
         )
     }
