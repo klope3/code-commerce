@@ -6,7 +6,7 @@ export const validateByFieldName = (fieldName, fieldValue) => {
         [fieldNames.passwordConfirm, checkValidPassword],
         [fieldNames.firstName, checkLettersOnly],
         [fieldNames.surname, checkLettersOnly],
-        [fieldNames.postcode, checkMaxNumber],
+        [fieldNames.postcode, checkValidPostcode],
         [fieldNames.emailLogin, checkValidEmail],
         [fieldNames.passwordLogin, checkValidPassword],
     ]);
@@ -14,7 +14,7 @@ export const validateByFieldName = (fieldName, fieldValue) => {
     return func(fieldValue);
 }
 
-export const checkLettersOnly = input => console.log("Checking for letters only")/*/^[a-zA-Z]+$/g.test(input)*/;
-export const checkMaxNumber = input => console.log("Checking max number");
-export const checkValidEmail = input => console.log("Checking email");
-export const checkValidPassword = input => console.log("Checking password");
+export const checkLettersOnly = input => /^[a-zA-Z]+$/g.test(input);
+export const checkValidPostcode = input => input >= 10000 && input <= 99999; //real postcodes are more complex than this
+export const checkValidEmail = input => /^(?:[a-zA-Z\d]+)@(?:[a-zA-Z\d]+)\.(?:[a-zA-Z]{2,})$/g.test(input);
+export const checkValidPassword = input => /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+]).{8,20}$/g.test(input);
