@@ -32,10 +32,7 @@ class AccountManagementBox extends React.Component {
             ],
             [
                 fieldNames.passwordConfirm, 
-                value => {
-                    console.log("confirm validation");
-                    return this.state[fieldNames.passwordCreate] === value ? "" : "The passwords must match."
-                }
+                value => this.state[fieldNames.passwordCreate] === value ? "" : "The passwords must match."
             ],
             [
                 fieldNames.firstName, 
@@ -96,12 +93,19 @@ class AccountManagementBox extends React.Component {
         const { target: { name, value }} = event;
         const inputError = this.validateByFieldName(name, value);
         const errorKey = this.errorKeyNameFor(name);
+        const newErrors = {
+            ...this.state.errors,
+            [errorKey]: inputError,
+        };
+        if (name === fieldNames.passwordCreate) {
+            const passwordConfirmError = this.validateByFieldName(fieldNames.passwordConfirm, this.state[fieldNames.passwordConfirm]);
+            const passwordConfirmErrorKey = this.errorKeyNameFor(fieldNames.passwordConfirm);
+            newErrors[passwordConfirmErrorKey] = passwordConfirmError;
+            console.log(newErrors);
+        }
         this.setState(prevState => ({
             ...prevState,
-            errors: {
-                ...prevState.errors,
-                [errorKey]: inputError,
-            }
+            errors: newErrors,
         }))
     };
 
