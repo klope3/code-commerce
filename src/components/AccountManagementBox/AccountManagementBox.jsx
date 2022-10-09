@@ -8,22 +8,16 @@ import "./AccountManagementBox.css";
 class AccountManagementBox extends React.Component {
     constructor() {
         super();
+        const fieldValues = {};
+        const fieldErrors = {};
+        Object.keys(fieldNamesCreate).forEach(fieldName => {
+            fieldValues[fieldName] = "";
+            fieldErrors[this.errorKeyNameFor(fieldName)] = "";
+        });
         this.state = {
             createAccountMode: true,
-            [fieldNamesCreate.emailCreate]: "",
-            [fieldNamesCreate.passwordCreate]: "",
-            [fieldNamesCreate.passwordConfirm]: "",
-            [fieldNamesCreate.firstName]: "",
-            [fieldNamesCreate.surname]: "",
-            [fieldNamesCreate.postcode]: "",
-            fieldErrors: {
-                [this.errorKeyNameFor(fieldNamesCreate.emailCreate)]: "",
-                [this.errorKeyNameFor(fieldNamesCreate.passwordCreate)]: "",
-                [this.errorKeyNameFor(fieldNamesCreate.passwordConfirm)]: "",
-                [this.errorKeyNameFor(fieldNamesCreate.firstName)]: "",
-                [this.errorKeyNameFor(fieldNamesCreate.surname)]: "",
-                [this.errorKeyNameFor(fieldNamesCreate.postcode)]: "",
-            },
+            ...fieldValues,
+            fieldErrors: fieldErrors,
             submitError: "",
         }
         this.validationFunctions = new Map([
@@ -64,9 +58,16 @@ class AccountManagementBox extends React.Component {
         return this.validationFunctions.get(fieldName)(fieldValue);
     };
 
+    updateErrorsObjectByFieldName = (fieldName, fieldValue, errorsObj) => {
+        const fieldError = this.validateByFieldName(fieldName, fieldValue);
+        const errorKey = this.errorKeyNameFor(fieldName);
+        errorsObj[errorKey] = fieldError;
+    }
+
     handleChange = event => {
         if (event.target.name === "accountInputToggle") {
             this.setState(prevState => ({ createAccountMode: !prevState.createAccountMode}));
+            return;
         }
         this.setState(prevState => ({
             ...prevState,
@@ -76,16 +77,13 @@ class AccountManagementBox extends React.Component {
 
     handleBlur = event => {
         const { target: { name, value }} = event;
-        const inputError = this.validateByFieldName(name, value);
-        const errorKey = this.errorKeyNameFor(name);
         const newErrors = {
             ...this.state.fieldErrors,
-            [errorKey]: inputError,
         };
+        this.updateErrorsObjectByFieldName(name, value, newErrors);
         if (name === fieldNamesCreate.passwordCreate) {
-            const passwordConfirmError = this.validateByFieldName(fieldNamesCreate.passwordConfirm, this.state[fieldNamesCreate.passwordConfirm]);
-            const passwordConfirmErrorKey = this.errorKeyNameFor(fieldNamesCreate.passwordConfirm);
-            newErrors[passwordConfirmErrorKey] = passwordConfirmError;
+            const { passwordConfirm } = fieldNamesCreate;
+            this.updateErrorsObjectByFieldName(passwordConfirm, this.state[passwordConfirm], newErrors);
         }
         this.setState(prevState => ({
             ...prevState,
@@ -108,29 +106,29 @@ class AccountManagementBox extends React.Component {
         }
     };
 
-    doSubmit = event => {
+    getCreateAccountValues = () => {
+        const fieldValues = [];
+        Object.keys(fieldNamesCreate).forEach(fieldName => {
+            if (fieldName !== fieldNamesCreate.passwordConfirm) {
+                fieldValues.push(this.state[fieldName]);
+            }
+        });
+        return fieldValues;
+    }
+
+    doSubmit = () => {
         if (this.state.createAccountMode) {
-            addAccount(
-                this.state[fieldNamesCreate.emailCreate],
-                this.state[fieldNamesCreate.passwordCreate],
-                this.state[fieldNamesCreate.firstName],
-                this.state[fieldNamesCreate.surname],
-                this.state[fieldNamesCreate.postcode],
-            ); //can destructuring be used here??????????????
+            addAccount(...this.getCreateAccountValues());
             this.clearFields();
         }
     }
 
     clearFields = () => {
-        console.log("clearing");
+        const blankValues = {};
+        Object.keys(fieldNamesCreate).forEach(fieldName => blankValues[fieldName] = "");
         this.setState(prevState => ({
             ...prevState,
-            [fieldNamesCreate.emailCreate]: "",
-            [fieldNamesCreate.passwordCreate]: "",
-            [fieldNamesCreate.passwordConfirm]: "",
-            [fieldNamesCreate.firstName]: "",
-            [fieldNamesCreate.surname]: "",
-            [fieldNamesCreate.postcode]: "",
+            ...blankValues,
         }));
     }
 
@@ -169,49 +167,37 @@ class AccountManagementBox extends React.Component {
     createAccountForm = () => {
         const params = [
             {
-                name: fieldNamesCreate.emailCreate,
                 type: "email",
-                value: this.state[fieldNamesCreate.emailCreate],
                 labelText: "Your E-Mail Address",
-                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.emailCreate)],
             },
             {
-                name: fieldNamesCreate.passwordCreate,
                 type: "password",
-                value: this.state[fieldNamesCreate.passwordCreate],
                 labelText: "Create Password",
                 subText: "Password must be 8-20 characters, including: at least one capital letter, at least one small letter, one number and one special character - ! @ # $ % ^ & * () _ +",
-                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.passwordCreate)],
             },
             {
-                name: fieldNamesCreate.passwordConfirm,
                 type: "password",
-                value: this.state[fieldNamesCreate.passwordConfirm],
                 labelText: "Confirm Password",
-                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.passwordConfirm)],
             },
             {
-                name: fieldNamesCreate.firstName,
                 type: "text",
-                value: this.state[fieldNamesCreate.firstName],
                 labelText: "First Name",
-                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.firstName)],
             },
             {
-                name: fieldNamesCreate.surname,
                 type: "text",
-                value: this.state[fieldNamesCreate.surname],
                 labelText: "Surname",
-                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.surname)],
             },
             {
-                name: fieldNamesCreate.postcode,
                 type: "number",
-                value: this.state[fieldNamesCreate.postcode],
                 labelText: "Postcode",
-                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.postcode)],
             }
         ];
+        Object.keys(fieldNamesCreate).forEach((fieldName, index) => {
+            const errorKey = this.errorKeyNameFor(fieldName);
+            params[index].name = fieldName;
+            params[index].value = this.state[fieldName];
+            params[index].errorText = this.state.fieldErrors[errorKey];
+        });
         return this.buildInputAreas(params);
     }
 
