@@ -22,5 +22,11 @@ export const doesAccountExist = email => {
 };
 
 export const tryVerifyLogin = (email, password) => {
-
+    console.log("Trying to verify login " + email + " " + password);
+    for (const account of accounts) {
+        if (account.email === email && account.password === password) {
+            return true;
+        }
+    }
+    return false;
 };

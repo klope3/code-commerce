@@ -66,7 +66,10 @@ class AccountManagementBox extends React.Component {
 
     handleChange = event => {
         if (event.target.name === "accountInputToggle") {
-            this.setState(prevState => ({ createAccountMode: !prevState.createAccountMode}));
+            this.setState(prevState => ({ 
+                createAccountMode: !prevState.createAccountMode,
+                submitError: "",
+            }));
             return;
         }
         this.setState(prevState => ({
@@ -93,10 +96,7 @@ class AccountManagementBox extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const { createAccountMode } = this.state;
-        const submitError = createAccountMode && !this.isAccountFormReady() ? 
-            "We're sorry, but one or more fields are incomplete or incorrect. Find errors." : 
-            "";
+        const submitError = this.getSubmitError();
         this.setState(prevState => ({
             ...prevState,
             submitError: submitError,
@@ -105,6 +105,18 @@ class AccountManagementBox extends React.Component {
             this.doSubmit(event);
         }
     };
+
+    getSubmitError = () => {
+        const { createAccountMode } = this.state;
+        if (createAccountMode) {
+            return !this.isAccountFormReady() ? 
+                "We're sorry, but one or more fields are incomplete or incorrect. Find errors." : 
+                "";
+        }
+        return !tryVerifyLogin(this.state[fieldNamesLogin.emailLogin], this.state[fieldNamesLogin.passwordLogin]) ? 
+            "Invalid E-Mail or password." : 
+            "";
+    }
 
     getCreateAccountValues = () => {
         const fieldValues = [];
@@ -120,6 +132,9 @@ class AccountManagementBox extends React.Component {
         if (this.state.createAccountMode) {
             addAccount(...this.getCreateAccountValues());
             this.clearFields();
+        }
+        else {
+            console.log("Login attempt success? " + tryVerifyLogin(this.state[fieldNamesLogin.emailLogin], this.state[fieldNamesLogin.passwordLogin]));
         }
     }
 
