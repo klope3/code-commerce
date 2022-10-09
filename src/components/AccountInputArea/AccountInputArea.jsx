@@ -14,6 +14,7 @@ class AccountInputArea extends React.Component {
             params: {
                 name,
                 type,
+                value,
                 labelText,
                 fieldId,
                 subText, 
@@ -27,7 +28,7 @@ class AccountInputArea extends React.Component {
         return (
             <div className="account-input-area">
                 <label htmlFor={fieldId} className="field-label">{labelText}</label>
-                <input type={typeToUse} name={name} className="account-field" id={fieldId} onChange={changeFunction} onBlur={blurFunction} />  
+                <input type={typeToUse} name={name} value={value} className="account-field" id={fieldId} onChange={changeFunction} onBlur={blurFunction} />  
                 {subText && <span className="field-sub-text">{subText}</span>}
                 {type === "password" && <button className="password-visibility-button" onClick={this.togglePasswordVisibility}></button>}
                 {errorText && <span className="error-text absolute">{errorText}</span>}

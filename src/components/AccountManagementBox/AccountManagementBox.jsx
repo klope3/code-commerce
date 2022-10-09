@@ -10,6 +10,12 @@ class AccountManagementBox extends React.Component {
         super();
         this.state = {
             createAccountMode: true,
+            [fieldNamesCreate.emailCreate]: "",
+            [fieldNamesCreate.passwordCreate]: "",
+            [fieldNamesCreate.passwordConfirm]: "",
+            [fieldNamesCreate.firstName]: "",
+            [fieldNamesCreate.surname]: "",
+            [fieldNamesCreate.postcode]: "",
             fieldErrors: {
                 [this.errorKeyNameFor(fieldNamesCreate.emailCreate)]: "",
                 [this.errorKeyNameFor(fieldNamesCreate.passwordCreate)]: "",
@@ -24,7 +30,7 @@ class AccountManagementBox extends React.Component {
             [
                 fieldNamesCreate.emailCreate, 
                 value => {
-                    if (this.doesAccountExist(value)) { return "An account with that E-Mail already exists."; }
+                    if (doesAccountExist(value)) { return "An account with that E-Mail already exists."; }
                     return checkValidEmail(value) ? "" : "Please enter a valid E-Mail."
                 }
             ],
@@ -53,10 +59,7 @@ class AccountManagementBox extends React.Component {
 
     errorKeyNameFor = fieldName => `${fieldName}Error`;
 
-    doesAccountExist = email => false; //DO!!!!!!!
-
     validateByFieldName = (fieldName, fieldValue) => {
-        console.log("Validating " + fieldName);
         if (!this.validationFunctions.has(fieldName)) { return ""; }
         return this.validationFunctions.get(fieldName)(fieldValue);
     };
@@ -100,13 +103,41 @@ class AccountManagementBox extends React.Component {
             ...prevState,
             submitError: submitError,
         }));
+        if (submitError.length === 0) {
+            this.doSubmit(event);
+        }
     };
+
+    doSubmit = event => {
+        if (this.state.createAccountMode) {
+            addAccount(
+                this.state[fieldNamesCreate.emailCreate],
+                this.state[fieldNamesCreate.passwordCreate],
+                this.state[fieldNamesCreate.firstName],
+                this.state[fieldNamesCreate.surname],
+                this.state[fieldNamesCreate.postcode],
+            ); //can destructuring be used here??????????????
+            this.clearFields();
+        }
+    }
+
+    clearFields = () => {
+        console.log("clearing");
+        this.setState(prevState => ({
+            ...prevState,
+            [fieldNamesCreate.emailCreate]: "",
+            [fieldNamesCreate.passwordCreate]: "",
+            [fieldNamesCreate.passwordConfirm]: "",
+            [fieldNamesCreate.firstName]: "",
+            [fieldNamesCreate.surname]: "",
+            [fieldNamesCreate.postcode]: "",
+        }));
+    }
 
     tryFindInputErrors = () => {
         const { fieldErrors: errors } = this.state;
         for (const key in errors) {
             if (errors[key].length > 0) {
-                console.log("Found error");
                 return true;
             }
         }
@@ -116,7 +147,6 @@ class AccountManagementBox extends React.Component {
     tryFindEmptyField = () => {
         for (const item in fieldNamesCreate) {
             if (!this.state[item] || this.state[item].length === 0) {
-                console.log("Found empty field");
                 return true;
             }
         }
@@ -141,12 +171,14 @@ class AccountManagementBox extends React.Component {
             {
                 name: fieldNamesCreate.emailCreate,
                 type: "email",
+                value: this.state[fieldNamesCreate.emailCreate],
                 labelText: "Your E-Mail Address",
                 errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.emailCreate)],
             },
             {
                 name: fieldNamesCreate.passwordCreate,
                 type: "password",
+                value: this.state[fieldNamesCreate.passwordCreate],
                 labelText: "Create Password",
                 subText: "Password must be 8-20 characters, including: at least one capital letter, at least one small letter, one number and one special character - ! @ # $ % ^ & * () _ +",
                 errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.passwordCreate)],
@@ -154,24 +186,28 @@ class AccountManagementBox extends React.Component {
             {
                 name: fieldNamesCreate.passwordConfirm,
                 type: "password",
+                value: this.state[fieldNamesCreate.passwordConfirm],
                 labelText: "Confirm Password",
                 errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.passwordConfirm)],
             },
             {
                 name: fieldNamesCreate.firstName,
                 type: "text",
+                value: this.state[fieldNamesCreate.firstName],
                 labelText: "First Name",
                 errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.firstName)],
             },
             {
                 name: fieldNamesCreate.surname,
                 type: "text",
+                value: this.state[fieldNamesCreate.surname],
                 labelText: "Surname",
                 errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.surname)],
             },
             {
                 name: fieldNamesCreate.postcode,
                 type: "number",
+                value: this.state[fieldNamesCreate.postcode],
                 labelText: "Postcode",
                 errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.postcode)],
             }

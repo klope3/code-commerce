@@ -13,7 +13,7 @@ export const addAccount = (email, password, firstName, surname, postcode) => {
 };
 
 export const doesAccountExist = email => {
-    for (const account in accounts) {
+    for (const account of accounts) {
         if (account.email === email) {
             return true;
         }
