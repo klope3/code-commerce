@@ -30,7 +30,7 @@ class AccountInputArea extends React.Component {
                 <input type={typeToUse} name={name} className="account-field" id={fieldId} onChange={changeFunction} onBlur={blurFunction} />  
                 {subText && <span className="field-sub-text">{subText}</span>}
                 {type === "password" && <button className="password-visibility-button" onClick={this.togglePasswordVisibility}></button>}
-                {errorText && <span className="error-text">{errorText}</span>}
+                {errorText && <span className="error-text absolute">{errorText}</span>}
             </div>
         )
     }

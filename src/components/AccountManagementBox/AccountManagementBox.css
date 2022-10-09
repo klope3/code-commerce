@@ -4,8 +4,11 @@
 }
 
 .error-text {
-    position: absolute;
     right: 0;
     top: 0;
     color: red;
+}
+
+.absolute {
+    position: absolute;
 }

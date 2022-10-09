@@ -10,7 +10,7 @@ class AccountManagementBox extends React.Component {
         super();
         this.state = {
             createAccountMode: true,
-            errors: {
+            fieldErrors: {
                 [this.errorKeyNameFor(fieldNamesCreate.emailCreate)]: "",
                 [this.errorKeyNameFor(fieldNamesCreate.passwordCreate)]: "",
                 [this.errorKeyNameFor(fieldNamesCreate.passwordConfirm)]: "",
@@ -18,7 +18,7 @@ class AccountManagementBox extends React.Component {
                 [this.errorKeyNameFor(fieldNamesCreate.surname)]: "",
                 [this.errorKeyNameFor(fieldNamesCreate.postcode)]: "",
             },
-            submitDisabled: true,
+            submitError: "",
         }
         this.validationFunctions = new Map([
             [
@@ -56,6 +56,7 @@ class AccountManagementBox extends React.Component {
     doesAccountExist = email => false; //DO!!!!!!!
 
     validateByFieldName = (fieldName, fieldValue) => {
+        console.log("Validating " + fieldName);
         if (!this.validationFunctions.has(fieldName)) { return ""; }
         return this.validationFunctions.get(fieldName)(fieldValue);
     };
@@ -75,7 +76,7 @@ class AccountManagementBox extends React.Component {
         const inputError = this.validateByFieldName(name, value);
         const errorKey = this.errorKeyNameFor(name);
         const newErrors = {
-            ...this.state.errors,
+            ...this.state.fieldErrors,
             [errorKey]: inputError,
         };
         if (name === fieldNamesCreate.passwordCreate) {
@@ -85,22 +86,27 @@ class AccountManagementBox extends React.Component {
         }
         this.setState(prevState => ({
             ...prevState,
-            errors: newErrors,
-            submitDisabled: this.state.createAccountMode && !this.isAccountFormReady(newErrors),
+            fieldErrors: newErrors,
         }));
     };
 
     handleSubmit = event => {
         event.preventDefault();
-        
+        const { createAccountMode } = this.state;
+        const submitError = createAccountMode && !this.isAccountFormReady() ? 
+            "We're sorry, but one or more fields are incomplete or incorrect. Find errors." : 
+            "";
+        this.setState(prevState => ({
+            ...prevState,
+            submitError: submitError,
+        }));
     };
 
-    tryFindInputErrors = errors => {
-        console.log("Checking for errors");
-        console.log(errors);
+    tryFindInputErrors = () => {
+        const { fieldErrors: errors } = this.state;
         for (const key in errors) {
             if (errors[key].length > 0) {
-                console.log("Found an error");
+                console.log("Found error");
                 return true;
             }
         }
@@ -110,13 +116,14 @@ class AccountManagementBox extends React.Component {
     tryFindEmptyField = () => {
         for (const item in fieldNamesCreate) {
             if (!this.state[item] || this.state[item].length === 0) {
+                console.log("Found empty field");
                 return true;
             }
         }
         return false;
     }
 
-    isAccountFormReady = currentErrors => !this.tryFindInputErrors(currentErrors) && !this.tryFindEmptyField();
+    isAccountFormReady = () => !this.tryFindInputErrors() && !this.tryFindEmptyField();
 
     buildInputAreas = paramsArray => {
         return (paramsArray.map(item => (
@@ -135,38 +142,38 @@ class AccountManagementBox extends React.Component {
                 name: fieldNamesCreate.emailCreate,
                 type: "email",
                 labelText: "Your E-Mail Address",
-                errorText: this.state.errors[this.errorKeyNameFor(fieldNamesCreate.emailCreate)],
+                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.emailCreate)],
             },
             {
                 name: fieldNamesCreate.passwordCreate,
                 type: "password",
                 labelText: "Create Password",
                 subText: "Password must be 8-20 characters, including: at least one capital letter, at least one small letter, one number and one special character - ! @ # $ % ^ & * () _ +",
-                errorText: this.state.errors[this.errorKeyNameFor(fieldNamesCreate.passwordCreate)],
+                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.passwordCreate)],
             },
             {
                 name: fieldNamesCreate.passwordConfirm,
                 type: "password",
                 labelText: "Confirm Password",
-                errorText: this.state.errors[this.errorKeyNameFor(fieldNamesCreate.passwordConfirm)],
+                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.passwordConfirm)],
             },
             {
                 name: fieldNamesCreate.firstName,
                 type: "text",
                 labelText: "First Name",
-                errorText: this.state.errors[this.errorKeyNameFor(fieldNamesCreate.firstName)],
+                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.firstName)],
             },
             {
                 name: fieldNamesCreate.surname,
                 type: "text",
                 labelText: "Surname",
-                errorText: this.state.errors[this.errorKeyNameFor(fieldNamesCreate.surname)],
+                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.surname)],
             },
             {
                 name: fieldNamesCreate.postcode,
                 type: "number",
                 labelText: "Postcode",
-                errorText: this.state.errors[this.errorKeyNameFor(fieldNamesCreate.postcode)],
+                errorText: this.state.fieldErrors[this.errorKeyNameFor(fieldNamesCreate.postcode)],
             }
         ];
         return this.buildInputAreas(params);
@@ -190,7 +197,7 @@ class AccountManagementBox extends React.Component {
 
 
     render() {
-        const { createAccountMode, submitDisabled } = this.state;
+        const { createAccountMode, submitError } = this.state;
         return (
             <div className="account-management-box">
                 <div>
@@ -200,8 +207,9 @@ class AccountManagementBox extends React.Component {
                     <label htmlFor="create-account-toggle">CREATE ACCOUNT</label>
                 </div>
                 <form action="">
+                    {submitError && <div className="error-text">{submitError}</div>}
                     {createAccountMode ? this.createAccountForm() : this.signInForm()}
-                    <input type="submit" value={createAccountMode ? "SAVE" : "SIGN IN"} onClick={this.handleSubmit} disabled={submitDisabled} />
+                    <input type="submit" value={createAccountMode ? "SAVE" : "SIGN IN"} onClick={this.handleSubmit} />
                 </form>
             </div>
         )
