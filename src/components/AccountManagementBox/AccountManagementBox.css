@@ -2,3 +2,10 @@
     width: 450px;
     margin: auto;
 }
+
+.error-text {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: red;
+}

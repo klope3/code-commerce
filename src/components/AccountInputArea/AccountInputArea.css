@@ -13,13 +13,6 @@
     margin: 15px 0px;
 }
 
-.field-error-text {
-    position: absolute;
-    right: 0;
-    top: 0;
-    color: red;
-}
-
 .password-visibility-button {
     position: absolute;
     right: 0;
