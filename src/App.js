@@ -1,8 +1,8 @@
-import AccountManagementBox from "./components/AccountManagementBox/AccountManagementBox";
+import MainPage from "./components/MainPage/MainPage";
 
 function App() {
   return (
-    <AccountManagementBox />
+    <MainPage />
   );
 }
 
