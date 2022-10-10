@@ -1,0 +1,23 @@
+.cart-item-row {
+    padding: 15px 0px;
+    position: relative;
+}
+
+.product-quantity-input {
+    width: 70%;
+}
+
+.product-display-container {
+    display: flex;
+}
+
+.product-display-container img {
+    width: 100px;
+}
+
+.remove-cart-item-x {
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+}

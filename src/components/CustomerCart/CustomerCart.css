@@ -33,32 +33,9 @@
     flex: 1;
 }
 
-.cart-item-row {
-    padding: 15px 0px;
-    position: relative;
-}
-
-.product-quantity-input {
-    width: 70%;
-}
-
 .cart-products-flex div:first-child {
     flex: 2;
     text-align: left;
-}
-
-.product-display-container {
-    display: flex;
-}
-
-.product-display-container img {
-    width: 100px;
-}
-
-.remove-cart-item-x {
-    position: absolute;
-    left: -20px;
-    top: 50%;
 }
 
 .cart-price-breakdown-row {
