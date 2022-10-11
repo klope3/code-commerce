@@ -21,10 +21,52 @@ class CustomerCart extends React.Component {
     }
 
     handleChangeItemQuantity = event => {
+        if (event.target.value <= 0) { return; }
         const itemIndex = event.target.name.replace(/[^0-9]/g, "");
         const newState = {...this.state};
         newState.cartItems[itemIndex].quantity = event.target.value;
         this.setState(newState);
+    }
+
+    getCartTotal = () => this.state.cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.product.price * cartItem.quantity, 0);
+
+    cartBreakdownRow = (leftText, rightText) => {
+        return (
+            <div className="cart-price-breakdown-row">
+                <div>{leftText}</div>
+                <div>{rightText}</div>
+            </div>
+        )
+    }
+
+    buildCartBreakdown = () => {
+        // const subtotal = this.getCartTotal();
+        // const breakdown = [
+        //     {
+        //         leftText: "Cart Subtotal:",
+        //         rightText: `$${subtotal.toFixed(2)}`,
+        //     },
+        //     {
+        //         leftText: "Shipping & Handling:",
+        //         rightText: "--",
+        //     },
+        //     {
+        //         leftText: "Discount:",
+        //         rightText: "--",
+        //     },
+        //     {
+        //         leftText: "Cart Total:",
+        //         rightText: `$${subtotal.toFixed(2)}`,
+        //     },
+        // ];
+        // return breakdown.map(breakdownRow => this.cartBreakdownRow(breakdownRow.leftText, breakdownRow.rightText));
+        const subtotal = this.getCartTotal();
+        return [
+            this.cartBreakdownRow("Cart Subtotal:", `$${subtotal.toFixed(2)}`),
+            this.cartBreakdownRow("Shipping & Handling:", "--"),
+            this.cartBreakdownRow("Discount:", "--"),
+            this.cartBreakdownRow("Cart Total:", `$${subtotal.toFixed(2)}`),
+        ];
     }
 
     render() {
@@ -46,51 +88,6 @@ class CustomerCart extends React.Component {
                     </div>
                     <div className="cart-items-container">
                         {cartItems.map(cartItem => <CustomerCartItemRow key={cartItem.id} itemData={cartItem} changeQuantityFunction={this.handleChangeItemQuantity} />)}
-                        {/* <div className="cart-products-flex cart-item-row">
-                            <div className="product-display-container">
-                                {circleXMark}
-                                <img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
-                                <div>
-                                    <div>Product Description</div>
-                                    <div>Product Name</div>
-                                    <div>Data 1: 130</div>
-                                    <div>Data 2: 12</div>
-                                </div>
-                            </div>
-                            <div>$21.50</div>
-                            <div><input type="number" className="product-quantity-input" /></div>
-                            <div>$21.50</div>
-                        </div>
-                        <div className="cart-products-flex cart-item-row">
-                            <div className="product-display-container">
-                                {circleXMark}
-                                <img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
-                                <div>
-                                    <div>Product Description</div>
-                                    <div>Product Name</div>
-                                    <div>Data 1: 130</div>
-                                    <div>Data 2: 12</div>
-                                </div>
-                            </div>
-                            <div>$21.50</div>
-                            <div><input type="number" className="product-quantity-input" /></div>
-                            <div>$21.50</div>
-                        </div>
-                        <div className="cart-products-flex cart-item-row">
-                            <div className="product-display-container">
-                                {circleXMark}
-                                <img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
-                                <div>
-                                    <div>Product Description</div>
-                                    <div>Product Name</div>
-                                    <div>Data 1: 130</div>
-                                    <div>Data 2: 12</div>
-                                </div>
-                            </div>
-                            <div>$21.50</div>
-                            <div><input type="number" className="product-quantity-input" /></div>
-                            <div>$21.50</div>
-                        </div> */}
                     </div>
                 </div>
                 <div className="cart-right-container">
@@ -102,22 +99,11 @@ class CustomerCart extends React.Component {
                             <button>APPLY</button>
                         </div>
                         <div>
-                            <div className="cart-price-breakdown-row">
-                                <div>Cart Subtotal:</div>
-                                <div>$54.00</div>
-                            </div>
-                            <div className="cart-price-breakdown-row">
-                                <div>Shipping and Handling:</div>
-                                <div>--</div>
-                            </div>
-                            <div className="cart-price-breakdown-row">
-                                <div>Discount:</div>
-                                <div>--</div>
-                            </div>
-                            <div className="cart-price-breakdown-row">
-                                <div>Cart Total:</div>
-                                <div>$54.00</div>
-                            </div>
+                            {this.buildCartBreakdown()}
+                            {/* {this.cartBreakdownRow("Cart Subtotal:", `$${this.getCartTotal().toFixed(2)}`)}
+                            {this.cartBreakdownRow("Shipping & Handling:", "--")}
+                            {this.cartBreakdownRow("Discount:", "--")}
+                            {this.cartBreakdownRow("Cart Total:", `$${this.getCartTotal().toFixed(2)}`)} */}
                         </div>
                         <button>CHECKOUT</button>
                     </div>
