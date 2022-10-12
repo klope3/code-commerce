@@ -7,7 +7,6 @@ const circleXMark = <FontAwesomeIcon icon={faCircleXmark} className="remove-cart
 
 class CustomerCartItemRow extends React.Component {
     render() {
-        console.log(this.props.itemData);
         const { 
             itemData: {
                 product: {
@@ -16,6 +15,7 @@ class CustomerCartItemRow extends React.Component {
                     price,
                     fileSize,
                     starRating,
+                    imgUrl,
                 },
                 quantity,
                 id,
@@ -26,7 +26,7 @@ class CustomerCartItemRow extends React.Component {
             <div className="cart-products-flex cart-item-row">
                 <div className="product-display-container">
                     {circleXMark}
-                    <img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
+                    <img src={imgUrl} alt="Product" />
                     <div>
                         <div>{description}</div>
                         <div>{name}</div>

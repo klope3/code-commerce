@@ -4,6 +4,7 @@ import CustomerCartItemRow from "../CustomerCartItemRow/CustomerCartItemRow";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { products } from "../products";
+import { promoCodes } from "../promoCodes";
 
 const exclamation = <FontAwesomeIcon icon={faTriangleExclamation} />;
 const xMark = <FontAwesomeIcon icon={faXmark} className="close-x" />;
@@ -14,9 +15,11 @@ class CustomerCart extends React.Component {
         this.state = {
             cartItems: products.map((product, index) => ({
                 product: product,
-                quantity: 6,
+                quantity: 1,
                 id: index,
             })),
+            promoCodeField: "",
+            promoCodesEntered: [],
         }
     }
 
@@ -28,7 +31,40 @@ class CustomerCart extends React.Component {
         this.setState(newState);
     }
 
-    getCartTotal = () => this.state.cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.product.price * cartItem.quantity, 0);
+    handleChangePromoCode = event => {
+        this.setState(prevState => ({
+            ...prevState,
+            promoCodeField: event.target.value,
+        }));
+    }
+
+    handleSubmitPromoCode = () => {
+        const matchedCode = promoCodes.find(code => code.code === this.state.promoCodeField.toLowerCase());
+        const newState = { 
+            ...this.state,
+            promoCodeField: "",
+        };
+        if (matchedCode && !this.state.promoCodesEntered.find(code => code.code === matchedCode.code)) {
+            newState.promoCodesEntered.push(matchedCode);
+        }
+        this.setState(newState);
+    }
+
+    getCartSubtotal = () => this.state.cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.product.price * cartItem.quantity, 0);
+
+    getTotalDiscount = () => {
+        const cartSubtotal = this.getCartSubtotal();
+        let runningTotal = cartSubtotal;
+        for (const promo of this.state.promoCodesEntered) {
+            runningTotal *= 1 - promo.discountFactor;
+        }
+        return cartSubtotal - runningTotal;
+    }
+
+    buildCartColumnLabels = () => {
+        const labels = ["PRODUCT", "PRICE", "QUANTITY", "TOTAL PRICE"];
+        return labels.map((label, index) => <div key={index}>{label}</div>);
+    }
 
     cartBreakdownRow = (leftText, rightText) => {
         return (
@@ -40,33 +76,34 @@ class CustomerCart extends React.Component {
     }
 
     buildCartBreakdown = () => {
-        // const subtotal = this.getCartTotal();
-        // const breakdown = [
-        //     {
-        //         leftText: "Cart Subtotal:",
-        //         rightText: `$${subtotal.toFixed(2)}`,
-        //     },
-        //     {
-        //         leftText: "Shipping & Handling:",
-        //         rightText: "--",
-        //     },
-        //     {
-        //         leftText: "Discount:",
-        //         rightText: "--",
-        //     },
-        //     {
-        //         leftText: "Cart Total:",
-        //         rightText: `$${subtotal.toFixed(2)}`,
-        //     },
-        // ];
-        // return breakdown.map(breakdownRow => this.cartBreakdownRow(breakdownRow.leftText, breakdownRow.rightText));
-        const subtotal = this.getCartTotal();
-        return [
-            this.cartBreakdownRow("Cart Subtotal:", `$${subtotal.toFixed(2)}`),
-            this.cartBreakdownRow("Shipping & Handling:", "--"),
-            this.cartBreakdownRow("Discount:", "--"),
-            this.cartBreakdownRow("Cart Total:", `$${subtotal.toFixed(2)}`),
+        const subtotal = this.getCartSubtotal();
+        const totalDiscount = this.getTotalDiscount();
+        const breakdown = [
+            {
+                leftText: "Cart Subtotal:",
+                rightText: `$${subtotal.toFixed(2)}`,
+            },
+            {
+                leftText: "Shipping & Handling:",
+                rightText: "--",
+            },
+            {
+                leftText: "Discount:",
+                rightText: totalDiscount === 0 ? "--" : `$${totalDiscount.toFixed(2)}`,
+            },
+            {
+                leftText: "Cart Total:",
+                rightText: `$${(subtotal - totalDiscount).toFixed(2)}`,
+            },
         ];
+        return breakdown.map((breakdownRow, index) => {
+            return (
+                <div className="cart-price-breakdown-row" key={index}>
+                    <div>{breakdownRow.leftText}</div>
+                    <div>{breakdownRow.rightText}</div>
+                </div>
+            )
+        });
     }
 
     render() {
@@ -81,10 +118,7 @@ class CustomerCart extends React.Component {
                         {xMark}
                     </div>
                     <div className="cart-products-flex">
-                        <div>PRODUCT</div>
-                        <div>PRICE</div>
-                        <div>QUANTITY</div>
-                        <div>TOTAL PRICE</div>
+                        {this.buildCartColumnLabels()}
                     </div>
                     <div className="cart-items-container">
                         {cartItems.map(cartItem => <CustomerCartItemRow key={cartItem.id} itemData={cartItem} changeQuantityFunction={this.handleChangeItemQuantity} />)}
@@ -95,15 +129,11 @@ class CustomerCart extends React.Component {
                     <div>
                         <div>Do you have a promo code?</div>
                         <div>
-                            <input type="text" />
-                            <button>APPLY</button>
+                            <input type="text" value={this.state.promoCodeField} onChange={this.handleChangePromoCode} />
+                            <button onClick={this.handleSubmitPromoCode}>APPLY</button>
                         </div>
                         <div>
                             {this.buildCartBreakdown()}
-                            {/* {this.cartBreakdownRow("Cart Subtotal:", `$${this.getCartTotal().toFixed(2)}`)}
-                            {this.cartBreakdownRow("Shipping & Handling:", "--")}
-                            {this.cartBreakdownRow("Discount:", "--")}
-                            {this.cartBreakdownRow("Cart Total:", `$${this.getCartTotal().toFixed(2)}`)} */}
                         </div>
                         <button>CHECKOUT</button>
                     </div>
