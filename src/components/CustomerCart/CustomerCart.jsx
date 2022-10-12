@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { products } from "../products";
 import { promoCodes } from "../promoCodes";
+import CartPriceBreakdown from "../CartPriceBreakdown/CartPriceBreakdown";
 
 const exclamation = <FontAwesomeIcon icon={faTriangleExclamation} />;
 const xMark = <FontAwesomeIcon icon={faXmark} className="close-x" />;
@@ -159,9 +160,7 @@ class CustomerCart extends React.Component {
                             <input type="text" value={this.state.promoCodeField} onChange={this.handleChangePromoCode} />
                             <button onClick={this.handleSubmitPromoCode}>APPLY</button>
                         </div>
-                        <div>
-                            {this.buildCartBreakdown()}
-                        </div>
+                        <CartPriceBreakdown subtotal={this.getCartSubtotal()} shippingHandling={0} discount={this.getTotalDiscount()} />
                         <button disabled={emptyCart}>CHECKOUT</button>
                     </div>
                 </div>
