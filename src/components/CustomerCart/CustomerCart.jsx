@@ -13,11 +13,7 @@ class CustomerCart extends React.Component {
     constructor() {
         super();
         this.state = {
-            cartItems: products.map((product, index) => ({
-                product: product,
-                quantity: 1,
-                id: index,
-            })),
+            cartItems: this.getInitialCartItems(),
             promoCodeField: "",
             promoCodesEntered: [],
         }
@@ -56,6 +52,21 @@ class CustomerCart extends React.Component {
             newState.promoCodesEntered.push(matchedCode);
         }
         this.setState(newState);
+    }
+
+    handleResetCart = () => {
+        this.setState(prevState => ({
+            ...prevState,
+            cartItems: this.getInitialCartItems(),
+        }));
+    }
+
+    getInitialCartItems = () => {
+        return products.map((product, index) => ({
+            product: product,
+            quantity: 1,
+            id: index,
+        }));
     }
 
     getCartSubtotal = () => this.state.cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.product.price * cartItem.quantity, 0);
@@ -114,8 +125,15 @@ class CustomerCart extends React.Component {
         });
     }
 
+    resetCartButton = () => {
+        return (
+            <button>Reset Cart</button>
+        )
+    }
+
     render() {
         const { cartItems } = this.state;
+        const emptyCart = cartItems.length === 0;
         return (
             <div className="cart-main">
                 <div className="cart-left-container">
@@ -130,6 +148,7 @@ class CustomerCart extends React.Component {
                     </div>
                     <div className="cart-items-container">
                         {cartItems.map(cartItem => <CustomerCartItemRow key={cartItem.id} itemData={cartItem} changeQuantityFunction={this.handleChangeItemQuantity} removeItemFunction={this.handleRemoveItem} />)}
+                        {emptyCart && <button className="reset-cart-button" onClick={this.handleResetCart}>Reset Cart</button>}
                     </div>
                 </div>
                 <div className="cart-right-container">
@@ -143,7 +162,7 @@ class CustomerCart extends React.Component {
                         <div>
                             {this.buildCartBreakdown()}
                         </div>
-                        <button>CHECKOUT</button>
+                        <button disabled={emptyCart}>CHECKOUT</button>
                     </div>
                 </div>
             </div>
