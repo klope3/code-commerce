@@ -3,7 +3,7 @@ import "./CustomerCartItemRow.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
-const circleXMark = <FontAwesomeIcon icon={faCircleXmark} className="remove-cart-item-x" />;
+// const circleXMark = <FontAwesomeIcon icon={faCircleXmark} className="remove-cart-item-x" />;
 
 class CustomerCartItemRow extends React.Component {
     render() {
@@ -21,11 +21,14 @@ class CustomerCartItemRow extends React.Component {
                 id,
             },
             changeQuantityFunction,
+            removeItemFunction,
         } = this.props;
         return (
             <div className="cart-products-flex cart-item-row">
                 <div className="product-display-container">
-                    {circleXMark}
+                    <button className="remove-cart-item-x" name={`removeItem${id}`} onClick={removeItemFunction}>
+                        <FontAwesomeIcon icon={faCircleXmark} />
+                    </button>
                     <img src={imgUrl} alt="Product" />
                     <div>
                         <div>{description}</div>

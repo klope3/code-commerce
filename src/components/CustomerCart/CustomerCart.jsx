@@ -38,6 +38,14 @@ class CustomerCart extends React.Component {
         }));
     }
 
+    handleRemoveItem = event => {
+        const itemId = parseInt(event.target.name.replace(/[^0-9]/g, ""));
+        const itemToRemove = this.state.cartItems.find(item => item.id === itemId);
+        const newState = { ...this.state };
+        newState.cartItems = newState.cartItems.filter(item => item !== itemToRemove);
+        this.setState(newState);
+    }
+
     handleSubmitPromoCode = () => {
         const matchedCode = promoCodes.find(code => code.code === this.state.promoCodeField.toLowerCase());
         const newState = { 
@@ -121,7 +129,7 @@ class CustomerCart extends React.Component {
                         {this.buildCartColumnLabels()}
                     </div>
                     <div className="cart-items-container">
-                        {cartItems.map(cartItem => <CustomerCartItemRow key={cartItem.id} itemData={cartItem} changeQuantityFunction={this.handleChangeItemQuantity} />)}
+                        {cartItems.map(cartItem => <CustomerCartItemRow key={cartItem.id} itemData={cartItem} changeQuantityFunction={this.handleChangeItemQuantity} removeItemFunction={this.handleRemoveItem} />)}
                     </div>
                 </div>
                 <div className="cart-right-container">
