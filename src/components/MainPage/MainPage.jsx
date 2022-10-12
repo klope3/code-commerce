@@ -1,6 +1,7 @@
 import React from "react";
 import AccountManagementBox from "../AccountManagementBox/AccountManagementBox";
 import CustomerCart from "../CustomerCart/CustomerCart";
+import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 
 class MainPage extends React.Component {
     constructor() {
@@ -13,7 +14,7 @@ class MainPage extends React.Component {
     render() {
         return (
             <div>
-                <CustomerCart />
+                <OrderProgressBar orderStep={3} />
             </div>
         )
     }
