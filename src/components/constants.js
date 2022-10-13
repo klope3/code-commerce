@@ -11,3 +11,5 @@ export const fieldNamesLogin = {
     emailLogin: "emailLogin",
     passwordLogin: "passwordLogin",
 }
+
+export const expressShippingPrice = 5;

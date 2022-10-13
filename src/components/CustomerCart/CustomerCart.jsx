@@ -14,7 +14,6 @@ class CustomerCart extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmitPromoCode = props.submitPromoCodeFunction;
-        console.log(this.handleSubmitPromoCode);
         this.state = {
             //cartItems: this.getInitialCartItems(),
             promoCodeField: "",
@@ -93,12 +92,12 @@ class CustomerCart extends React.Component {
     render() {
         const { 
             cartItems, 
+            subtotal, 
             totalDiscount, 
             changeQuantityFunction, 
             removeItemFunction, 
         } = this.props;
         const emptyCart = cartItems.length === 0;
-        const subtotal = cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.product.price * cartItem.quantity, 0);
         return (
             <div className="cart-main">
                 <div className="cart-left-container">

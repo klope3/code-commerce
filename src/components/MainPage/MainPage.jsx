@@ -5,14 +5,28 @@ import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import ShippingInfo from "../ShippingInfo/ShippingInfo";
 import { products } from "../products";
 import { promoCodes } from "../promoCodes";
+import { expressShippingPrice } from "../constants";
 
 class MainPage extends React.Component {
     constructor() {
         super();
         this.state = {
             activeBox: "",
+            orderStep: 0,
+            loggedInEmail: "person@example.com",
             cartItems: this.getInitialCartItems(),
             promoCodesEntered: [],
+            shippingInfo: {
+                addressTitle: "",
+                nameSurname: "",
+                zip: 0,
+                country: "",
+                city: "",
+                state: "",
+                cell: 0,
+                telephone: 0,
+                express: false,
+            },
         }
     }
 
@@ -34,6 +48,8 @@ class MainPage extends React.Component {
         }
         return cartSubtotal - runningTotal;
     }
+
+    getShippingPrice = () => this.state.shippingInfo.express ? expressShippingPrice : 0;
 
     handleChangeItemQuantity = event => {
         if (event.target.value <= 0) { return; }
@@ -59,7 +75,6 @@ class MainPage extends React.Component {
     }
 
     handleSubmitPromoCode = (promoCodeField) => {
-        console.log("Called in main");
         const matchedCode = promoCodes.find(code => code.code === promoCodeField.toLowerCase());
         if (matchedCode && !this.state.promoCodesEntered.find(code => code.code === matchedCode.code)) {
             this.setState(prevState => ({
@@ -73,12 +88,18 @@ class MainPage extends React.Component {
         const { cartItems } = this.state;
         return (
             <div>
-                <CustomerCart 
+                <ShippingInfo 
                     cartItems={cartItems} 
+                    subtotal={this.getCartSubtotal()} 
+                    shippingHandling={this.getShippingPrice()} 
+                    discount={this.getTotalDiscount()} />
+                {/* <CustomerCart 
+                    cartItems={cartItems} 
+                    subtotal={this.getCartSubtotal()}
                     totalDiscount={this.getTotalDiscount()} 
                     changeQuantityFunction={this.handleChangeItemQuantity} 
                     removeItemFunction={this.handleRemoveItem}
-                    submitPromoCodeFunction={this.handleSubmitPromoCode} />
+                    submitPromoCodeFunction={this.handleSubmitPromoCode} /> */}
             </div>
         )
     }

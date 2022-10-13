@@ -1,0 +1,16 @@
+.product-display-container {
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.product-display-container img {
+    width: 100px;
+}
+
+.product-display-price {
+    position: absolute;
+    font-weight: bold;
+    bottom: 0;
+    right: 0;
+}

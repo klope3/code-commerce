@@ -1,3 +1,11 @@
 .shipping-info-main {
     display: flex;
 }
+
+.shipping-info-small-fields {
+    display: flex;
+}
+
+.shipping-info-small-fields input {
+    width: 50%;
+}
