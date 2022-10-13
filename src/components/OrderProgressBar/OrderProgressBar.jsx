@@ -55,15 +55,6 @@ class OrderProgressBar extends React.Component {
                         </div>
                     )
                 })}
-                {/* <div className="progress-bar-circle" style={circleStyles[0]}>
-                    <FontAwesomeIcon icon={faCheck} />
-                </div>
-                <div className="progress-bar-circle" style={circleStyles[1]}>
-                    <FontAwesomeIcon icon={faTruck} /></div>
-                <div className="progress-bar-circle" style={circleStyles[2]}>
-                    <FontAwesomeIcon icon={faCreditCard} /></div>
-                <div className="progress-bar-circle" style={circleStyles[3]}>
-                    <FontAwesomeIcon icon={faCircleCheck} /></div> */}
             </div>
         )
     }

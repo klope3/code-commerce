@@ -2,6 +2,7 @@ import React from "react";
 import "./CustomerCartItemRow.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import ProductDataText from "../ProductDataText/ProductDataText";
 
 // const circleXMark = <FontAwesomeIcon icon={faCircleXmark} className="remove-cart-item-x" />;
 
@@ -9,6 +10,7 @@ class CustomerCartItemRow extends React.Component {
     render() {
         const { 
             itemData: {
+                product,
                 product: {
                     name,
                     description,
@@ -30,12 +32,13 @@ class CustomerCartItemRow extends React.Component {
                         <FontAwesomeIcon icon={faCircleXmark} />
                     </button>
                     <img src={imgUrl} alt="Product" />
-                    <div>
+                    <ProductDataText productData={product} />
+                    {/* <div>
                         <div>{description}</div>
                         <div>{name}</div>
                         <div>Filesize: {fileSize}kb</div>
                         <div>Stars: {starRating}</div>
-                    </div>
+                    </div> */}
                 </div>
                 <div>${price}</div>
                 <div>
