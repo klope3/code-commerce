@@ -6,6 +6,7 @@ import ShippingInfo from "../ShippingInfo/ShippingInfo";
 import { products } from "../products";
 import { promoCodes } from "../promoCodes";
 import { expressShippingPrice } from "../constants";
+import { standardShippingMinimum } from "../constants";
 
 class MainPage extends React.Component {
     constructor() {
@@ -19,13 +20,15 @@ class MainPage extends React.Component {
             shippingInfo: {
                 addressTitle: "",
                 nameSurname: "",
-                zip: 0,
+                zipCode: 0,
                 country: "",
                 city: "",
                 state: "",
-                cell: 0,
-                telephone: 0,
-                express: false,
+                cellCountryCode: 0,
+                cellNumber: 0,
+                telephoneCountryCode: 0,
+                telephoneNumber: 0,
+                shippingMethod: undefined,
             },
         }
     }
@@ -38,10 +41,10 @@ class MainPage extends React.Component {
         }));
     }
 
-    getCartSubtotal = () => this.state.cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.product.price * cartItem.quantity, 0);
+    getCartSubtotal = cartItems => cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.product.price * cartItem.quantity, 0);
 
     getTotalDiscount = () => {
-        const cartSubtotal = this.getCartSubtotal();
+        const cartSubtotal = this.getCartSubtotal(this.state.cartItems);
         let runningTotal = cartSubtotal;
         for (const promo of this.state.promoCodesEntered) {
             runningTotal *= 1 - promo.discountFactor;
@@ -84,15 +87,31 @@ class MainPage extends React.Component {
         }
     }
 
+    handleShippingFieldChange = event => {
+        if (event.target.name === "shippingMethod") {
+            this.setState(prevState => ({
+                ...prevState,
+                shippingInfo : {
+                    ...prevState.shippingInfo,
+                    shippingMethod: event.target.id,
+                }
+            }))
+        }
+    }
+
     render() {
-        const { cartItems } = this.state;
+        const { cartItems, shippingInfo } = this.state;
+        const subtotal = this.getCartSubtotal(cartItems);
+        const meetsStandardShippingMinimum = subtotal >= standardShippingMinimum;
         return (
             <div>
                 <ShippingInfo 
                     cartItems={cartItems} 
-                    subtotal={this.getCartSubtotal()} 
+                    subtotal={subtotal} 
                     shippingHandling={this.getShippingPrice()} 
-                    discount={this.getTotalDiscount()} />
+                    discount={this.getTotalDiscount()}
+                    fieldData={shippingInfo}
+                    changeFieldFunction={this.handleShippingFieldChange} />
                 {/* <CustomerCart 
                     cartItems={cartItems} 
                     subtotal={this.getCartSubtotal()}

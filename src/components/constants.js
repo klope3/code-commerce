@@ -13,3 +13,4 @@ export const fieldNamesLogin = {
 }
 
 export const expressShippingPrice = 5;
+export const standardShippingMinimum = 40;

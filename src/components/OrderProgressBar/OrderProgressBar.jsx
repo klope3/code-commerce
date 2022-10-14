@@ -50,8 +50,8 @@ class OrderProgressBar extends React.Component {
                 </div>
                 {circles.map((circle, index) => {
                     return (
-                        <div className="progress-bar-circle" style={circle.style}>
-                            <FontAwesomeIcon icon={circle.icon} key={index} />
+                        <div className="progress-bar-circle" style={circle.style} key={index}>
+                            <FontAwesomeIcon icon={circle.icon} />
                         </div>
                     )
                 })}
