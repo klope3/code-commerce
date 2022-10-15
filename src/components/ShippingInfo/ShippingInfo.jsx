@@ -152,19 +152,6 @@ class ShippingInfo extends React.Component {
                     subtotal={subtotal}
                     shippingHandling={shippingHandling} 
                     discount={discount} />
-                {/* <div className="shipping-info-right">
-                    <h2>SUMMARY</h2>
-                    <div><strong>{`${cartItems.length} items`}</strong> in your bag.</div>
-                    <div>
-                        {cartItems.map((item, index) => {
-                            return (
-                                <ProductDisplayArea productData={item.product} quantity={item.quantity} hideDescription={true} key={index} />
-                            )
-                        })}
-                    </div>
-                    <CartPriceBreakdown subtotal={subtotal} shippingHandling={shippingHandling} discount={discount} />
-                    <button>CHECKOUT</button>
-                </div> */}
             </div>
         )
     }

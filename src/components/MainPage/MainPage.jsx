@@ -110,7 +110,13 @@ class MainPage extends React.Component {
     }
 
     handlePaymentFieldChange = event => {
-
+        this.setState(prevState => ({
+            ...prevState, 
+            paymentInfo: {
+                ...prevState.paymentInfo,
+                [event.target.name]: event.target.value,
+            }
+        }));
     }
 
     render() {
@@ -119,21 +125,21 @@ class MainPage extends React.Component {
         const standardShippingAllowed = subtotal >= standardShippingMinimum;
         return (
             <div>
-                {/* <PaymentInfo
+                <PaymentInfo
                     cartItems={cartItems}
                     subtotal={subtotal}
                     shippingHandling={this.getShippingPrice()}
                     discount={this.getTotalDiscount()}
                     fieldData={paymentInfo}
-                    changeFieldFunction={this.handlePaymentFieldChange} /> */}
-                <ShippingInfo 
+                    changeFieldFunction={this.handlePaymentFieldChange} />
+                {/* <ShippingInfo 
                     cartItems={cartItems} 
                     subtotal={subtotal} 
                     shippingHandling={this.getShippingPrice()} 
                     discount={this.getTotalDiscount()}
                     fieldData={shippingInfo}
                     standardShippingAllowed={standardShippingAllowed}
-                    changeFieldFunction={this.handleShippingFieldChange} />
+                    changeFieldFunction={this.handleShippingFieldChange} /> */}
                 {/* <CustomerCart 
                     cartItems={cartItems} 
                     subtotal={this.getCartSubtotal()}
