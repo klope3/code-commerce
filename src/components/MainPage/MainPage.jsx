@@ -24,15 +24,22 @@ class MainPage extends React.Component {
                 addressTitle: "",
                 nameSurname: "",
                 address: "",
-                zipCode: 0,
+                zipCode: "",
                 country: "",
                 city: "",
                 state: "",
-                cellCountryCode: 0,
-                cellNumber: 0,
-                telephoneCountryCode: 0,
-                telephoneNumber: 0,
+                cellCountryCode: "",
+                cellNumber: "",
+                telephoneCountryCode: "",
+                telephoneNumber: "",
                 shippingMethod: standardShippingAllowed ? undefined : "express",
+            },
+            paymentInfo: {
+                cardholder: "",
+                cardNumber: "",
+                expiryMonth: "",
+                expiryYear: "",
+                securityCode: "",
             },
         }
     }
@@ -102,13 +109,23 @@ class MainPage extends React.Component {
         }));
     }
 
+    handlePaymentFieldChange = event => {
+
+    }
+
     render() {
-        const { cartItems, shippingInfo } = this.state;
+        const { cartItems, shippingInfo, paymentInfo } = this.state;
         const subtotal = this.getCartSubtotal(cartItems);
         const standardShippingAllowed = subtotal >= standardShippingMinimum;
         return (
             <div>
-                {/* <PaymentInfo /> */}
+                {/* <PaymentInfo
+                    cartItems={cartItems}
+                    subtotal={subtotal}
+                    shippingHandling={this.getShippingPrice()}
+                    discount={this.getTotalDiscount()}
+                    fieldData={paymentInfo}
+                    changeFieldFunction={this.handlePaymentFieldChange} /> */}
                 <ShippingInfo 
                     cartItems={cartItems} 
                     subtotal={subtotal} 

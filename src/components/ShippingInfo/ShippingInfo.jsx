@@ -3,6 +3,7 @@ import CartPriceBreakdown from "../CartPriceBreakdown/CartPriceBreakdown";
 import FieldRowSection from "../FieldRowSection/FieldRowSection";
 import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import ProductDisplayArea from "../ProductDisplayArea/ProductDisplayArea";
+import SummarySidebar from "../SummarySidebar/SummarySidebar";
 import "./ShippingInfo.css";
 
 class ShippingInfo extends React.Component {
@@ -146,7 +147,12 @@ class ShippingInfo extends React.Component {
                     <h2>SHIPPING METHOD</h2>
                     {this.buildShippingMethods(subtotal, shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
                 </div>
-                <div className="shipping-info-right">
+                <SummarySidebar 
+                    cartItems={cartItems} 
+                    subtotal={subtotal}
+                    shippingHandling={shippingHandling} 
+                    discount={discount} />
+                {/* <div className="shipping-info-right">
                     <h2>SUMMARY</h2>
                     <div><strong>{`${cartItems.length} items`}</strong> in your bag.</div>
                     <div>
@@ -158,7 +164,7 @@ class ShippingInfo extends React.Component {
                     </div>
                     <CartPriceBreakdown subtotal={subtotal} shippingHandling={shippingHandling} discount={discount} />
                     <button>CHECKOUT</button>
-                </div>
+                </div> */}
             </div>
         )
     }
