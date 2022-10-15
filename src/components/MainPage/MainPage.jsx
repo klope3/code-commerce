@@ -7,6 +7,7 @@ import { products } from "../products";
 import { promoCodes } from "../promoCodes";
 import { expressShippingPrice } from "../constants";
 import { standardShippingMinimum } from "../constants";
+import PaymentInfo from "../PaymentInfo/PaymentInfo";
 
 class MainPage extends React.Component {
     constructor() {
@@ -107,6 +108,7 @@ class MainPage extends React.Component {
         const standardShippingAllowed = subtotal >= standardShippingMinimum;
         return (
             <div>
+                {/* <PaymentInfo /> */}
                 <ShippingInfo 
                     cartItems={cartItems} 
                     subtotal={subtotal} 

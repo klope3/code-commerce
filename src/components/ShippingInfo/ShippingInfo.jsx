@@ -1,26 +1,11 @@
 import React from "react";
 import CartPriceBreakdown from "../CartPriceBreakdown/CartPriceBreakdown";
+import FieldRowSection from "../FieldRowSection/FieldRowSection";
 import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import ProductDisplayArea from "../ProductDisplayArea/ProductDisplayArea";
 import "./ShippingInfo.css";
 
 class ShippingInfo extends React.Component {
-    fieldRow = (inputType, inputIds, labelText, labelFor, changeFieldFunction) => {
-        return (
-            <div key={`section${inputIds.join()}`}>
-                <label htmlFor={labelFor}>{labelText}</label>
-                {inputIds.map(inputId => <input type={inputType} name={inputId} id={inputId} key={inputId} onChange={changeFieldFunction}/>)}
-            </div>
-        )
-    }
-
-    fieldRowSection = (rowSection, changeFieldFunction) => {
-        return rowSection.map(rowSection => {
-            const { inputType, inputs, labelText, labelFor } = rowSection;
-            return this.fieldRow(inputType, inputs, labelText, labelFor, changeFieldFunction);
-        })
-    }
-
     buildFieldRows = changeFieldFunction => {
         const rowSection1 = [
             {
@@ -84,11 +69,11 @@ class ShippingInfo extends React.Component {
         ];
         return (
             <div>
-                {this.fieldRowSection(rowSection1, changeFieldFunction)}
+                <FieldRowSection rowSection={rowSection1} changeFieldFunction={changeFieldFunction} />
                 <div className="shipping-info-small-fields">
-                    {this.fieldRowSection(rowSection2, changeFieldFunction)}
+                    <FieldRowSection rowSection={rowSection2} changeFieldFunction={changeFieldFunction} />
                 </div>
-                {this.fieldRowSection(rowSection3, changeFieldFunction)}
+                <FieldRowSection rowSection={rowSection3} changeFieldFunction={changeFieldFunction} />
             </div>
         )
     }
