@@ -105,14 +105,14 @@ class ShippingInfo extends React.Component {
         )
     }
 
-    buildShippingMethods = (cartSubtotal, checkedStates, changeFieldFunction) => {
+    buildShippingMethods = (cartSubtotal, checkedStates, standardShippingAllowed, changeFieldFunction) => {
         const radios = [
             {
                 id: "standard",
                 labelText: "STANDARD",
                 description: "Delivery in 4-6 business days - Free ($40 minimum)",
                 checked: checkedStates[0],
-                disabled: false,
+                disabled: !standardShippingAllowed,
             },
             {
                 id: "express",
@@ -148,6 +148,7 @@ class ShippingInfo extends React.Component {
                 telephoneNumber,
                 shippingMethod,
             },
+            standardShippingAllowed,
             changeFieldFunction,
         } = this.props;
         const shippingMethodCheckedStates = [shippingMethod === "standard", shippingMethod === "express"];
@@ -158,7 +159,7 @@ class ShippingInfo extends React.Component {
                     <h2>SHIPPING INFORMATION</h2>
                     {this.buildFieldRows(changeFieldFunction)}
                     <h2>SHIPPING METHOD</h2>
-                    {this.buildShippingMethods(subtotal, shippingMethodCheckedStates, changeFieldFunction)}
+                    {this.buildShippingMethods(subtotal, shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
                 </div>
                 <div className="shipping-info-right">
                     <h2>SUMMARY</h2>

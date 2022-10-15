@@ -11,6 +11,8 @@ import { standardShippingMinimum } from "../constants";
 class MainPage extends React.Component {
     constructor() {
         super();
+        const initialItems = this.getInitialCartItems();
+        const standardShippingAllowed = this.getCartSubtotal(initialItems) >= standardShippingMinimum;
         this.state = {
             activeBox: "",
             orderStep: 0,
@@ -20,6 +22,7 @@ class MainPage extends React.Component {
             shippingInfo: {
                 addressTitle: "",
                 nameSurname: "",
+                address: "",
                 zipCode: 0,
                 country: "",
                 city: "",
@@ -28,7 +31,7 @@ class MainPage extends React.Component {
                 cellNumber: 0,
                 telephoneCountryCode: 0,
                 telephoneNumber: 0,
-                shippingMethod: undefined,
+                shippingMethod: standardShippingAllowed ? undefined : "express",
             },
         }
     }
@@ -52,7 +55,7 @@ class MainPage extends React.Component {
         return cartSubtotal - runningTotal;
     }
 
-    getShippingPrice = () => this.state.shippingInfo.express ? expressShippingPrice : 0;
+    getShippingPrice = () => this.state.shippingInfo.shippingMethod === "express" ? expressShippingPrice : 0;
 
     handleChangeItemQuantity = event => {
         if (event.target.value <= 0) { return; }
@@ -88,21 +91,20 @@ class MainPage extends React.Component {
     }
 
     handleShippingFieldChange = event => {
-        if (event.target.name === "shippingMethod") {
-            this.setState(prevState => ({
-                ...prevState,
-                shippingInfo : {
-                    ...prevState.shippingInfo,
-                    shippingMethod: event.target.id,
-                }
-            }))
-        }
+        const value = event.target.name === "shippingMethod" ? event.target.id : event.target.value;
+        this.setState(prevState => ({
+            ...prevState,
+            shippingInfo: {
+                ...prevState.shippingInfo,
+                [event.target.name]: value,
+            }
+        }));
     }
 
     render() {
         const { cartItems, shippingInfo } = this.state;
         const subtotal = this.getCartSubtotal(cartItems);
-        const meetsStandardShippingMinimum = subtotal >= standardShippingMinimum;
+        const standardShippingAllowed = subtotal >= standardShippingMinimum;
         return (
             <div>
                 <ShippingInfo 
@@ -111,6 +113,7 @@ class MainPage extends React.Component {
                     shippingHandling={this.getShippingPrice()} 
                     discount={this.getTotalDiscount()}
                     fieldData={shippingInfo}
+                    standardShippingAllowed={standardShippingAllowed}
                     changeFieldFunction={this.handleShippingFieldChange} />
                 {/* <CustomerCart 
                     cartItems={cartItems} 

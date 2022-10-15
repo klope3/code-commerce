@@ -3,6 +3,7 @@ import React from "react";
 class CartPriceBreakdown extends React.Component {
     render() {
         const { subtotal, shippingHandling, discount } = this.props;
+        console.log(shippingHandling);
         const rows = [
             {
                 leftText: "Cart Subtotal:",
@@ -18,7 +19,7 @@ class CartPriceBreakdown extends React.Component {
             },
             {
                 leftText: "Cart Total:",
-                rightText: `$${(subtotal - discount).toFixed(2)}`,
+                rightText: `$${(subtotal + shippingHandling - discount).toFixed(2)}`,
             },
         ];
         return (
