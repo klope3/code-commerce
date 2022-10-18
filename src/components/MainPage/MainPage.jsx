@@ -44,6 +44,8 @@ class MainPage extends React.Component {
         }
     }
 
+    removeNonDigits = string => string.replace(/[^\d]/g, "");
+
     getInitialCartItems = () => {
         return products.map((product, index) => ({
             product: product,
@@ -110,11 +112,16 @@ class MainPage extends React.Component {
     }
 
     handlePaymentFieldChange = event => {
+        let value = event.target.value;
+        if (event.target.name === "cardNumber") {
+            value = this.removeNonDigits(value);
+            if (value.length) value = value.match(new RegExp(".{1,4}", "g")).join(" ");
+        }
         this.setState(prevState => ({
             ...prevState, 
             paymentInfo: {
                 ...prevState.paymentInfo,
-                [event.target.name]: event.target.value,
+                [event.target.name]: value,
             }
         }));
     }

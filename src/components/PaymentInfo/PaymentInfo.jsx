@@ -5,7 +5,7 @@ import "./PaymentInfo.css";
 import FieldRowSection from "../FieldRowSection/FieldRowSection";
 
 class PaymentInfo extends React.Component {
-    buildFields = changeFunction => {
+    buildFields = (cardNumber, changeFunction) => {
         const rowSection = [
             {
                 inputType: "text",
@@ -14,10 +14,11 @@ class PaymentInfo extends React.Component {
                 labelFor: "cardholder",
             },
             {
-                inputType: "number",
+                inputType: "text",
                 inputs: ["cardNumber"],
                 labelText: "Card Number",
                 labelFor: "cardNumber",
+                value: cardNumber
             },
             {
                 inputType: "number",
@@ -32,7 +33,6 @@ class PaymentInfo extends React.Component {
                 labelFor: "securityCode",
             },
         ];
-        console.log(changeFunction);
         return <FieldRowSection rowSection={rowSection} changeFieldFunction={changeFunction} />
     }
 
@@ -44,7 +44,9 @@ class PaymentInfo extends React.Component {
             discount, 
             shippingInfo,
             paymentInfo,
-            fieldData, 
+            fieldData: {
+                cardNumber
+            },
             changeFieldFunction,
         } = this.props;
         const orderTotal = subtotal + shippingHandling - discount;
@@ -54,7 +56,7 @@ class PaymentInfo extends React.Component {
                     <OrderProgressBar orderStep={2} />
                     <div>
                         <h2>PAYMENT INFORMATION</h2>
-                        {this.buildFields(changeFieldFunction)}
+                        {this.buildFields(cardNumber, changeFieldFunction)}
                         <button>PAY {`$${orderTotal}`}</button>
                     </div>
                 </div>
