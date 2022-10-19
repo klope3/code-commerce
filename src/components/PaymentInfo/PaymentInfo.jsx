@@ -3,37 +3,49 @@ import SummarySidebar from "../SummarySidebar/SummarySidebar";
 import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import "./PaymentInfo.css";
 import FieldRowSection from "../FieldRowSection/FieldRowSection";
+import { creditCardLogos } from "../constants";
 
 class PaymentInfo extends React.Component {
-    buildFields = (cardNumber, changeFunction) => {
-        const rowSection = [
+    buildFields = (cardNumber, cardType, changeFunction) => {
+        const fieldRows = [
             {
-                inputType: "text",
-                inputs: ["cardholder"],
-                labelText: "Cardholder Name",
-                labelFor: "cardholder",
+                displayText: "Cardholder Name",
+                //value: cardNumber,
+                name: "cardholder",
+                label: "cardholder name",
+                type: "text",
             },
             {
-                inputType: "text",
-                inputs: ["cardNumber"],
-                labelText: "Card Number",
-                labelFor: "cardNumber",
-                value: cardNumber
+                displayText: "Card Number",
+                value: cardNumber,
+                name: "cardNumber",
+                label: "card number",
+                type: "text",
+                extraInputContent: cardType ? <img src={creditCardLogos[cardType]} alt={cardType} className="credit-card-logo" /> : undefined,
             },
             {
-                inputType: "number",
-                inputs: ["expiryMonth", "expiryYear"],
-                labelText: "Exp. Date",
-                labelFor: "expiryMonth",
+                displayText: "Exp. Date",
+                // value: cardNumber,
+                name: "expiryMonth",
+                label: "expiration month",
+                type: "number",
             },
             {
-                inputType: "number",
-                inputs: ["securityCode"],
-                labelText: "CVV",
-                labelFor: "securityCode",
+                displayText: "Exp. Date",
+                // value: cardNumber,
+                name: "expiryYear",
+                label: "expiration year",
+                type: "number",
+            },
+            {
+                displayText: "CVV",
+                // value: cardNumber,
+                name: "securityCode",
+                label: "security code",
+                type: "number",
             },
         ];
-        return <FieldRowSection rowSection={rowSection} changeFieldFunction={changeFunction} />
+        return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={changeFunction} />
     }
 
     render() {
@@ -45,7 +57,8 @@ class PaymentInfo extends React.Component {
             shippingInfo,
             paymentInfo,
             fieldData: {
-                cardNumber
+                cardNumber, 
+                cardType,
             },
             changeFieldFunction,
         } = this.props;
@@ -56,7 +69,7 @@ class PaymentInfo extends React.Component {
                     <OrderProgressBar orderStep={2} />
                     <div>
                         <h2>PAYMENT INFORMATION</h2>
-                        {this.buildFields(cardNumber, changeFieldFunction)}
+                        {this.buildFields(cardNumber, cardType, changeFieldFunction)}
                         <button>PAY {`$${orderTotal}`}</button>
                     </div>
                 </div>

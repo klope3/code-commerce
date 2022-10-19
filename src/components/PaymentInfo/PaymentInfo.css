@@ -1,0 +1,9 @@
+.field-row-input-container {
+    position: relative;
+}
+
+.credit-card-logo {
+    position: absolute;
+    right: 0;
+    top: 50%;
+}

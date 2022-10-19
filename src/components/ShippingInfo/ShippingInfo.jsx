@@ -8,75 +8,75 @@ import "./ShippingInfo.css";
 
 class ShippingInfo extends React.Component {
     buildFieldRows = changeFieldFunction => {
-        const rowSection1 = [
+        const fieldRows = [
             {
-                inputType: "text",
-                inputs: ["addressTitle"],
-                labelText: "Address Title",
-                labelFor: "addressTitle",
+                name: "addressTitle",
+                displayText: "Address Title",
+                label: "address title",
+                type: "text",
             },
             {
-                inputType: "text",
-                inputs: ["nameSurname"],
-                labelText: "Name - Surname",
-                labelFor: "nameSurname",
+                name: "nameSurname",
+                displayText: "Name - Surname",
+                label: "name surname",
+                type: "text",
             },
             {
-                inputType: "text",
-                inputs: ["address"],
-                labelText: "Your Address",
-                labelFor: "address",
+                name: "address",
+                displayText: "Your Address",
+                label: "your address",
+                type: "text",
+            },
+            {
+                name: "zipCode",
+                displayText: "Zip",
+                label: "zip code",
+                type: "number",
+            },
+            {
+                name: "country",
+                displayText: "Country",
+                label: "country",
+                type: "text",
+            },
+            {
+                name: "city",
+                displayText: "City",
+                label: "city",
+                type: "text",
+            },
+            {
+                name: "state",
+                displayText: "State",
+                label: "state",
+                type: "text",
+            },
+            {
+                name: "cellCountryCode",
+                displayText: "Cell Phone",
+                label: "cell country code",
+                type: "number",
+            },
+            {
+                name: "cellNumber",
+                // displayText: "",
+                label: "cell number",
+                type: "number",
+            },
+            {
+                name: "telephoneCountryCode",
+                displayText: "Telephone",
+                label: "telephone country code",
+                type: "number",
+            },
+            {
+                name: "telephoneNumber",
+                // displayText: "",
+                label: "telephone number",
+                type: "number",
             },
         ];
-        const rowSection2 = [
-            {
-                inputType: "number",
-                inputs: ["zipCode"],
-                labelText: "Zip Code",
-                labelFor: "zipCode",
-            },
-            {
-                inputType: "text",
-                inputs: ["country"],
-                labelText: "Country",
-                labelFor: "country",
-            },
-            {
-                inputType: "text",
-                inputs: ["city"],
-                labelText: "City",
-                labelFor: "city",
-            },
-            {
-                inputType: "text",
-                inputs: ["state"],
-                labelText: "State",
-                labelFor: "state",
-            },
-        ];
-        const rowSection3 = [
-            {
-                inputType: "number",
-                inputs: ["cellCountryCode", "cellNumber"],
-                labelText: "Cell Phone",
-                labelFor: "cellNumber",
-            },
-            {
-                inputType: "number",
-                inputs: ["telephoneCountryCode", "telephoneNumber"],
-                labelText: "Telephone",
-                labelFor: "telephoneNumber",
-            },
-        ];
-        return (
-            <div>
-                <FieldRowSection rowSection={rowSection1} changeFieldFunction={changeFieldFunction} />
-                <div className="shipping-info-small-fields">
-                    <FieldRowSection rowSection={rowSection2} changeFieldFunction={changeFieldFunction} />
-                </div>
-                <FieldRowSection rowSection={rowSection3} changeFieldFunction={changeFieldFunction} />
-            </div>
-        )
+        return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={changeFieldFunction} />
     }
 
     radioRow = (inputName, inputId, labelText, descriptionText, defaultChecked, disabled, changeFieldFunction) => {

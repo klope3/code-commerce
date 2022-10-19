@@ -5,7 +5,7 @@ import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import ShippingInfo from "../ShippingInfo/ShippingInfo";
 import { products } from "../products";
 import { promoCodes } from "../promoCodes";
-import { expressShippingPrice } from "../constants";
+import { creditCardTypes, expressShippingPrice } from "../constants";
 import { standardShippingMinimum } from "../constants";
 import PaymentInfo from "../PaymentInfo/PaymentInfo";
 
@@ -37,6 +37,7 @@ class MainPage extends React.Component {
             paymentInfo: {
                 cardholder: "",
                 cardNumber: "",
+                cardType: "",
                 expiryMonth: "",
                 expiryYear: "",
                 securityCode: "",
@@ -45,6 +46,13 @@ class MainPage extends React.Component {
     }
 
     removeNonDigits = string => string.replace(/[^\d]/g, "");
+
+    getCardType = numberString => {
+        for (const cardType of creditCardTypes) {
+            if (numberString.startsWith(cardType.start)) return cardType.type;
+        }
+        return undefined;
+    }
 
     getInitialCartItems = () => {
         return products.map((product, index) => ({
@@ -113,17 +121,21 @@ class MainPage extends React.Component {
 
     handlePaymentFieldChange = event => {
         let value = event.target.value;
+        const newState = { ...this.state };
         if (event.target.name === "cardNumber") {
             value = this.removeNonDigits(value);
+            newState.paymentInfo.cardType = this.getCardType(value);
             if (value.length) value = value.match(new RegExp(".{1,4}", "g")).join(" ");
         }
-        this.setState(prevState => ({
-            ...prevState, 
-            paymentInfo: {
-                ...prevState.paymentInfo,
-                [event.target.name]: value,
-            }
-        }));
+        newState.paymentInfo[event.target.name] = value;
+        this.setState(newState);
+        //this.setState(prevState => ({
+        //    ...prevState, 
+        //    paymentInfo: {
+        //        ...prevState.paymentInfo,
+        //        [event.target.name]: value,
+        //    }
+        //}));
     }
 
     render() {
