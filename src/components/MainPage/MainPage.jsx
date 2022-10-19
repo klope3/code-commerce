@@ -7,6 +7,7 @@ import { products } from "../products";
 import { promoCodes } from "../promoCodes";
 import { creditCardTypes, expressShippingPrice } from "../constants";
 import { standardShippingMinimum } from "../constants";
+import { paymentValidations } from "../validations";
 import PaymentInfo from "../PaymentInfo/PaymentInfo";
 
 class MainPage extends React.Component {
@@ -41,6 +42,11 @@ class MainPage extends React.Component {
                 expiryMonth: "",
                 expiryYear: "",
                 securityCode: "",
+                errors: {
+                    cardholder: "",
+                    cardNumber: "",
+                    securityCode: "",
+                }
             },
         }
     }
@@ -126,16 +132,10 @@ class MainPage extends React.Component {
             value = this.removeNonDigits(value);
             newState.paymentInfo.cardType = this.getCardType(value);
             if (value.length) value = value.match(new RegExp(".{1,4}", "g")).join(" ");
+            newState.paymentInfo.errors.cardNumber = paymentValidations.cardNumber(value);
         }
         newState.paymentInfo[event.target.name] = value;
         this.setState(newState);
-        //this.setState(prevState => ({
-        //    ...prevState, 
-        //    paymentInfo: {
-        //        ...prevState.paymentInfo,
-        //        [event.target.name]: value,
-        //    }
-        //}));
     }
 
     render() {

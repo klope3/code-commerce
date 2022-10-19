@@ -6,7 +6,14 @@ import FieldRowSection from "../FieldRowSection/FieldRowSection";
 import { creditCardLogos } from "../constants";
 
 class PaymentInfo extends React.Component {
-    buildFields = (cardNumber, cardType, changeFunction) => {
+    numberArray = (first, last) => {
+        const array = [];
+        for (let i = first; i <= last; i++) {
+            array.push(i);
+        }
+        return array;
+    }
+    buildFields = (cardNumber, cardType, changeFunction, errors) => {
         const fieldRows = [
             {
                 displayText: "Cardholder Name",
@@ -22,20 +29,25 @@ class PaymentInfo extends React.Component {
                 label: "card number",
                 type: "text",
                 extraInputContent: cardType ? <img src={creditCardLogos[cardType]} alt={cardType} className="credit-card-logo" /> : undefined,
+                errorMessage: errors.cardNumber,
             },
             {
                 displayText: "Exp. Date",
                 // value: cardNumber,
                 name: "expiryMonth",
                 label: "expiration month",
-                type: "number",
+                type: "select",
+                placeholder: "Month",
+                options: this.numberArray(1, 12),
             },
             {
                 displayText: "Exp. Date",
                 // value: cardNumber,
                 name: "expiryYear",
                 label: "expiration year",
-                type: "number",
+                type: "select",
+                placeholder: "Year",
+                options: this.numberArray(2022, 2032),
             },
             {
                 displayText: "CVV",
@@ -59,6 +71,7 @@ class PaymentInfo extends React.Component {
             fieldData: {
                 cardNumber, 
                 cardType,
+                errors,
             },
             changeFieldFunction,
         } = this.props;
@@ -69,7 +82,7 @@ class PaymentInfo extends React.Component {
                     <OrderProgressBar orderStep={2} />
                     <div>
                         <h2>PAYMENT INFORMATION</h2>
-                        {this.buildFields(cardNumber, cardType, changeFieldFunction)}
+                        {this.buildFields(cardNumber, cardType, changeFieldFunction, errors)}
                         <button>PAY {`$${orderTotal}`}</button>
                     </div>
                 </div>

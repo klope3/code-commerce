@@ -1,9 +1,22 @@
+.field-row {
+    margin: 13px 0px;
+}
+
 .field-row-input-container {
     position: relative;
 }
 
 .credit-card-logo {
     position: absolute;
-    right: 0;
-    top: 50%;
+    right: 3px;
+    top: 20%;
+    width: 30px;
+}
+
+.field-row-input-error {
+    position: absolute;
+    left: 0;
+    transform: translateY(110%);
+    color: red;
+    font-size: 0.9rem;
 }
