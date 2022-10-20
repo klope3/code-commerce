@@ -96,6 +96,7 @@ class CustomerCart extends React.Component {
             totalDiscount, 
             changeQuantityFunction, 
             removeItemFunction, 
+            resetCartFunction,
         } = this.props;
         const emptyCart = cartItems.length === 0;
         return (
@@ -120,7 +121,7 @@ class CustomerCart extends React.Component {
                                 removeItemFunction={removeItemFunction} />
                             )
                         })}
-                        {emptyCart && <button className="reset-cart-button" onClick={this.handleResetCart}>Reset Cart</button>}
+                        {emptyCart && <button className="reset-cart-button" onClick={resetCartFunction}>Reset Cart</button>}
                     </div>
                 </div>
                 <div className="cart-right-container">

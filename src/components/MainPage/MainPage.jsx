@@ -144,13 +144,13 @@ class MainPage extends React.Component {
         const standardShippingAllowed = subtotal >= standardShippingMinimum;
         return (
             <div>
-                <PaymentInfo
+                {/* <PaymentInfo
                     cartItems={cartItems}
                     subtotal={subtotal}
                     shippingHandling={this.getShippingPrice()}
                     discount={this.getTotalDiscount()}
                     fieldData={paymentInfo}
-                    changeFieldFunction={this.handlePaymentFieldChange} />
+                    changeFieldFunction={this.handlePaymentFieldChange} /> */}
                 {/* <ShippingInfo 
                     cartItems={cartItems} 
                     subtotal={subtotal} 
@@ -159,13 +159,14 @@ class MainPage extends React.Component {
                     fieldData={shippingInfo}
                     standardShippingAllowed={standardShippingAllowed}
                     changeFieldFunction={this.handleShippingFieldChange} /> */}
-                {/* <CustomerCart 
+                <CustomerCart 
                     cartItems={cartItems} 
-                    subtotal={this.getCartSubtotal()}
+                    subtotal={this.getCartSubtotal(this.state.cartItems)}
                     totalDiscount={this.getTotalDiscount()} 
                     changeQuantityFunction={this.handleChangeItemQuantity} 
                     removeItemFunction={this.handleRemoveItem}
-                    submitPromoCodeFunction={this.handleSubmitPromoCode} /> */}
+                    resetCartFunction={this.handleResetCart}
+                    submitPromoCodeFunction={this.handleSubmitPromoCode} />
             </div>
         )
     }

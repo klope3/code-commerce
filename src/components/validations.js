@@ -5,7 +5,9 @@ export const checkValidPassword = input => /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?
 
 export const paymentValidations = {
     cardNumber: numberString => {
-        let noSpaces = numberString.replace(" ", "");
+        console.log("Received " + numberString);
+        let noSpaces = numberString.replace(/[^\d]/g, "");
+        console.log("Validating " + noSpaces);
         return noSpaces.length !== 16 ? "The card number must be 16 digits." : undefined;
     }
 };

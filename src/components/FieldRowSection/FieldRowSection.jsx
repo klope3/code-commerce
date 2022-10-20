@@ -39,7 +39,7 @@ class FieldRowSection extends React.Component {
                 </label>
                 <span className="field-row-input-container">
                     {this.inputElement(type, value, name, placeholder, changeFieldFunction, options)}
-                    {errorMessage && <span class="field-row-input-error">{errorMessage}</span>}
+                    {errorMessage && <span className="field-row-input-error">{errorMessage}</span>}
                     {extraInputContent}
                 </span>
             </div>
