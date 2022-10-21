@@ -7,7 +7,7 @@ import { products } from "../products";
 import { promoCodes } from "../promoCodes";
 import { creditCardTypes, expressShippingPrice } from "../constants";
 import { standardShippingMinimum } from "../constants";
-import { paymentValidations } from "../validations";
+import { paymentValidations, validationFunctions } from "../validations";
 import PaymentInfo from "../PaymentInfo/PaymentInfo";
 
 class MainPage extends React.Component {
@@ -34,6 +34,10 @@ class MainPage extends React.Component {
                 telephoneCountryCode: "",
                 telephoneNumber: "",
                 shippingMethod: standardShippingAllowed ? undefined : "express",
+                errors: {
+                    nameSurname: undefined,
+                    zipCode: undefined,
+                }
             },
             paymentInfo: {
                 cardholder: "",
@@ -43,9 +47,9 @@ class MainPage extends React.Component {
                 expiryYear: "",
                 securityCode: "",
                 errors: {
-                    cardholder: "",
-                    cardNumber: "",
-                    securityCode: "",
+                    cardholder: undefined,
+                    cardNumber: undefined,
+                    securityCode: undefined,
                 }
             },
         }
@@ -114,29 +118,54 @@ class MainPage extends React.Component {
         }
     }
 
+    formatCardNumber = rawString => {
+        let formatted = this.removeNonDigits(rawString);
+        if (formatted.length) {
+            formatted = formatted.match(new RegExp(".{1,4}", "g")).join(" ");
+        }
+        return formatted;
+    }
+
     handleShippingFieldChange = event => {
-        const value = event.target.name === "shippingMethod" ? event.target.id : event.target.value;
+        const { name: sender, value } = event.target;
         this.setState(prevState => ({
             ...prevState,
             shippingInfo: {
                 ...prevState.shippingInfo,
-                [event.target.name]: value,
+                [sender]: sender === "shippingMethod" ? event.target.id : value,
             }
         }));
     }
 
     handlePaymentFieldChange = event => {
-        let value = event.target.value;
-        const newState = { ...this.state };
-        if (event.target.name === "cardNumber") {
-            value = this.removeNonDigits(value);
-            newState.paymentInfo.cardType = this.getCardType(value);
-            if (value.length) value = value.match(new RegExp(".{1,4}", "g")).join(" ");
-            newState.paymentInfo.errors.cardNumber = paymentValidations.cardNumber(value);
-        }
-        newState.paymentInfo[event.target.name] = value;
-        this.setState(newState);
+        const { name: sender, value } = event.target;
+        this.setState(prevState => ({
+            ...prevState,
+            paymentInfo: {
+                ...prevState.paymentInfo,
+                [sender]: sender === "cardNumber" ? this.formatCardNumber(value) : value,
+                cardType: sender === "cardNumber" ? this.getCardType(value) : prevState.paymentInfo.cardType,
+            }
+        }));
     }
+
+    handleFieldBlur = (event, infoObjectKey) => {
+        const { name: sender, value } = event.target;
+        const validationFunction = validationFunctions[sender];
+        this.setState(prevState => ({
+            ...prevState,
+            [infoObjectKey]: {
+                ...prevState[infoObjectKey],
+                errors: {
+                    ...prevState[infoObjectKey].errors,
+                    [sender]: validationFunction ? validationFunction(value) : undefined,
+                }
+            }
+        }));
+    }
+
+    handlePaymentFieldBlur = event => this.handleFieldBlur(event, "paymentInfo");
+    handleShippingFieldBlur = event => this.handleFieldBlur(event, "shippingInfo");
 
     render() {
         const { cartItems, shippingInfo, paymentInfo } = this.state;
@@ -150,23 +179,25 @@ class MainPage extends React.Component {
                     shippingHandling={this.getShippingPrice()}
                     discount={this.getTotalDiscount()}
                     fieldData={paymentInfo}
-                    changeFieldFunction={this.handlePaymentFieldChange} /> */}
-                {/* <ShippingInfo 
+                    changeFieldFunction={this.handlePaymentFieldChange}
+                    blurFieldFunction={this.handlePaymentFieldBlur} /> */}
+                <ShippingInfo 
                     cartItems={cartItems} 
                     subtotal={subtotal} 
                     shippingHandling={this.getShippingPrice()} 
                     discount={this.getTotalDiscount()}
                     fieldData={shippingInfo}
                     standardShippingAllowed={standardShippingAllowed}
-                    changeFieldFunction={this.handleShippingFieldChange} /> */}
-                <CustomerCart 
+                    changeFieldFunction={this.handleShippingFieldChange}
+                    blurFieldFunction={this.handleShippingFieldBlur} />
+                {/* <CustomerCart 
                     cartItems={cartItems} 
                     subtotal={this.getCartSubtotal(this.state.cartItems)}
                     totalDiscount={this.getTotalDiscount()} 
                     changeQuantityFunction={this.handleChangeItemQuantity} 
                     removeItemFunction={this.handleRemoveItem}
                     resetCartFunction={this.handleResetCart}
-                    submitPromoCodeFunction={this.handleSubmitPromoCode} />
+                    submitPromoCodeFunction={this.handleSubmitPromoCode} /> */}
             </div>
         )
     }

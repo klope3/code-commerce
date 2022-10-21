@@ -1,0 +1,15 @@
+.field-row-input-error {
+    position: absolute;
+    left: 0;
+    color: red;
+    font-size: 0.8rem;
+    top: 20px;
+}
+
+.field-row {
+    margin: 30px 0px;
+}
+
+.field-row-input-container {
+    position: relative;
+}

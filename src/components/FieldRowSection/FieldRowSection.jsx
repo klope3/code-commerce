@@ -1,16 +1,18 @@
 import React from "react";
+import "./FieldRowSection.css";
 
 class FieldRowSection extends React.Component {
-    inputElement = (type, value, name, placeholder, changeFieldFunction, options) => {
+    inputElement = (type, value, name, placeholder, changeFieldFunction, blurFieldFunction, options) => {
         let element = (<input 
             type={type} 
             value={value} 
             name={name} 
             id={name} 
             placeholder={placeholder} 
-            onChange={changeFieldFunction} />);
+            onChange={changeFieldFunction}
+            onBlur={blurFieldFunction} />);
         if (type === "select") {
-            element = (<select name={name} id={name} onChange={changeFieldFunction}>
+            element = (<select name={name} id={name} onChange={changeFieldFunction} onBlur={blurFieldFunction}>
                 {placeholder && <option disabled selected hidden>{placeholder}</option>}
                 {options.map(option => <option key={`${name}-option-${option}`} value={option}>{option}</option>)}
             </select>);
@@ -18,7 +20,7 @@ class FieldRowSection extends React.Component {
         return element;
     }
 
-    fieldRow = (rowData, changeFieldFunction) => {
+    fieldRow = (rowData, changeFieldFunction, blurFieldFunction) => {
         const { 
             displayText, 
             value, 
@@ -38,7 +40,7 @@ class FieldRowSection extends React.Component {
                     {label}
                 </label>
                 <span className="field-row-input-container">
-                    {this.inputElement(type, value, name, placeholder, changeFieldFunction, options)}
+                    {this.inputElement(type, value, name, placeholder, changeFieldFunction, blurFieldFunction, options)}
                     {errorMessage && <span className="field-row-input-error">{errorMessage}</span>}
                     {extraInputContent}
                 </span>
@@ -47,8 +49,8 @@ class FieldRowSection extends React.Component {
     }
 
     render() {
-        const { fieldRows,  changeFieldFunction } = this.props;
-        return fieldRows.map(rowData => this.fieldRow(rowData, changeFieldFunction));
+        const { fieldRows,  changeFieldFunction, blurFieldFunction } = this.props;
+        return fieldRows.map(rowData => this.fieldRow(rowData, changeFieldFunction, blurFieldFunction));
     }
 }
 

@@ -7,7 +7,7 @@ import SummarySidebar from "../SummarySidebar/SummarySidebar";
 import "./ShippingInfo.css";
 
 class ShippingInfo extends React.Component {
-    buildFieldRows = changeFieldFunction => {
+    buildFieldRows = (changeFieldFunction, blurFieldFunction, errors) => {
         const fieldRows = [
             {
                 name: "addressTitle",
@@ -20,6 +20,7 @@ class ShippingInfo extends React.Component {
                 displayText: "Name - Surname",
                 label: "name surname",
                 type: "text",
+                errorMessage: errors.nameSurname,
             },
             {
                 name: "address",
@@ -76,7 +77,7 @@ class ShippingInfo extends React.Component {
                 type: "number",
             },
         ];
-        return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={changeFieldFunction} />
+        return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={changeFieldFunction} blurFieldFunction={blurFieldFunction} />
     }
 
     radioRow = (inputName, inputId, labelText, descriptionText, defaultChecked, disabled, changeFieldFunction) => {
@@ -133,9 +134,11 @@ class ShippingInfo extends React.Component {
                 telephoneCountryCode,
                 telephoneNumber,
                 shippingMethod,
+                errors,
             },
             standardShippingAllowed,
             changeFieldFunction,
+            blurFieldFunction,
         } = this.props;
         const shippingMethodCheckedStates = [shippingMethod === "standard", shippingMethod === "express"];
         return (
@@ -143,7 +146,7 @@ class ShippingInfo extends React.Component {
                 <div className="shipping-info-left">
                     <OrderProgressBar orderStep={1} />
                     <h2>SHIPPING INFORMATION</h2>
-                    {this.buildFieldRows(changeFieldFunction)}
+                    {this.buildFieldRows(changeFieldFunction, blurFieldFunction, errors)}
                     <h2>SHIPPING METHOD</h2>
                     {this.buildShippingMethods(subtotal, shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
                 </div>

@@ -13,7 +13,7 @@ class PaymentInfo extends React.Component {
         }
         return array;
     }
-    buildFields = (cardNumber, cardType, changeFunction, errors) => {
+    buildFields = (cardNumber, cardType, changeFunction, blurFunction, errors) => {
         const fieldRows = [
             {
                 displayText: "Cardholder Name",
@@ -21,6 +21,7 @@ class PaymentInfo extends React.Component {
                 name: "cardholder",
                 label: "cardholder name",
                 type: "text",
+                errorMessage: errors.cardholder,
             },
             {
                 displayText: "Card Number",
@@ -55,9 +56,11 @@ class PaymentInfo extends React.Component {
                 name: "securityCode",
                 label: "security code",
                 type: "number",
+                errorMessage: errors.securityCode,
+
             },
         ];
-        return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={changeFunction} />
+        return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={changeFunction} blurFieldFunction={blurFunction} />
     }
 
     render() {
@@ -74,6 +77,7 @@ class PaymentInfo extends React.Component {
                 errors,
             },
             changeFieldFunction,
+            blurFieldFunction,
         } = this.props;
         const orderTotal = subtotal + shippingHandling - discount;
         return (
@@ -82,7 +86,7 @@ class PaymentInfo extends React.Component {
                     <OrderProgressBar orderStep={2} />
                     <div>
                         <h2>PAYMENT INFORMATION</h2>
-                        {this.buildFields(cardNumber, cardType, changeFieldFunction, errors)}
+                        {this.buildFields(cardNumber, cardType, changeFieldFunction, blurFieldFunction, errors)}
                         <button>PAY {`$${orderTotal}`}</button>
                     </div>
                 </div>

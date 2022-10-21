@@ -15,19 +15,9 @@ class CustomerCart extends React.Component {
         super(props);
         this.handleSubmitPromoCode = props.submitPromoCodeFunction;
         this.state = {
-            //cartItems: this.getInitialCartItems(),
             promoCodeField: "",
-            //promoCodesEntered: [],
         }
     }
-
-    // handleChangeItemQuantity = event => {
-    //     if (event.target.value <= 0) { return; }
-    //     const itemIndex = event.target.name.replace(/[^0-9]/g, "");
-    //     const newState = {...this.state};
-    //     newState.cartItems[itemIndex].quantity = event.target.value;
-    //     this.setState(newState);
-    // }
 
     handleChangePromoCode = event => {
         this.setState(prevState => ({
@@ -48,46 +38,6 @@ class CustomerCart extends React.Component {
             promoCodeField: "",
         }))
     }
-
-    // cartBreakdownRow = (leftText, rightText) => {
-    //     return (
-    //         <div className="cart-price-breakdown-row">
-    //             <div>{leftText}</div>
-    //             <div>{rightText}</div>
-    //         </div>
-    //     )
-    // }
-
-    // buildCartBreakdown = () => {
-    //     const subtotal = this.getCartSubtotal();
-    //     const totalDiscount = this.getTotalDiscount();
-    //     const breakdown = [
-    //         {
-    //             leftText: "Cart Subtotal:",
-    //             rightText: `$${subtotal.toFixed(2)}`,
-    //         },
-    //         {
-    //             leftText: "Shipping & Handling:",
-    //             rightText: "--",
-    //         },
-    //         {
-    //             leftText: "Discount:",
-    //             rightText: totalDiscount === 0 ? "--" : `$${totalDiscount.toFixed(2)}`,
-    //         },
-    //         {
-    //             leftText: "Cart Total:",
-    //             rightText: `$${(subtotal - totalDiscount).toFixed(2)}`,
-    //         },
-    //     ];
-    //     return breakdown.map((breakdownRow, index) => {
-    //         return (
-    //             <div className="cart-price-breakdown-row" key={index}>
-    //                 <div>{breakdownRow.leftText}</div>
-    //                 <div>{breakdownRow.rightText}</div>
-    //             </div>
-    //         )
-    //     });
-    // }
 
     render() {
         const { 
