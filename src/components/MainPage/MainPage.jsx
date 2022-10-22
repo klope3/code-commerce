@@ -183,14 +183,15 @@ class MainPage extends React.Component {
         const standardShippingAllowed = subtotal >= standardShippingMinimum;
         return (
             <div>
-                <PaymentInfo
+                <AccountManagementBox />
+                {/* <PaymentInfo
                     cartItems={cartItems}
                     subtotal={subtotal}
                     shippingHandling={this.getShippingPrice()}
                     discount={this.getTotalDiscount()}
                     fieldData={paymentInfo}
                     changeFieldFunction={this.handlePaymentFieldChange}
-                    blurFieldFunction={this.handlePaymentFieldBlur} />
+                    blurFieldFunction={this.handlePaymentFieldBlur} /> */}
                 {/* <ShippingInfo 
                     cartItems={cartItems} 
                     subtotal={subtotal} 
