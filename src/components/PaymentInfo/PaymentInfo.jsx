@@ -13,11 +13,11 @@ class PaymentInfo extends React.Component {
         }
         return array;
     }
-    buildFields = (cardNumber, cardType, changeFunction, blurFunction, errors) => {
+    buildFields = (cardNumber, cardholder, cardType, securityCode, changeFunction, blurFunction, errors) => {
         const fieldRows = [
             {
                 displayText: "Cardholder Name",
-                //value: cardNumber,
+                value: cardholder,
                 name: "cardholder",
                 label: "cardholder name",
                 type: "text",
@@ -40,6 +40,7 @@ class PaymentInfo extends React.Component {
                 type: "select",
                 placeholder: "Month",
                 options: this.numberArray(1, 12),
+                errorMessage: errors.expiryMonth,
             },
             {
                 displayText: "Exp. Date",
@@ -49,13 +50,14 @@ class PaymentInfo extends React.Component {
                 type: "select",
                 placeholder: "Year",
                 options: this.numberArray(2022, 2032),
+                errorMessage: errors.expiryYear,
             },
             {
                 displayText: "CVV",
-                // value: cardNumber,
+                value: securityCode,
                 name: "securityCode",
                 label: "security code",
-                type: "number",
+                type: "text",
                 errorMessage: errors.securityCode,
 
             },
@@ -72,8 +74,10 @@ class PaymentInfo extends React.Component {
             shippingInfo,
             paymentInfo,
             fieldData: {
+                cardholder,
                 cardNumber, 
                 cardType,
+                securityCode,
                 errors,
             },
             changeFieldFunction,
@@ -86,7 +90,7 @@ class PaymentInfo extends React.Component {
                     <OrderProgressBar orderStep={2} />
                     <div>
                         <h2>PAYMENT INFORMATION</h2>
-                        {this.buildFields(cardNumber, cardType, changeFieldFunction, blurFieldFunction, errors)}
+                        {this.buildFields(cardNumber, cardholder, cardType, securityCode, changeFieldFunction, blurFieldFunction, errors)}
                         <button>PAY {`$${orderTotal}`}</button>
                     </div>
                 </div>

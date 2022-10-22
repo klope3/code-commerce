@@ -9,6 +9,7 @@ import { creditCardTypes, expressShippingPrice } from "../constants";
 import { standardShippingMinimum } from "../constants";
 import { paymentValidations, validationFunctions } from "../validations";
 import PaymentInfo from "../PaymentInfo/PaymentInfo";
+import { formattingFunctions } from "../formatters";
 
 class MainPage extends React.Component {
     constructor() {
@@ -55,7 +56,6 @@ class MainPage extends React.Component {
         }
     }
 
-    removeNonDigits = string => string.replace(/[^\d]/g, "");
 
     getCardType = numberString => {
         for (const cardType of creditCardTypes) {
@@ -118,21 +118,31 @@ class MainPage extends React.Component {
         }
     }
 
-    formatCardNumber = rawString => {
-        let formatted = this.removeNonDigits(rawString);
-        if (formatted.length) {
-            formatted = formatted.match(new RegExp(".{1,4}", "g")).join(" ");
-        }
-        return formatted;
-    }
+    //handleFieldChange = (event, infoObjectKey) => {
+    //    const { name: sender, value } = event.target;
+    //    let valueToSet = value;
+    //    if (formattingFunctions[sender]) valueToSet = formattingFunctions[sender](value);
+    //    if (sender === "shippingMethod") valueToSet = event.target.id;
+    //    this.setState(prevState => ({
+    //        ...prevState,
+    //        [infoObjectKey]: {
+    //            ...prevState[infoObjectKey],
+    //            [sender]: valueToSet,
+    //            cardType: 
+    //        }
+    //    }));
+    //}
 
     handleShippingFieldChange = event => {
         const { name: sender, value } = event.target;
+        let valueToSet = value;
+        if (formattingFunctions[sender]) valueToSet = formattingFunctions[sender](value);
+        if (sender === "shippingMethod") valueToSet = event.target.id;
         this.setState(prevState => ({
             ...prevState,
             shippingInfo: {
                 ...prevState.shippingInfo,
-                [sender]: sender === "shippingMethod" ? event.target.id : value,
+                [sender]: valueToSet,
             }
         }));
     }
@@ -143,7 +153,7 @@ class MainPage extends React.Component {
             ...prevState,
             paymentInfo: {
                 ...prevState.paymentInfo,
-                [sender]: sender === "cardNumber" ? this.formatCardNumber(value) : value,
+                [sender]: formattingFunctions[sender] ? formattingFunctions[sender](value) : value,
                 cardType: sender === "cardNumber" ? this.getCardType(value) : prevState.paymentInfo.cardType,
             }
         }));
@@ -173,15 +183,15 @@ class MainPage extends React.Component {
         const standardShippingAllowed = subtotal >= standardShippingMinimum;
         return (
             <div>
-                {/* <PaymentInfo
+                <PaymentInfo
                     cartItems={cartItems}
                     subtotal={subtotal}
                     shippingHandling={this.getShippingPrice()}
                     discount={this.getTotalDiscount()}
                     fieldData={paymentInfo}
                     changeFieldFunction={this.handlePaymentFieldChange}
-                    blurFieldFunction={this.handlePaymentFieldBlur} /> */}
-                <ShippingInfo 
+                    blurFieldFunction={this.handlePaymentFieldBlur} />
+                {/* <ShippingInfo 
                     cartItems={cartItems} 
                     subtotal={subtotal} 
                     shippingHandling={this.getShippingPrice()} 
@@ -189,7 +199,7 @@ class MainPage extends React.Component {
                     fieldData={shippingInfo}
                     standardShippingAllowed={standardShippingAllowed}
                     changeFieldFunction={this.handleShippingFieldChange}
-                    blurFieldFunction={this.handleShippingFieldBlur} />
+                    blurFieldFunction={this.handleShippingFieldBlur} /> */}
                 {/* <CustomerCart 
                     cartItems={cartItems} 
                     subtotal={this.getCartSubtotal(this.state.cartItems)}

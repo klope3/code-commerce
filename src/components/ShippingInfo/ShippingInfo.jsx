@@ -7,16 +7,29 @@ import SummarySidebar from "../SummarySidebar/SummarySidebar";
 import "./ShippingInfo.css";
 
 class ShippingInfo extends React.Component {
-    buildFieldRows = (changeFieldFunction, blurFieldFunction, errors) => {
+    buildFieldRows = (fieldData, changeFieldFunction, blurFieldFunction) => {
+        const { 
+            zipCode, 
+            state,
+            city,
+            nameSurname,
+            cellCountryCode,
+            cellNumber,
+            telephoneCountryCode,
+            telephoneNumber,
+            errors
+        } = fieldData;
         const fieldRows = [
             {
                 name: "addressTitle",
                 displayText: "Address Title",
                 label: "address title",
                 type: "text",
+                errorMessage: errors.addressTitle,
             },
             {
                 name: "nameSurname",
+                value: nameSurname,
                 displayText: "Name - Surname",
                 label: "name surname",
                 type: "text",
@@ -27,12 +40,15 @@ class ShippingInfo extends React.Component {
                 displayText: "Your Address",
                 label: "your address",
                 type: "text",
+                errorMessage: errors.address,
             },
             {
                 name: "zipCode",
+                value: zipCode,
                 displayText: "Zip",
                 label: "zip code",
-                type: "number",
+                type: "text",
+                errorMessage: errors.zipCode
             },
             {
                 name: "country",
@@ -42,39 +58,51 @@ class ShippingInfo extends React.Component {
             },
             {
                 name: "city",
+                value: city,
                 displayText: "City",
                 label: "city",
                 type: "text",
+                errorMessage: errors.city,
             },
             {
                 name: "state",
+                value: state,
                 displayText: "State",
                 label: "state",
                 type: "text",
+                errorMessage: errors.state,
             },
             {
                 name: "cellCountryCode",
+                value: cellCountryCode,
                 displayText: "Cell Phone",
                 label: "cell country code",
-                type: "number",
+                type: "text",
+                errorMessage: errors.cellCountryCode,
             },
             {
                 name: "cellNumber",
+                value: cellNumber,
                 // displayText: "",
                 label: "cell number",
-                type: "number",
+                type: "text",
+                errorMessage: errors.cellNumber,
             },
             {
                 name: "telephoneCountryCode",
+                value: telephoneCountryCode,
                 displayText: "Telephone",
                 label: "telephone country code",
-                type: "number",
+                type: "text",
+                errorMessage: errors.telephoneCountryCode,
             },
             {
                 name: "telephoneNumber",
+                value: telephoneNumber,
                 // displayText: "",
                 label: "telephone number",
-                type: "number",
+                type: "text",
+                errorMessage: errors.telephoneNumber,
             },
         ];
         return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={changeFieldFunction} blurFieldFunction={blurFieldFunction} />
@@ -122,6 +150,7 @@ class ShippingInfo extends React.Component {
             subtotal, 
             shippingHandling, 
             discount,
+            fieldData,
             fieldData: {
                 addressTitle,
                 nameSurname,
@@ -146,7 +175,7 @@ class ShippingInfo extends React.Component {
                 <div className="shipping-info-left">
                     <OrderProgressBar orderStep={1} />
                     <h2>SHIPPING INFORMATION</h2>
-                    {this.buildFieldRows(changeFieldFunction, blurFieldFunction, errors)}
+                    {this.buildFieldRows(fieldData, changeFieldFunction, blurFieldFunction, errors)}
                     <h2>SHIPPING METHOD</h2>
                     {this.buildShippingMethods(subtotal, shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
                 </div>
