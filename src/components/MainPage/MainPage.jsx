@@ -56,6 +56,12 @@ class MainPage extends React.Component {
         }
     }
 
+    changeOrderStep = backwards => {
+        this.setState(prevState => ({
+            ...prevState,
+            orderStep: backwards ? prevState.orderStep - 1 : prevState.orderStep + 1,
+        }));
+    }
 
     getCardType = numberString => {
         for (const cardType of creditCardTypes) {
