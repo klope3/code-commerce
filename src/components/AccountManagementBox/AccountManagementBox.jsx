@@ -1,4 +1,5 @@
 import React from "react";
+import { addAccount, doesAccountExist, tryVerifyLogin } from "../accounts";
 import FieldRowSection from "../FieldRowSection/FieldRowSection";
 //import AccountInputArea from "../AccountInputArea/AccountInputArea";
 //import { checkLettersOnly, checkValidEmail, checkValidPassword, checkValidPostcode } from "../validations";
@@ -40,9 +41,48 @@ class AccountManagementBox extends React.Component {
             "The passwords must match." : undefined;
     }
 
+    signUp = () => {
+        const { 
+            createAccountEmail: email, 
+            createAccountFirstName: firstName,
+            createAccountSurname: surname,
+            createAccountPassword: password,
+            createAccountZipCode: zipCode,
+        } = this.state;
+        const errors = {};
+        let errorFound = false;
+        for (const key in this.state) {
+            if (!key.startsWith("create")) continue;
+            const validationFunction = key === "createAccountPasswordConfirm" ? 
+                this.validateConfirmPassword : validationFunctions[key];
+            if (validationFunction) {
+                errors[key] = validationFunction(this.state[key]);
+                if (errors[key]) errorFound = true;
+            }
+        }
+        this.setState(prevState => ({
+            ...prevState,
+            errors: errors,
+        }));
+        if (!errorFound && !doesAccountExist(this.state.createAccountEmail)) {
+            addAccount(email, password, firstName, surname, zipCode);
+        }
+    }
+
+    signIn = () => {
+        const { 
+            signInEmail: email, 
+            signInPassword: password,
+        } = this.state;
+        if (tryVerifyLogin(email, password)) {
+            console.log("Success");
+        }
+    }
+
     handleButton = event => {
-        const { name: sender } = event.target;
-        console.log("clicked " + sender);
+        const signingUp = event.target.name === "signUp";
+        if (signingUp) this.signUp();
+        else this.signIn();
     }
 
     handleChange = event => {
