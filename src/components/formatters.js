@@ -15,6 +15,9 @@ const formatPhoneNumber = string => {
 };
 
 export const formattingFunctions = {
+    createAccountFirstName: rawString => removeNonLettersNonSpaces(rawString),
+    createAccountSurname: rawString => removeNonLettersNonSpaces(rawString),
+    createAccountZipCode: rawString => removeNonDigits(rawString),
     cardNumber: rawString => {
         let formatted = removeNonDigits(rawString).substring(0, 16);
         if (formatted.length) {
