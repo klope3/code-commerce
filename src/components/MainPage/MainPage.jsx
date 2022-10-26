@@ -10,6 +10,7 @@ import { standardShippingMinimum } from "../constants";
 import { paymentValidations, validationFunctions } from "../validations";
 import PaymentInfo from "../PaymentInfo/PaymentInfo";
 import { formattingFunctions } from "../formatters";
+import { tryVerifyLogin } from "../accounts";
 
 class MainPage extends React.Component {
     constructor() {
@@ -183,13 +184,76 @@ class MainPage extends React.Component {
     handlePaymentFieldBlur = event => this.handleFieldBlur(event, "paymentInfo");
     handleShippingFieldBlur = event => this.handleFieldBlur(event, "shippingInfo");
 
+    trySignIn = (email, password) => {
+        if (tryVerifyLogin(email, password)) {
+            
+            this.setState(prevState => ({
+                ...prevState,
+                loggedInEmail: email,
+                orderStep: prevState.orderStep + 1,
+            }));
+        }
+    }
+
+    chooseScreen = () => {
+        const { orderStep } = this.state;
+        const { cartItems, shippingInfo, paymentInfo } = this.state;
+        const subtotal = this.getCartSubtotal(cartItems);
+        const standardShippingAllowed = subtotal >= standardShippingMinimum;
+
+        switch (orderStep) {
+            case 0:
+                return <AccountManagementBox signInFunction={this.trySignIn} />;
+            case 1:
+                return (
+                    <CustomerCart 
+                        cartItems={cartItems} 
+                        subtotal={this.getCartSubtotal(this.state.cartItems)}
+                        totalDiscount={this.getTotalDiscount()} 
+                        changeQuantityFunction={this.handleChangeItemQuantity} 
+                        removeItemFunction={this.handleRemoveItem}
+                        resetCartFunction={this.handleResetCart}
+                        submitPromoCodeFunction={this.handleSubmitPromoCode}
+                        changeOrderStepFunction={this.changeOrderStep} />
+                );
+            case 2:
+                return (
+                    <ShippingInfo 
+                        cartItems={cartItems} 
+                        subtotal={subtotal} 
+                        shippingHandling={this.getShippingPrice()} 
+                        discount={this.getTotalDiscount()}
+                        fieldData={shippingInfo}
+                        standardShippingAllowed={standardShippingAllowed}
+                        changeFieldFunction={this.handleShippingFieldChange}
+                        blurFieldFunction={this.handleShippingFieldBlur}
+                        changeOrderStepFunction={this.changeOrderStep} />
+                );
+            case 3:
+                return (
+                    <PaymentInfo
+                        cartItems={cartItems}
+                        subtotal={subtotal}
+                        shippingHandling={this.getShippingPrice()}
+                        discount={this.getTotalDiscount()}
+                        fieldData={paymentInfo}
+                        changeFieldFunction={this.handlePaymentFieldChange}
+                        blurFieldFunction={this.handlePaymentFieldBlur}
+                        changeOrderStepFunction={this.changeOrderStep} />
+                );
+            default:
+                return undefined;
+        }
+    }
+
     render() {
         const { cartItems, shippingInfo, paymentInfo } = this.state;
         const subtotal = this.getCartSubtotal(cartItems);
         const standardShippingAllowed = subtotal >= standardShippingMinimum;
         return (
             <div>
-                <AccountManagementBox />
+                {this.chooseScreen()}
+                {/* <AccountManagementBox /> */}
                 {/* <PaymentInfo
                     cartItems={cartItems}
                     subtotal={subtotal}

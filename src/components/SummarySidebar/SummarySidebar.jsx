@@ -20,6 +20,8 @@ class SummarySidebar extends React.Component {
             discount, 
             shippingInfo, 
             paymentInfo,
+            navClickFunction,
+            navButtonText
         } = this.props;
         return (
             <div className="shipping-info-right">
@@ -29,7 +31,7 @@ class SummarySidebar extends React.Component {
                     {this.buildProductAreas(cartItems)}
                 </div>
                 <CartPriceBreakdown subtotal={subtotal} shippingHandling={shippingHandling} discount={discount} />
-                <button>CHECKOUT</button>
+                <button name="nav-forward" onClick={navClickFunction}>{navButtonText ? navButtonText : "CHECKOUT"}</button>
             </div>
         )
     }

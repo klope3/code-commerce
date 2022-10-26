@@ -14,6 +14,7 @@ class CustomerCart extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmitPromoCode = props.submitPromoCodeFunction;
+        this.changeOrderStep = props.changeOrderStepFunction;
         this.state = {
             promoCodeField: "",
         }
@@ -39,6 +40,8 @@ class CustomerCart extends React.Component {
         }))
     }
 
+    handleNavClick = () => this.changeOrderStep();
+
     render() {
         const { 
             cartItems, 
@@ -47,6 +50,7 @@ class CustomerCart extends React.Component {
             changeQuantityFunction, 
             removeItemFunction, 
             resetCartFunction,
+            changeOrderStepFunction,
         } = this.props;
         const emptyCart = cartItems.length === 0;
         return (
@@ -83,7 +87,7 @@ class CustomerCart extends React.Component {
                             <button onClick={this.clickSubmitPromoCode}>APPLY</button>
                         </div>
                         <CartPriceBreakdown subtotal={subtotal} shippingHandling={0} discount={totalDiscount} />
-                        <button disabled={emptyCart}>CHECKOUT</button>
+                        <button disabled={emptyCart} onClick={this.handleNavClick}>CHECKOUT</button>
                     </div>
                 </div>
             </div>

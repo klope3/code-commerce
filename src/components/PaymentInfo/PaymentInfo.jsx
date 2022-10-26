@@ -6,6 +6,11 @@ import FieldRowSection from "../FieldRowSection/FieldRowSection";
 import { creditCardLogos } from "../constants";
 
 class PaymentInfo extends React.Component {
+    constructor(props) {
+        super(props);
+        this.changeOrderStepFunction = props.changeOrderStepFunction;
+    }
+
     numberArray = (first, last) => {
         const array = [];
         for (let i = first; i <= last; i++) {
@@ -65,6 +70,11 @@ class PaymentInfo extends React.Component {
         return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={changeFunction} blurFieldFunction={blurFunction} />
     }
 
+    handleNavClick = event => {
+        if (event.target.name === "nav-forward") this.changeOrderStepFunction();
+        else if (event.target.name === "nav-backward") this.changeOrderStepFunction(true);
+    }
+
     render() {
         const { 
             cartItems, 
@@ -93,6 +103,7 @@ class PaymentInfo extends React.Component {
                         {this.buildFields(cardNumber, cardholder, cardType, securityCode, changeFieldFunction, blurFieldFunction, errors)}
                         <button>PAY {`$${orderTotal}`}</button>
                     </div>
+                    <button name="nav-backward" onClick={this.handleNavClick}>BACK TO SHIPPING</button>
                 </div>
                 <SummarySidebar 
                     cartItems={cartItems} 
@@ -100,7 +111,9 @@ class PaymentInfo extends React.Component {
                     shippingHandling={shippingHandling} 
                     discount={discount}
                     shippingInfo={shippingInfo} 
-                    paymentInfo={paymentInfo} />
+                    paymentInfo={paymentInfo}
+                    navClickFunction={this.handleNavClick}
+                    navButtonText={`PAY {$${orderTotal}}`} />
             </div>
         )
     }

@@ -7,6 +7,11 @@ import SummarySidebar from "../SummarySidebar/SummarySidebar";
 import "./ShippingInfo.css";
 
 class ShippingInfo extends React.Component {
+    constructor(props) {
+        super(props);
+        this.changeOrderStepFunction = props.changeOrderStepFunction;
+    }
+
     buildFieldRows = (fieldData, changeFieldFunction, blurFieldFunction) => {
         const { 
             zipCode, 
@@ -144,6 +149,11 @@ class ShippingInfo extends React.Component {
         )
     }
 
+    handleNavClick = event => {
+        if (event.target.name === "nav-forward") this.changeOrderStepFunction();
+        else if (event.target.name === "nav-backward") this.changeOrderStepFunction(true);
+    }
+
     render() {
         const { 
             cartItems, 
@@ -178,12 +188,14 @@ class ShippingInfo extends React.Component {
                     {this.buildFieldRows(fieldData, changeFieldFunction, blurFieldFunction, errors)}
                     <h2>SHIPPING METHOD</h2>
                     {this.buildShippingMethods(subtotal, shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
+                    <button name="nav-backward" onClick={this.handleNavClick}>BACK TO CART</button>
                 </div>
                 <SummarySidebar 
                     cartItems={cartItems} 
                     subtotal={subtotal}
                     shippingHandling={shippingHandling} 
-                    discount={discount} />
+                    discount={discount}
+                    navClickFunction={this.handleNavClick} />
             </div>
         )
     }

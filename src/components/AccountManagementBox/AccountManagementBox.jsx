@@ -10,8 +10,8 @@ import { validationFunctions } from "../validations";
 import "./AccountManagementBox.css";
 
 class AccountManagementBox extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             accountModeToggle: "",
 
@@ -34,6 +34,7 @@ class AccountManagementBox extends React.Component {
                 createAccountZipCode: undefined,
             }
         };
+        this.signInFunction = props.signInFunction;
     }
 
     validateConfirmPassword = () => {
@@ -69,20 +70,26 @@ class AccountManagementBox extends React.Component {
         }
     }
 
-    signIn = () => {
-        const { 
-            signInEmail: email, 
-            signInPassword: password,
-        } = this.state;
-        if (tryVerifyLogin(email, password)) {
-            console.log("Success");
-        }
-    }
+    //signIn = () => {
+    //    const { 
+    //        signInEmail: email, 
+    //        signInPassword: password,
+    //    } = this.state;
+    //    if (tryVerifyLogin(email, password)) {
+    //        console.log("Success");
+    //    }
+    //}
 
     handleButton = event => {
         const signingUp = event.target.name === "signUp";
         if (signingUp) this.signUp();
-        else this.signIn();
+        else {
+            const { 
+                signInEmail: email, 
+                signInPassword: password,
+            } = this.state;
+            this.signInFunction(email, password);
+        }
     }
 
     handleChange = event => {
