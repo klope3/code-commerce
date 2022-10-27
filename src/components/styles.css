@@ -1,0 +1,37 @@
+h2 {
+    margin-top: 0;
+}
+
+.order-screen-main {
+    display: flex;
+    max-width: 1024px;
+    margin: auto;
+    gap: 20px;
+    padding: 20px;
+}
+
+.order-screen-left-container {
+    flex: 1;
+}
+
+.order-screen-left-sub-container {
+    box-shadow: 0px 0px 10px lightgray;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.nav-forward-button {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    height: 44px;
+    border: none;
+    background: rgb(215, 39, 72);
+    color: white;
+    cursor: pointer;
+}
+
+.nav-forward-button:hover {
+    background: rgb(255, 64, 99);
+}

@@ -141,7 +141,7 @@ class AccountManagementBox extends React.Component {
         const secondButtonText = `SIGN ${creatingAccount ? "UP" : "IN"} WITH FACEBOOK`;
         return (
             <div>
-                <button name={creatingAccount ? "signUp" : "signIn"} onClick={this.handleButton}>{firstButtonText}</button>
+                <button className="nav-forward-button" name={creatingAccount ? "signUp" : "signIn"} onClick={this.handleButton}>{firstButtonText}</button>
                 <div>or</div>
                 <button>{secondButtonText}</button>
             </div>
@@ -228,7 +228,7 @@ class AccountManagementBox extends React.Component {
     render() {
         const createAccountMode = this.state.accountModeToggle === "modeCreateAccount";
         return (
-            <div>
+            <div className="account-management-container">
                 {this.buildAccountModeToggle()}
                 {createAccountMode ? this.buildCreateAccountFields() : this.buildSignInFields()}
                 {this.buildBottomSection()}

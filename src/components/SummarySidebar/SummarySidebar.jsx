@@ -24,14 +24,14 @@ class SummarySidebar extends React.Component {
             navButtonText
         } = this.props;
         return (
-            <div className="shipping-info-right">
+            <div className="summary-sidebar-main">
                 <h2>SUMMARY</h2>
                 <div><strong>{`${cartItems.length} items`}</strong> in your bag.</div>
                 <div>
                     {this.buildProductAreas(cartItems)}
                 </div>
                 <CartPriceBreakdown subtotal={subtotal} shippingHandling={shippingHandling} discount={discount} />
-                <button name="nav-forward" onClick={navClickFunction}>{navButtonText ? navButtonText : "CHECKOUT"}</button>
+                <button name="nav-forward" className="nav-forward-button" onClick={navClickFunction}>{navButtonText ? navButtonText : "CHECKOUT"}</button>
             </div>
         )
     }

@@ -6,10 +6,6 @@
     padding: 20px;
 }
 
-.cart-left-container {
-    flex: 1;
-}
-
 .out-of-stock-notice {
     background: lightgray;
     position: relative;
@@ -19,6 +15,11 @@
     position: absolute;
     right: 0;
     top: 0;
+}
+
+.cart-column-labels {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 10px;
 }
 
 .cart-products-flex {

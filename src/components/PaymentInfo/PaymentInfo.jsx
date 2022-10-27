@@ -95,15 +95,15 @@ class PaymentInfo extends React.Component {
         } = this.props;
         const orderTotal = subtotal + shippingHandling - discount;
         return (
-            <div style={{display: "flex"}}>  {/*each order window parent div like this should probably have a common css ruleset*/}
-                <div className="payment-left-side">
+            <div className="order-screen-main">
+                <div className="order-screen-left-container">
                     <OrderProgressBar orderStep={2} />
-                    <div>
+                    <div className="order-screen-left-sub-container">
                         <h2>PAYMENT INFORMATION</h2>
                         {this.buildFields(cardNumber, cardholder, cardType, securityCode, changeFieldFunction, blurFieldFunction, errors)}
                         <button>PAY {`$${orderTotal}`}</button>
+                        <button name="nav-backward" onClick={this.handleNavClick}>BACK TO SHIPPING</button>
                     </div>
-                    <button name="nav-backward" onClick={this.handleNavClick}>BACK TO SHIPPING</button>
                 </div>
                 <SummarySidebar 
                     cartItems={cartItems} 
@@ -113,7 +113,7 @@ class PaymentInfo extends React.Component {
                     shippingInfo={shippingInfo} 
                     paymentInfo={paymentInfo}
                     navClickFunction={this.handleNavClick}
-                    navButtonText={`PAY {$${orderTotal}}`} />
+                    navButtonText={`PAY $${orderTotal}`} />
             </div>
         )
     }

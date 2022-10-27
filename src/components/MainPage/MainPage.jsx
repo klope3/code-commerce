@@ -11,6 +11,7 @@ import { paymentValidations, validationFunctions } from "../validations";
 import PaymentInfo from "../PaymentInfo/PaymentInfo";
 import { formattingFunctions } from "../formatters";
 import { tryVerifyLogin } from "../accounts";
+import "../styles.css";
 
 class MainPage extends React.Component {
     constructor() {

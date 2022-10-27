@@ -1,6 +1,17 @@
-.account-management-box {
+.account-management-container {
     width: 450px;
     margin: auto;
+    position: relative;
+}
+
+#field-row-modeSignIn,
+#field-row-modeCreateAccount {
+    display: inline-flex;
+}
+
+.account-management-container .field-row-input-container {
+    order: -1;
+    display: block;
 }
 
 .error-text {

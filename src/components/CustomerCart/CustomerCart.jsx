@@ -54,31 +54,33 @@ class CustomerCart extends React.Component {
         } = this.props;
         const emptyCart = cartItems.length === 0;
         return (
-            <div className="cart-main">
-                <div className="cart-left-container">
+            <div className="order-screen-main">
+                <div className="order-screen-left-container">
                     <div className="out-of-stock-notice">
                         {exclamation}
                         <div>One out of stock item removed:</div>
                         <div>Product name here</div>
                         {xMark}
                     </div>
-                    <div className="cart-products-flex">
-                        {this.buildCartColumnLabels()}
-                    </div>
-                    <div className="cart-items-container">
-                        {cartItems.map(cartItem => {
-                            return (
-                                <CustomerCartItemRow 
-                                key={cartItem.id} 
-                                itemData={cartItem} 
-                                changeQuantityFunction={changeQuantityFunction} 
-                                removeItemFunction={removeItemFunction} />
-                            )
-                        })}
-                        {emptyCart && <button className="reset-cart-button" onClick={resetCartFunction}>Reset Cart</button>}
+                    <div className="order-screen-left-sub-container">
+                        <div className="cart-products-flex cart-column-labels">
+                            {this.buildCartColumnLabels()}
+                        </div>
+                        <div className="cart-items-container">
+                            {cartItems.map(cartItem => {
+                                return (
+                                    <CustomerCartItemRow 
+                                    key={cartItem.id} 
+                                    itemData={cartItem} 
+                                    changeQuantityFunction={changeQuantityFunction} 
+                                    removeItemFunction={removeItemFunction} />
+                                )
+                            })}
+                            {emptyCart && <button className="reset-cart-button" onClick={resetCartFunction}>Reset Cart</button>}
+                        </div>
                     </div>
                 </div>
-                <div className="cart-right-container">
+                <div className="summary-sidebar-main">
                     <h2>SUMMARY</h2>
                     <div>
                         <div>Do you have a promo code?</div>
@@ -87,7 +89,7 @@ class CustomerCart extends React.Component {
                             <button onClick={this.clickSubmitPromoCode}>APPLY</button>
                         </div>
                         <CartPriceBreakdown subtotal={subtotal} shippingHandling={0} discount={totalDiscount} />
-                        <button disabled={emptyCart} onClick={this.handleNavClick}>CHECKOUT</button>
+                        <button className="nav-forward-button" disabled={emptyCart} onClick={this.handleNavClick}>CHECKOUT</button>
                     </div>
                 </div>
             </div>

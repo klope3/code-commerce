@@ -1,6 +1,6 @@
 .order-progress-bar {
     display: flex;
-    width: 500px;
+    /* width: 500px; */
     justify-content: space-between;
     position: relative;
 }

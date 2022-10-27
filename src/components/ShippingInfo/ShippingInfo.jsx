@@ -50,6 +50,7 @@ class ShippingInfo extends React.Component {
             {
                 name: "zipCode",
                 value: zipCode,
+                id: "zip-input",
                 displayText: "Zip",
                 label: "zip code",
                 type: "text",
@@ -181,14 +182,16 @@ class ShippingInfo extends React.Component {
         } = this.props;
         const shippingMethodCheckedStates = [shippingMethod === "standard", shippingMethod === "express"];
         return (
-            <div className="shipping-info-main">
-                <div className="shipping-info-left">
+            <div className="order-screen-main">
+                <div className="order-screen-left-container">
                     <OrderProgressBar orderStep={1} />
-                    <h2>SHIPPING INFORMATION</h2>
-                    {this.buildFieldRows(fieldData, changeFieldFunction, blurFieldFunction, errors)}
-                    <h2>SHIPPING METHOD</h2>
-                    {this.buildShippingMethods(subtotal, shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
-                    <button name="nav-backward" onClick={this.handleNavClick}>BACK TO CART</button>
+                    <div className="order-screen-left-sub-container">
+                        <h2>SHIPPING INFORMATION</h2>
+                        {this.buildFieldRows(fieldData, changeFieldFunction, blurFieldFunction, errors)}
+                        <h2>SHIPPING METHOD</h2>
+                        {this.buildShippingMethods(subtotal, shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
+                        <button name="nav-backward" onClick={this.handleNavClick}>BACK TO CART</button>
+                    </div>
                 </div>
                 <SummarySidebar 
                     cartItems={cartItems} 

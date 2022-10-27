@@ -37,9 +37,9 @@ class FieldRowSection extends React.Component {
             options 
         } = rowData;
         return (
-            <div key={id ? id : name} className="field-row">
+            <div key={id ? id : name} className="field-row" id={id ? `field-row-${id}` : undefined}>
                 {displayText && <span className="field-row-display-text">{displayText}</span>}
-                <label htmlFor={name} style={{display: showLabel ? "inline" : "none"}}>
+                <label htmlFor={id ? id : name} style={{display: showLabel ? "inline" : "none"}}>
                     {label}
                 </label>
                 <span className="field-row-input-container">
