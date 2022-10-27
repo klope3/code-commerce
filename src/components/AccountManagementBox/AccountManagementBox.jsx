@@ -140,10 +140,10 @@ class AccountManagementBox extends React.Component {
         const firstButtonText = creatingAccount ? "SAVE" : "SIGN IN";
         const secondButtonText = `SIGN ${creatingAccount ? "UP" : "IN"} WITH FACEBOOK`;
         return (
-            <div>
-                <button className="nav-forward-button" name={creatingAccount ? "signUp" : "signIn"} onClick={this.handleButton}>{firstButtonText}</button>
+            <div className="account-buttons-container">
+                <button className="nav-forward-button account-button" name={creatingAccount ? "signUp" : "signIn"} onClick={this.handleButton}>{firstButtonText}</button>
                 <div>or</div>
-                <button>{secondButtonText}</button>
+                <button className="nav-forward-button account-button" id="facebook-button">{secondButtonText}</button>
             </div>
         )
     }
