@@ -62,7 +62,7 @@ class CustomerCart extends React.Component {
                         <div>Product name here</div>
                         {xMark}
                     </div>
-                    <div className="order-screen-left-sub-container">
+                    <div className="order-screen-left-sub-container" id="cart-screen-left-sub-container">
                         <div className="cart-products-flex cart-column-labels">
                             {this.buildCartColumnLabels()}
                         </div>

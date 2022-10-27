@@ -17,9 +17,13 @@
 
 .remove-cart-item-x {
     position: absolute;
-    left: -20px;
+    left: -30px;
     top: 50%;
     transform: translateY(-50%);
+    color: gray;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .remove-cart-item-x svg {
