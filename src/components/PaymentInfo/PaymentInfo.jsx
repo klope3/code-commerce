@@ -24,6 +24,7 @@ class PaymentInfo extends React.Component {
                 displayText: "Cardholder Name",
                 value: cardholder,
                 name: "cardholder",
+                id: "cardholder",
                 label: "cardholder name",
                 type: "text",
                 errorMessage: errors.cardholder,
@@ -32,6 +33,7 @@ class PaymentInfo extends React.Component {
                 displayText: "Card Number",
                 value: cardNumber,
                 name: "cardNumber",
+                id: "cardNumber",
                 label: "card number",
                 type: "text",
                 extraInputContent: cardType ? <img src={creditCardLogos[cardType]} alt={cardType} className="credit-card-logo" /> : undefined,
@@ -41,6 +43,7 @@ class PaymentInfo extends React.Component {
                 displayText: "Exp. Date",
                 // value: cardNumber,
                 name: "expiryMonth",
+                id: "expiryMonth",
                 label: "expiration month",
                 type: "select",
                 placeholder: "Month",
@@ -48,9 +51,10 @@ class PaymentInfo extends React.Component {
                 errorMessage: errors.expiryMonth,
             },
             {
-                displayText: "Exp. Date",
+                //displayText: "Exp. Date",
                 // value: cardNumber,
                 name: "expiryYear",
+                id: "expiryYear",
                 label: "expiration year",
                 type: "select",
                 placeholder: "Year",
@@ -61,6 +65,7 @@ class PaymentInfo extends React.Component {
                 displayText: "CVV",
                 value: securityCode,
                 name: "securityCode",
+                id: "securityCode",
                 label: "security code",
                 type: "text",
                 errorMessage: errors.securityCode,
@@ -98,10 +103,10 @@ class PaymentInfo extends React.Component {
             <div className="order-screen-main">
                 <div className="order-screen-left-container">
                     <OrderProgressBar orderStep={2} />
-                    <div className="order-screen-left-sub-container">
+                    <div className="order-screen-left-sub-container" id="payment-info-screen">
                         <h2>PAYMENT INFORMATION</h2>
                         {this.buildFields(cardNumber, cardholder, cardType, securityCode, changeFieldFunction, blurFieldFunction, errors)}
-                        <button>PAY {`$${orderTotal}`}</button>
+                        <button className="nav-forward-button">PAY {`$${orderTotal}`}</button>
                         <button name="nav-backward" onClick={this.handleNavClick}>BACK TO SHIPPING</button>
                     </div>
                 </div>

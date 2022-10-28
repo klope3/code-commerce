@@ -81,9 +81,5 @@ label {
 
 .shipping-method-name {
     display: inline-block;
-    width: 100%;
+    width: 100px;
 }
-
-/* .shipping-info-field-row {
-    display: flex;
-} */

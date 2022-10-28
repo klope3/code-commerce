@@ -1,8 +1,44 @@
-
-
 .credit-card-logo {
     position: absolute;
     right: 3px;
     top: 20%;
     width: 30px;
+}
+
+#field-row-expiryMonth,
+#field-row-expiryYear {
+    display: inline-block;
+}
+
+#field-row-expiryMonth {
+    margin-right: 10px;
+}
+
+#payment-info-screen .nav-forward-button {
+    position: static;
+    margin-left: 137px;
+    width: 200px;
+    display: block;
+    margin-top: 35px;
+}
+
+#payment-info-screen select {
+    width: 100px;
+}
+
+#field-row-cardholder .field-row-input-container,
+#field-row-cardNumber .field-row-input-container,
+#field-row-securityCode .field-row-input-container {
+    display: inline-block;
+    width: 300px;
+}
+
+#field-row-securityCode .field-row-input-container {
+    width: 80px;
+}
+
+#field-row-cardholder input,
+#field-row-cardNumber input,
+#field-row-securityCode input {
+    width: 100%;
 }

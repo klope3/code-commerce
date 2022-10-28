@@ -14,10 +14,6 @@
     position: relative;
 }
 
-.field-row-input-container input[type="text"] {
-    height: 30px;
-}
-
 .field-row-display-text {
     display: inline-block;
     width: 135px;
