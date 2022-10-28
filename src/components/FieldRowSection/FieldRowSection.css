@@ -12,9 +12,11 @@
 
 .field-row-input-container {
     position: relative;
+    display: inline-block;
 }
 
 .field-row-display-text {
     display: inline-block;
     width: 135px;
+    font-weight: bold;
 }

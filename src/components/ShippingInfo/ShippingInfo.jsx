@@ -27,6 +27,7 @@ class ShippingInfo extends React.Component {
         const fieldRows = [
             {
                 name: "addressTitle",
+                id: "addressTitle",
                 displayText: "Address Title",
                 label: "address title",
                 type: "text",
@@ -34,6 +35,7 @@ class ShippingInfo extends React.Component {
             },
             {
                 name: "nameSurname",
+                id: "nameSurname",
                 value: nameSurname,
                 displayText: "Name - Surname",
                 label: "name surname",
@@ -42,6 +44,7 @@ class ShippingInfo extends React.Component {
             },
             {
                 name: "address",
+                id: "address",
                 displayText: "Your Address",
                 label: "your address",
                 type: "text",
@@ -197,7 +200,7 @@ class ShippingInfo extends React.Component {
                         {this.buildFieldRows(fieldData, changeFieldFunction, blurFieldFunction, errors)}
                         <h2>SHIPPING METHOD</h2>
                         {this.buildShippingMethods(subtotal, shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
-                        <button name="nav-backward" onClick={this.handleNavClick}>BACK TO CART</button>
+                        <button name="nav-backward" className="nav-backward-button" onClick={this.handleNavClick}>BACK TO CART</button>
                     </div>
                 </div>
                 <SummarySidebar 

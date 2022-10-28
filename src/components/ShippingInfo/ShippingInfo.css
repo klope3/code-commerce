@@ -34,29 +34,40 @@ label {
 #field-row-city,
 #field-row-country,
 #field-row-state {
-    margin-left: 5px;
+    margin-left: var(--space-between-fields-horz);
 }
 
-#field-row-city .field-row-display-text {
-    width: 34px;
-}
-
-#field-row-country .field-row-display-text {
-    width: 63px;
-}
-
+#field-row-city .field-row-display-text,
+#field-row-country .field-row-display-text,
 #field-row-state .field-row-display-text {
-    width: 41px;
+    width: initial;
+    margin-right: 10px;
 }
 
+#field-row-zipCode input,
 #field-row-city input,
 #field-row-country input,
 #field-row-state input {
-    width: 90px;
+    width: var(--field-width-1);
 }
 
-#field-row-zipCode input {
-    width: 130px;
+#field-row-addressTitle input,
+#field-row-nameSurname input {
+    width: var(--field-width-4);
+}
+
+#field-row-address {
+    display: flex;
+    align-items: center;
+}
+
+#field-row-address .field-row-input-container {
+    flex: 1;
+}
+
+#field-row-address input {
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #field-row-cellNumber {
@@ -65,17 +76,16 @@ label {
 
 #field-row-cellCountryCode, 
 #field-row-telephoneCountryCode {
-    margin-right: 10px;
+    margin-right: var(--space-between-fields-horz);
 }
 
 #field-row-cellCountryCode input,
 #field-row-telephoneCountryCode input {
-    width: 100%;
+    width: var(--field-width-1);
 }
 
 #field-row-cellCountryCode .field-row-input-container,
 #field-row-telephoneCountryCode .field-row-input-container {
-    width: 60px;
     display: inline-block;
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import "./CartPriceBreakdown.css";
 
 class CartPriceBreakdown extends React.Component {
     render() {
@@ -22,7 +23,7 @@ class CartPriceBreakdown extends React.Component {
             },
         ];
         return (
-            <div>
+            <div className="breakdown-container">
                 {rows.map((row, index) => {
                     return (
                         <div className="cart-price-breakdown-row" key={index}>
