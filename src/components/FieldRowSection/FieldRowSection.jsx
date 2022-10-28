@@ -52,8 +52,12 @@ class FieldRowSection extends React.Component {
     }
 
     render() {
-        const { fieldRows,  changeFieldFunction, blurFieldFunction } = this.props;
-        return fieldRows.map(rowData => this.fieldRow(rowData, changeFieldFunction, blurFieldFunction));
+        const { fieldRows, sectionId, changeFieldFunction, blurFieldFunction } = this.props;
+        return (
+            <div className="field-row-section" id={sectionId}>
+                {fieldRows.map(rowData => this.fieldRow(rowData, changeFieldFunction, blurFieldFunction))}
+            </div>
+        )
     }
 }
 

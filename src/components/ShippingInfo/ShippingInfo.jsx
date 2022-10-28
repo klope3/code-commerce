@@ -24,7 +24,7 @@ class ShippingInfo extends React.Component {
             telephoneNumber,
             errors
         } = fieldData;
-        const fieldRows = [
+        const fieldRows1 = [
             {
                 name: "addressTitle",
                 id: "addressTitle",
@@ -50,6 +50,8 @@ class ShippingInfo extends React.Component {
                 type: "text",
                 errorMessage: errors.address,
             },
+        ];
+        const fieldRows2 = [
             {
                 name: "zipCode",
                 id: "zipCode",
@@ -84,6 +86,8 @@ class ShippingInfo extends React.Component {
                 type: "text",
                 errorMessage: errors.state,
             },
+        ];
+        const fieldRows3 = [
             {
                 name: "cellCountryCode",
                 id: "cellCountryCode",
@@ -102,6 +106,8 @@ class ShippingInfo extends React.Component {
                 type: "text",
                 errorMessage: errors.cellNumber,
             },
+        ];
+        const fieldRows4 = [
             {
                 name: "telephoneCountryCode",
                 id: "telephoneCountryCode",
@@ -121,7 +127,32 @@ class ShippingInfo extends React.Component {
                 errorMessage: errors.telephoneNumber,
             },
         ];
-        return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={changeFieldFunction} blurFieldFunction={blurFieldFunction} />
+
+        return (
+            <div>
+                <FieldRowSection 
+                    fieldRows={fieldRows1} 
+                    sectionId="shipping-section-1" 
+                    changeFieldFunction={changeFieldFunction} 
+                    blurFieldFunction={blurFieldFunction} />
+                <FieldRowSection 
+                    fieldRows={fieldRows2} 
+                    sectionId="shipping-section-2" 
+                    changeFieldFunction={changeFieldFunction} 
+                    blurFieldFunction={blurFieldFunction} />
+                <FieldRowSection 
+                    fieldRows={fieldRows3} 
+                    sectionId="shipping-section-3" 
+                    changeFieldFunction={changeFieldFunction} 
+                    blurFieldFunction={blurFieldFunction} />
+                <FieldRowSection 
+                    fieldRows={fieldRows4} 
+                    sectionId="shipping-section-4" 
+                    changeFieldFunction={changeFieldFunction} 
+                    blurFieldFunction={blurFieldFunction} />
+            </div>
+            
+        );
     }
 
     radioRow = (inputName, inputId, labelText, descriptionText, defaultChecked, disabled, changeFieldFunction) => {

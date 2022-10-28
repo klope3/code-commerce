@@ -20,7 +20,7 @@ label {
     display: inline;
 }
 
-#field-row-cellCountryCode,
+/* #field-row-cellCountryCode,
 #field-row-cellNumber,
 #field-row-telephoneCountryCode,
 #field-row-telephoneNumber,
@@ -29,12 +29,19 @@ label {
 #field-row-country,
 #field-row-state {
     display: inline-block;
-}
+} */
 
-#field-row-city,
+/* #field-row-city,
 #field-row-country,
 #field-row-state {
     margin-left: var(--space-between-fields-horz);
+} */
+
+#shipping-section-2,
+#shipping-section-3,
+#shipping-section-4 {
+    display: flex;
+    gap: var(--space-between-fields-horz);
 }
 
 #field-row-city .field-row-display-text,
@@ -44,11 +51,14 @@ label {
     margin-right: 10px;
 }
 
-#field-row-zipCode input,
+#field-row-zipCode input {
+    width: var(--field-width-1);
+}
+
 #field-row-city input,
 #field-row-country input,
 #field-row-state input {
-    width: var(--field-width-1);
+    width: var(--field-width-2);
 }
 
 #field-row-addressTitle input,
@@ -74,10 +84,10 @@ label {
     margin-right: 170px;
 }
 
-#field-row-cellCountryCode, 
+/* #field-row-cellCountryCode, 
 #field-row-telephoneCountryCode {
     margin-right: var(--space-between-fields-horz);
-}
+} */
 
 #field-row-cellCountryCode input,
 #field-row-telephoneCountryCode input {
