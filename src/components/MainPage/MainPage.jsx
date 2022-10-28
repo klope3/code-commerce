@@ -94,13 +94,10 @@ class MainPage extends React.Component {
     getShippingPrice = () => this.state.shippingInfo.shippingMethod === "express" ? expressShippingPrice : 0;
 
     handleChangeItemQuantity = event => {
-        console.log("Sender " + event.target.name + ", value " + event.target.value);
         if (event.target.value <= 0) { return; }
         const itemId = +event.target.name.replace(/[^0-9]/g, "");
-        console.log(typeof itemId);
         let newItems = [...this.state.cartItems];
         for (const i in newItems) {
-            console.log(newItems[i]);
             if (newItems[i].id !== itemId) continue;
             newItems[i] = {
                 ...newItems[i],
@@ -111,9 +108,6 @@ class MainPage extends React.Component {
             ...prevState,
             cartItems: newItems,
         }));
-        //const newState = {...this.state};
-        //newState.cartItems[itemIndex].quantity = event.target.value;
-        //this.setState(newState);
     }
 
     handleRemoveItem = event => {

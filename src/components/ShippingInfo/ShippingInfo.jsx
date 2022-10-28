@@ -49,8 +49,8 @@ class ShippingInfo extends React.Component {
             },
             {
                 name: "zipCode",
+                id: "zipCode",
                 value: zipCode,
-                id: "zip-input",
                 displayText: "Zip",
                 label: "zip code",
                 type: "text",
@@ -58,12 +58,14 @@ class ShippingInfo extends React.Component {
             },
             {
                 name: "country",
+                id: "country",
                 displayText: "Country",
                 label: "country",
                 type: "text",
             },
             {
                 name: "city",
+                id: "city",
                 value: city,
                 displayText: "City",
                 label: "city",
@@ -72,6 +74,7 @@ class ShippingInfo extends React.Component {
             },
             {
                 name: "state",
+                id: "state",
                 value: state,
                 displayText: "State",
                 label: "state",
@@ -80,6 +83,7 @@ class ShippingInfo extends React.Component {
             },
             {
                 name: "cellCountryCode",
+                id: "cellCountryCode",
                 value: cellCountryCode,
                 displayText: "Cell Phone",
                 label: "cell country code",
@@ -88,6 +92,7 @@ class ShippingInfo extends React.Component {
             },
             {
                 name: "cellNumber",
+                id: "cellNumber",
                 value: cellNumber,
                 // displayText: "",
                 label: "cell number",
@@ -96,6 +101,7 @@ class ShippingInfo extends React.Component {
             },
             {
                 name: "telephoneCountryCode",
+                id: "telephoneCountryCode",
                 value: telephoneCountryCode,
                 displayText: "Telephone",
                 label: "telephone country code",
@@ -104,6 +110,7 @@ class ShippingInfo extends React.Component {
             },
             {
                 name: "telephoneNumber",
+                id: "telephoneNumber",
                 value: telephoneNumber,
                 // displayText: "",
                 label: "telephone number",
@@ -119,7 +126,7 @@ class ShippingInfo extends React.Component {
             <div key={inputId}>
                 <label>
                     <input type="radio" name={inputName} id={inputId} checked={defaultChecked} disabled={disabled} onChange={changeFieldFunction} />
-                    {labelText}
+                    <span className="shipping-method-name">{labelText}</span>
                     <span>{descriptionText}</span>
                 </label>
             </div>
