@@ -84,8 +84,11 @@ class CustomerCart extends React.Component {
                     <h2>SUMMARY</h2>
                     <div>
                         <div>Do you have a promo code?</div>
-                        <div>
-                            <input type="text" value={this.state.promoCodeField} onChange={this.handleChangePromoCode} />
+                        <div id="promo-code-container">
+                            <label htmlFor="promo-code-field" style={{display: "none"}}>Promo Code</label>
+                            <div>
+                                <input id="promo-code-field" type="text" value={this.state.promoCodeField} onChange={this.handleChangePromoCode} />
+                            </div>
                             <button onClick={this.clickSubmitPromoCode}>APPLY</button>
                         </div>
                         <CartPriceBreakdown subtotal={subtotal} shippingHandling={0} discount={totalDiscount} />

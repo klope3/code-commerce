@@ -26,7 +26,7 @@ class SummarySidebar extends React.Component {
         return (
             <div className="summary-sidebar-main">
                 <h2>SUMMARY</h2>
-                <div><strong>{`${cartItems.length} items`}</strong> in your bag.</div>
+                <div className="top-bottom-bordered"><strong>{`${cartItems.length} items`}</strong> in your bag.</div>
                 <div>
                     {this.buildProductAreas(cartItems)}
                 </div>

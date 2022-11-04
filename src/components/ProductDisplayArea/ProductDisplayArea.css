@@ -2,10 +2,12 @@
     display: flex;
     position: relative;
     align-items: center;
+    gap: 5px;
+    margin: 10px 0;
 }
 
 .product-display-container img {
-    width: 100px;
+    width: 80px;
 }
 
 .product-display-price {

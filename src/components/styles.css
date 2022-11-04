@@ -7,6 +7,14 @@
 
     --font-size-14: 0.875rem;
     --font-size-20: 1.25rem;
+
+    --button-color-1: rgb(215, 39, 72);
+    --button-color-1-hover: rgb(255, 64, 99);
+    --facebook-color-1: rgb(50, 100, 175);
+    --facebook-color-1-hover: rgb(72, 127, 209);
+    --gray-235: rgb(235, 235, 235);
+    --gray-245: rgb(245, 245, 245);
+    --error-text-color: red;
 }
 
 body {
@@ -49,7 +57,7 @@ input {
     right: 15px;
     height: 44px;
     border: none;
-    background: rgb(215, 39, 72);
+    background: var(--button-color-1);
     color: white;
     cursor: pointer;
 }
@@ -66,7 +74,7 @@ input {
 }
 
 .nav-forward-button:hover {
-    background: rgb(255, 64, 99);
+    background: var(--button-color-1-hover);
 }
 
 .nav-backward-button:hover {
@@ -80,8 +88,20 @@ select {
 }
 
 select {
-    background: rgb(236, 236, 236);
+    background: var(--gray-235);
     border: none;
     padding: 10px;
     height: 40px;
+}
+
+select:hover {
+    background: var(--gray-245);
+}
+
+.top-bottom-bordered {
+    border: 1px solid lightgray;
+    border-right: none;
+    border-left: none;
+    margin: 20px 0;
+    padding: 10px 0;
 }

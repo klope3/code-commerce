@@ -23,7 +23,7 @@ class CartPriceBreakdown extends React.Component {
             },
         ];
         return (
-            <div className="breakdown-container">
+            <div className="top-bottom-bordered">
                 {rows.map((row, index) => {
                     return (
                         <div className="cart-price-breakdown-row" key={index}>

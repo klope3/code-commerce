@@ -48,9 +48,9 @@
 }
 
 #facebook-button {
-    background-color: rgb(50, 100, 175);
+    background-color: var(--facebook-color-1);
 }
 
 #facebook-button:hover {
-    background-color: rgb(72, 127, 209);
+    background-color: var(--facebook-color-1-hover);
 }

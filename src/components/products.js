@@ -23,4 +23,28 @@ export const products = [
         starRating: 4,
         imgUrl: "https://images.pexels.com/photos/5380618/pexels-photo-5380618.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
+    {
+        name: "Ultimate CSS Cleaner",
+        description: "Extension",
+        price: 10.00,
+        fileSize: 1345,
+        starRating: 4,
+        imgUrl: "https://images.pexels.com/photos/5380618/pexels-photo-5380618.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    },
+    {
+        name: "101 UI Elements",
+        description: "Graphics Pack",
+        price: 25.99,
+        fileSize: 14321,
+        starRating: 5,
+        imgUrl: "https://images.pexels.com/photos/5380618/pexels-photo-5380618.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    },
+    {
+        name: "Brilliant Loading Bars",
+        description: "Graphics Pack",
+        price: 7.25,
+        fileSize: 509,
+        starRating: 3,
+        imgUrl: "https://images.pexels.com/photos/5380618/pexels-photo-5380618.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    },
 ];
