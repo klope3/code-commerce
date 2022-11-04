@@ -37,9 +37,27 @@ class AccountManagementBox extends React.Component {
         this.signInFunction = props.signInFunction;
     }
 
-    validateConfirmPassword = () => {
+    validateConfirmPasswordField = () => {
         return this.state.createAccountPassword !== this.state.createAccountPasswordConfirm ? 
             "The passwords must match." : undefined;
+    }
+
+    checkForErrors = () => {
+        const results = {
+            errors: {},
+            errorFound: false,
+        };
+        let errorFound = false;
+        for (const key in this.state) {
+            if (!key.startsWith("create")) continue;
+            const validationFunction = key === "createAccountPasswordConfirm" ? 
+                this.validateConfirmPasswordField : validationFunctions[key];
+            if (validationFunction) {
+                results.errors[key] = validationFunction(this.state[key]);
+                if (results.errors[key]) results.errorFound = true;
+            }
+        }
+        return results;
     }
 
     signUp = () => {
@@ -50,17 +68,7 @@ class AccountManagementBox extends React.Component {
             createAccountPassword: password,
             createAccountZipCode: zipCode,
         } = this.state;
-        const errors = {};
-        let errorFound = false;
-        for (const key in this.state) {
-            if (!key.startsWith("create")) continue;
-            const validationFunction = key === "createAccountPasswordConfirm" ? 
-                this.validateConfirmPassword : validationFunctions[key];
-            if (validationFunction) {
-                errors[key] = validationFunction(this.state[key]);
-                if (errors[key]) errorFound = true;
-            }
-        }
+        const { errors, errorFound } = this.checkForErrors();
         this.setState(prevState => ({
             ...prevState,
             errors: errors,
@@ -70,16 +78,7 @@ class AccountManagementBox extends React.Component {
         }
     }
 
-    //signIn = () => {
-    //    const { 
-    //        signInEmail: email, 
-    //        signInPassword: password,
-    //    } = this.state;
-    //    if (tryVerifyLogin(email, password)) {
-    //        console.log("Success");
-    //    }
-    //}
-
+//#region Handle Functions
     handleButton = event => {
         const signingUp = event.target.name === "signUp";
         if (signingUp) this.signUp();
@@ -103,8 +102,8 @@ class AccountManagementBox extends React.Component {
 
     handleBlur = event => {
         const { name: sender, value } = event.target;
-        const validationFunction = sender === "createAccountPasswordConfirm" ? this.validateConfirmPassword : validationFunctions[sender];
-        const passwordConfirmError = sender === "createAccountPassword" ? this.validateConfirmPassword() : undefined;
+        const validationFunction = sender === "createAccountPasswordConfirm" ? this.validateConfirmPasswordField : validationFunctions[sender];
+        const passwordConfirmError = sender === "createAccountPassword" ? this.validateConfirmPasswordField() : undefined;
         this.setState(prevState => ({
             ...prevState,
             errors: {
@@ -114,7 +113,8 @@ class AccountManagementBox extends React.Component {
             }
         }));
     }
-
+//#endregion
+//#region Builder Functions
     buildAccountModeToggle = () => {
         const fieldRows = [
             {
@@ -175,7 +175,6 @@ class AccountManagementBox extends React.Component {
         const fieldRows = [
             {
                 displayText: "Your E-Mail Address",
-                //value: cardholder,
                 name: "createAccountEmail",
                 label: "e-mail address",
                 type: "text",
@@ -183,7 +182,6 @@ class AccountManagementBox extends React.Component {
             },
             {
                 displayText: "Create Password",
-                //value: cardholder,
                 name: "createAccountPassword",
                 label: "create password",
                 type: "text",
@@ -191,7 +189,6 @@ class AccountManagementBox extends React.Component {
             },
             {
                 displayText: "Confirm Password",
-                //value: cardholder,
                 name: "createAccountPasswordConfirm",
                 label: "confirm password",
                 type: "text",
@@ -224,6 +221,7 @@ class AccountManagementBox extends React.Component {
         ];
         return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={this.handleChange} blurFieldFunction={this.handleBlur} />
     }
+//#endregion
 
     render() {
         const createAccountMode = this.state.accountModeToggle === "modeCreateAccount";

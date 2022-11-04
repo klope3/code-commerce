@@ -1,16 +1,18 @@
 import React from "react";
+
 import AccountManagementBox from "../AccountManagementBox/AccountManagementBox";
 import CustomerCart from "../CustomerCart/CustomerCart";
-import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import ShippingInfo from "../ShippingInfo/ShippingInfo";
+import PaymentInfo from "../PaymentInfo/PaymentInfo";
+
 import { products } from "../products";
 import { promoCodes } from "../promoCodes";
-import { creditCardTypes, expressShippingPrice } from "../constants";
-import { standardShippingMinimum } from "../constants";
-import { paymentValidations, validationFunctions } from "../validations";
-import PaymentInfo from "../PaymentInfo/PaymentInfo";
+import { getCardType } from "../utility";
+import { expressShippingPrice, standardShippingMinimum } from "../constants";
+import { validationFunctions } from "../validations";
 import { formattingFunctions } from "../formatters";
 import { tryVerifyLogin } from "../accounts";
+
 import "../styles.css";
 
 class MainPage extends React.Component {
@@ -22,7 +24,7 @@ class MainPage extends React.Component {
             activeBox: "",
             orderStep: 0,
             loggedInEmail: "person@example.com",
-            cartItems: this.getInitialCartItems(),
+            cartItems: initialItems,
             promoCodesEntered: [],
             shippingInfo: {
                 addressTitle: "",
@@ -58,20 +60,6 @@ class MainPage extends React.Component {
         }
     }
 
-    changeOrderStep = backwards => {
-        this.setState(prevState => ({
-            ...prevState,
-            orderStep: backwards ? prevState.orderStep - 1 : prevState.orderStep + 1,
-        }));
-    }
-
-    getCardType = numberString => {
-        for (const cardType of creditCardTypes) {
-            if (numberString.startsWith(cardType.start)) return cardType.type;
-        }
-        return undefined;
-    }
-
     getInitialCartItems = () => {
         return products.map((product, index) => ({
             product: product,
@@ -80,6 +68,7 @@ class MainPage extends React.Component {
         }));
     }
 
+//#region Calculation
     getCartSubtotal = cartItems => cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.product.price * cartItem.quantity, 0);
 
     getTotalDiscount = () => {
@@ -92,6 +81,14 @@ class MainPage extends React.Component {
     }
 
     getShippingPrice = () => this.state.shippingInfo.shippingMethod === "express" ? expressShippingPrice : 0;
+//#endregion
+//#region Change Functions
+    changeOrderStep = backwards => {
+        this.setState(prevState => ({
+            ...prevState,
+            orderStep: backwards ? prevState.orderStep - 1 : prevState.orderStep + 1,
+        }));
+    }
 
     handleChangeItemQuantity = event => {
         if (event.target.value <= 0) { return; }
@@ -135,21 +132,6 @@ class MainPage extends React.Component {
         }
     }
 
-    //handleFieldChange = (event, infoObjectKey) => {
-    //    const { name: sender, value } = event.target;
-    //    let valueToSet = value;
-    //    if (formattingFunctions[sender]) valueToSet = formattingFunctions[sender](value);
-    //    if (sender === "shippingMethod") valueToSet = event.target.id;
-    //    this.setState(prevState => ({
-    //        ...prevState,
-    //        [infoObjectKey]: {
-    //            ...prevState[infoObjectKey],
-    //            [sender]: valueToSet,
-    //            cardType: 
-    //        }
-    //    }));
-    //}
-
     handleShippingFieldChange = event => {
         const { name: sender, value } = event.target;
         let valueToSet = value;
@@ -171,11 +153,22 @@ class MainPage extends React.Component {
             paymentInfo: {
                 ...prevState.paymentInfo,
                 [sender]: formattingFunctions[sender] ? formattingFunctions[sender](value) : value,
-                cardType: sender === "cardNumber" ? this.getCardType(value) : prevState.paymentInfo.cardType,
+                cardType: sender === "cardNumber" ? getCardType(value) : prevState.paymentInfo.cardType,
             }
         }));
     }
 
+    trySignIn = (email, password) => {
+        if (tryVerifyLogin(email, password)) {
+            this.setState(prevState => ({
+                ...prevState,
+                loggedInEmail: email,
+                orderStep: prevState.orderStep + 1,
+            }));
+        }
+    }
+//#endregion
+//#region Blur Functions
     handleFieldBlur = (event, infoObjectKey) => {
         const { name: sender, value } = event.target;
         const validationFunction = validationFunctions[sender];
@@ -193,18 +186,8 @@ class MainPage extends React.Component {
 
     handlePaymentFieldBlur = event => this.handleFieldBlur(event, "paymentInfo");
     handleShippingFieldBlur = event => this.handleFieldBlur(event, "shippingInfo");
-
-    trySignIn = (email, password) => {
-        if (tryVerifyLogin(email, password)) {
-            
-            this.setState(prevState => ({
-                ...prevState,
-                loggedInEmail: email,
-                orderStep: prevState.orderStep + 1,
-            }));
-        }
-    }
-
+//#endregion
+    
     chooseScreen = () => {
         const { orderStep } = this.state;
         const { cartItems, shippingInfo, paymentInfo } = this.state;
@@ -257,38 +240,9 @@ class MainPage extends React.Component {
     }
 
     render() {
-        const { cartItems, shippingInfo, paymentInfo } = this.state;
-        const subtotal = this.getCartSubtotal(cartItems);
-        const standardShippingAllowed = subtotal >= standardShippingMinimum;
         return (
             <div>
                 {this.chooseScreen()}
-                {/* <AccountManagementBox /> */}
-                {/* <PaymentInfo
-                    cartItems={cartItems}
-                    subtotal={subtotal}
-                    shippingHandling={this.getShippingPrice()}
-                    discount={this.getTotalDiscount()}
-                    fieldData={paymentInfo}
-                    changeFieldFunction={this.handlePaymentFieldChange}
-                    blurFieldFunction={this.handlePaymentFieldBlur} /> */}
-                {/* <ShippingInfo 
-                    cartItems={cartItems} 
-                    subtotal={subtotal} 
-                    shippingHandling={this.getShippingPrice()} 
-                    discount={this.getTotalDiscount()}
-                    fieldData={shippingInfo}
-                    standardShippingAllowed={standardShippingAllowed}
-                    changeFieldFunction={this.handleShippingFieldChange}
-                    blurFieldFunction={this.handleShippingFieldBlur} /> */}
-                {/* <CustomerCart 
-                    cartItems={cartItems} 
-                    subtotal={this.getCartSubtotal(this.state.cartItems)}
-                    totalDiscount={this.getTotalDiscount()} 
-                    changeQuantityFunction={this.handleChangeItemQuantity} 
-                    removeItemFunction={this.handleRemoveItem}
-                    resetCartFunction={this.handleResetCart}
-                    submitPromoCodeFunction={this.handleSubmitPromoCode} /> */}
             </div>
         )
     }

@@ -1,11 +1,12 @@
 import React from "react";
-import "./CustomerCart.css";
+
 import CustomerCartItemRow from "../CustomerCartItemRow/CustomerCartItemRow";
+import SummarySidebar from "../SummarySidebar/SummarySidebar";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { products } from "../products";
-import { promoCodes } from "../promoCodes";
-import CartPriceBreakdown from "../CartPriceBreakdown/CartPriceBreakdown";
+
+import "./CustomerCart.css";
 
 const exclamation = <FontAwesomeIcon icon={faTriangleExclamation} />;
 const xMark = <FontAwesomeIcon icon={faXmark} className="close-x" />;
@@ -20,16 +21,12 @@ class CustomerCart extends React.Component {
         }
     }
 
+//#region Handle Functions
     handleChangePromoCode = event => {
         this.setState(prevState => ({
             ...prevState,
             promoCodeField: event.target.value,
         }));
-    }
-
-    buildCartColumnLabels = () => {
-        const labels = ["PRODUCT", "PRICE", "QUANTITY", "TOTAL PRICE"];
-        return labels.map((label, index) => <div key={index}>{label}</div>);
     }
 
     clickSubmitPromoCode = () => {
@@ -41,6 +38,44 @@ class CustomerCart extends React.Component {
     }
 
     handleNavClick = () => this.changeOrderStep();
+//#endregion
+//#region Builder Functions
+    buildLeftContainer = (cartItems, changeQuantityFunction, removeItemFunction, resetCartFunction) => {
+        const emptyCart = cartItems.length === 0;
+        return (
+            <div className="order-screen-left-container">
+                <div className="out-of-stock-notice">
+                    {exclamation}
+                    <div>One out of stock item removed:</div>
+                    <div>Product name here</div>
+                    {xMark}
+                </div>
+                <div className="order-screen-left-sub-container" id="cart-screen-left-sub-container">
+                    <div className="cart-products-flex cart-column-labels">
+                        {this.buildCartColumnLabels()}
+                    </div>
+                    <div className="cart-items-container">
+                        {cartItems.map(cartItem => {
+                            return (
+                                <CustomerCartItemRow 
+                                key={cartItem.id} 
+                                itemData={cartItem} 
+                                changeQuantityFunction={changeQuantityFunction} 
+                                removeItemFunction={removeItemFunction} />
+                            )
+                        })}
+                        {emptyCart && <button className="reset-cart-button" onClick={resetCartFunction}>Reset Cart</button>}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+    buildCartColumnLabels = () => {
+        const labels = ["PRODUCT", "PRICE", "QUANTITY", "TOTAL PRICE"];
+        return labels.map((label, index) => <div key={index}>{label}</div>);
+    }
+//#endregion
 
     render() {
         const { 
@@ -50,51 +85,19 @@ class CustomerCart extends React.Component {
             changeQuantityFunction, 
             removeItemFunction, 
             resetCartFunction,
-            changeOrderStepFunction,
         } = this.props;
         const emptyCart = cartItems.length === 0;
         return (
             <div className="order-screen-main">
-                <div className="order-screen-left-container">
-                    <div className="out-of-stock-notice">
-                        {exclamation}
-                        <div>One out of stock item removed:</div>
-                        <div>Product name here</div>
-                        {xMark}
-                    </div>
-                    <div className="order-screen-left-sub-container" id="cart-screen-left-sub-container">
-                        <div className="cart-products-flex cart-column-labels">
-                            {this.buildCartColumnLabels()}
-                        </div>
-                        <div className="cart-items-container">
-                            {cartItems.map(cartItem => {
-                                return (
-                                    <CustomerCartItemRow 
-                                    key={cartItem.id} 
-                                    itemData={cartItem} 
-                                    changeQuantityFunction={changeQuantityFunction} 
-                                    removeItemFunction={removeItemFunction} />
-                                )
-                            })}
-                            {emptyCart && <button className="reset-cart-button" onClick={resetCartFunction}>Reset Cart</button>}
-                        </div>
-                    </div>
-                </div>
-                <div className="summary-sidebar-main">
-                    <h2>SUMMARY</h2>
-                    <div>
-                        <div>Do you have a promo code?</div>
-                        <div id="promo-code-container">
-                            <label htmlFor="promo-code-field" style={{display: "none"}}>Promo Code</label>
-                            <div>
-                                <input id="promo-code-field" type="text" value={this.state.promoCodeField} onChange={this.handleChangePromoCode} />
-                            </div>
-                            <button onClick={this.clickSubmitPromoCode}>APPLY</button>
-                        </div>
-                        <CartPriceBreakdown subtotal={subtotal} shippingHandling={0} discount={totalDiscount} />
-                        <button className="nav-forward-button" disabled={emptyCart} onClick={this.handleNavClick}>CHECKOUT</button>
-                    </div>
-                </div>
+                {this.buildLeftContainer(cartItems, changeQuantityFunction, removeItemFunction, resetCartFunction)}
+                <SummarySidebar 
+                    promoCodeField={this.state.promoCodeField}
+                    changePromoCodeFunction={this.handleChangePromoCode}
+                    clickPromoSubmitFunction={this.clickSubmitPromoCode}
+                    subtotal={subtotal} 
+                    discount={totalDiscount}
+                    navClickFunction={this.handleNavClick}
+                    disableNavButton={emptyCart} />
             </div>
         )
     }

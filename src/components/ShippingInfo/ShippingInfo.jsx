@@ -12,6 +12,7 @@ class ShippingInfo extends React.Component {
         this.changeOrderStepFunction = props.changeOrderStepFunction;
     }
 
+//#region Builder Functions
     buildFieldRows = (fieldData, changeFieldFunction, blurFieldFunction) => {
         const { 
             zipCode, 
@@ -101,7 +102,6 @@ class ShippingInfo extends React.Component {
                 name: "cellNumber",
                 id: "cellNumber",
                 value: cellNumber,
-                // displayText: "",
                 label: "cell number",
                 type: "text",
                 errorMessage: errors.cellNumber,
@@ -121,7 +121,6 @@ class ShippingInfo extends React.Component {
                 name: "telephoneNumber",
                 id: "telephoneNumber",
                 value: telephoneNumber,
-                // displayText: "",
                 label: "telephone number",
                 type: "text",
                 errorMessage: errors.telephoneNumber,
@@ -167,7 +166,7 @@ class ShippingInfo extends React.Component {
         )
     }
 
-    buildShippingMethods = (cartSubtotal, checkedStates, standardShippingAllowed, changeFieldFunction) => {
+    buildShippingMethods = (checkedStates, standardShippingAllowed, changeFieldFunction) => {
         const radios = [
             {
                 id: "standard",
@@ -190,6 +189,7 @@ class ShippingInfo extends React.Component {
             </div>
         )
     }
+//#endregion
 
     handleNavClick = event => {
         if (event.target.name === "nav-forward") this.changeOrderStepFunction();
@@ -204,16 +204,6 @@ class ShippingInfo extends React.Component {
             discount,
             fieldData,
             fieldData: {
-                addressTitle,
-                nameSurname,
-                zipCode,
-                country,
-                city,
-                state,
-                cellCountryCode,
-                cellNumber,
-                telephoneCountryCode,
-                telephoneNumber,
                 shippingMethod,
                 errors,
             },
@@ -230,7 +220,7 @@ class ShippingInfo extends React.Component {
                         <h2>SHIPPING INFORMATION</h2>
                         {this.buildFieldRows(fieldData, changeFieldFunction, blurFieldFunction, errors)}
                         <h2>SHIPPING METHOD</h2>
-                        {this.buildShippingMethods(subtotal, shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
+                        {this.buildShippingMethods(shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
                         <button name="nav-backward" className="nav-backward-button" onClick={this.handleNavClick}>BACK TO CART</button>
                     </div>
                 </div>

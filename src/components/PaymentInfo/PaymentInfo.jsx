@@ -4,6 +4,7 @@ import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import "./PaymentInfo.css";
 import FieldRowSection from "../FieldRowSection/FieldRowSection";
 import { creditCardLogos } from "../constants";
+import { numberArray } from "../utility";
 
 class PaymentInfo extends React.Component {
     constructor(props) {
@@ -11,13 +12,6 @@ class PaymentInfo extends React.Component {
         this.changeOrderStepFunction = props.changeOrderStepFunction;
     }
 
-    numberArray = (first, last) => {
-        const array = [];
-        for (let i = first; i <= last; i++) {
-            array.push(i);
-        }
-        return array;
-    }
     buildFields = (cardNumber, cardholder, cardType, securityCode, changeFunction, blurFunction, errors) => {
         const fieldRows = [
             {
@@ -41,24 +35,21 @@ class PaymentInfo extends React.Component {
             },
             {
                 displayText: "Exp. Date",
-                // value: cardNumber,
                 name: "expiryMonth",
                 id: "expiryMonth",
                 label: "expiration month",
                 type: "select",
                 placeholder: "Month",
-                options: this.numberArray(1, 12),
+                options: numberArray(1, 12),
                 errorMessage: errors.expiryMonth,
             },
             {
-                //displayText: "Exp. Date",
-                // value: cardNumber,
                 name: "expiryYear",
                 id: "expiryYear",
                 label: "expiration year",
                 type: "select",
                 placeholder: "Year",
-                options: this.numberArray(2022, 2032),
+                options: numberArray(2022, 2032),
                 errorMessage: errors.expiryYear,
             },
             {
