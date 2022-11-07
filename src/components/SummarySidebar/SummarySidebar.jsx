@@ -46,8 +46,8 @@ class SummarySidebar extends React.Component {
             <div className="summary-sidebar-main">
                 <h2>SUMMARY</h2>
                 {changePromoCodeFunction && this.buildPromoArea(promoCodeField, changePromoCodeFunction, clickPromoSubmitFunction)}
-                {cartItems && <div className="top-bottom-bordered"><strong>{`${cartItems.length} items`}</strong> in your bag.</div>}
-                {cartItems && <div>{this.buildProductAreas(cartItems)}</div>}
+                {cartItems && <div className="top-bottom-bordered"><strong>{`${cartItems.length} item${cartItems.length > 1 ? "s" : ""}`}</strong> in your bag.</div>}
+                {cartItems && <div className="sidebar-products-container">{this.buildProductAreas(cartItems)}</div>}
                 <CartPriceBreakdown subtotal={subtotal} shippingHandling={shippingHandling} discount={discount} />
                 <button name="nav-forward" className="nav-forward-button" disabled={disableNavButton} onClick={navClickFunction}>{navButtonText ? navButtonText : "CHECKOUT"}</button>
             </div>

@@ -89,7 +89,7 @@ class PaymentInfo extends React.Component {
             changeFieldFunction,
             blurFieldFunction,
         } = this.props;
-        const orderTotal = subtotal + shippingHandling - discount;
+        const orderTotalString = (subtotal + shippingHandling - discount).toFixed(2);
         return (
             <div className="order-screen-main">
                 <div className="order-screen-left-container">
@@ -97,7 +97,7 @@ class PaymentInfo extends React.Component {
                     <div className="order-screen-left-sub-container" id="payment-info-screen">
                         <h2>PAYMENT INFORMATION</h2>
                         {this.buildFields(cardNumber, cardholder, cardType, securityCode, changeFieldFunction, blurFieldFunction, errors)}
-                        <button className="nav-forward-button">PAY {`$${orderTotal}`}</button>
+                        <button className="nav-forward-button">PAY {`$${orderTotalString}`}</button>
                         <button name="nav-backward" className="nav-backward-button" onClick={this.handleNavClick}>BACK TO SHIPPING</button>
                     </div>
                 </div>
@@ -109,7 +109,7 @@ class PaymentInfo extends React.Component {
                     shippingInfo={shippingInfo} 
                     paymentInfo={paymentInfo}
                     navClickFunction={this.handleNavClick}
-                    navButtonText={`PAY $${orderTotal}`} />
+                    navButtonText={`PAY $${orderTotalString}`} />
             </div>
         )
     }

@@ -29,7 +29,6 @@ class AccountManagementBox extends React.Component {
                 createAccountEmail: undefined,
                 createAccountPassword: undefined,
                 createAccountPasswordConfirm: undefined,
-                createAccountEmail: undefined,
                 createAccountSurname: undefined,
                 createAccountZipCode: undefined,
             }

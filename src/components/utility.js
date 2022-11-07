@@ -14,3 +14,5 @@ export const numberArray = (first, last) => {
     }
     return array;
 }
+
+export const fileSizeToString = kilobytes => `${kilobytes <= 999 ? kilobytes + " KB" : (kilobytes / 100).toFixed(2) + " MB"}`;

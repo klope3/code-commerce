@@ -8,13 +8,14 @@
 
 #cart-screen-left-sub-container {
     padding-right: 5px;
-    padding-left: 45px;
+    padding-left: 35px;
     min-height: 480px;
 }
 
 .cart-items-container {
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
     height: 450px;
+    padding-left: 30px;
 }
 
 .out-of-stock-notice {
