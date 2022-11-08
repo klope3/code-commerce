@@ -15,7 +15,7 @@ class CustomerCart extends React.Component {
     constructor(props) {
         super(props);
         this.handleSubmitPromoCode = props.submitPromoCodeFunction;
-        this.changeOrderStep = props.changeOrderStepFunction;
+        this.navigate = props.navigateFunction;
         this.state = {
             promoCodeField: "",
         }
@@ -37,7 +37,7 @@ class CustomerCart extends React.Component {
         }))
     }
 
-    handleNavClick = () => this.changeOrderStep();
+    handleNavClick = () => this.navigate();
 //#endregion
 //#region Builder Functions
     buildLeftContainer = (cartItems, changeQuantityFunction, removeItemFunction, resetCartFunction) => {

@@ -84,10 +84,36 @@ class MainPage extends React.Component {
     getShippingPrice = () => this.state.shippingInfo.shippingMethod === "express" ? expressShippingPrice : 0;
 //#endregion
 //#region Change Functions
-    changeOrderStep = backwards => {
+    navigate = (senderName, backwards) => {
+        if (backwards) {
+            this.setState(prevState => ({
+                ...prevState,
+                orderStep: prevState.orderStep - 1,
+            }));
+            return;
+        }
+        let shippingErrors = this.state.shippingInfo.errors;
+        let paymentErrors = this.state.paymentInfo.errors;
+        if (senderName === "shippingInfo" || senderName === "paymentInfo") {
+            console.log("Checking for errors in");
+            console.log(this.state[senderName]);
+        }
+        const { errors, errorFound } = this.checkForErrors(this.state[senderName]);
+        console.log("Errors found:");
+        console.log(errors);
+        if (senderName === "shippingInfo") shippingErrors = errors;
+        if (senderName === "paymentInfo") paymentErrors = errors;
         this.setState(prevState => ({
             ...prevState,
-            orderStep: backwards ? prevState.orderStep - 1 : prevState.orderStep + 1,
+            orderStep: errorFound ? prevState.orderStep : prevState.orderStep + 1,
+            shippingInfo: {
+                ...prevState.shippingInfo,
+                errors: shippingErrors,
+            },
+            paymentInfo: {
+                ...prevState.paymentInfo,
+                errors: paymentErrors,
+            },
         }));
     }
 
@@ -172,7 +198,12 @@ class MainPage extends React.Component {
 //#region Blur Functions
     handleFieldBlur = (event, infoObjectKey) => {
         const { name: sender, value } = event.target;
+        console.log("blur called for " + sender);
         const validationFunction = validationFunctions[sender];
+        console.log("value is " );
+        console.log(value);
+        console.log("validation function " );
+        console.log(validationFunction);
         this.setState(prevState => ({
             ...prevState,
             [infoObjectKey]: {
@@ -189,12 +220,26 @@ class MainPage extends React.Component {
     handleShippingFieldBlur = event => this.handleFieldBlur(event, "shippingInfo");
 //#endregion
     
+    checkForErrors = (fieldData) => {
+        const results = {
+            errors: {},
+            errorFound: false,
+        };
+        for (const key in fieldData) {
+            const validationFunction = validationFunctions[key];
+            if (validationFunction) {
+                results.errors[key] = validationFunction(fieldData[key]);
+                if (results.errors[key]) results.errorFound = true;
+            }
+        }
+        return results;
+    }
+
     chooseScreen = () => {
         const { orderStep } = this.state;
         const { cartItems, shippingInfo, paymentInfo } = this.state;
         const subtotal = this.getCartSubtotal(cartItems);
         const standardShippingAllowed = subtotal >= standardShippingMinimum;
-        console.log(shippingInfo);
 
         switch (orderStep) {
             case 0:
@@ -209,7 +254,7 @@ class MainPage extends React.Component {
                         removeItemFunction={this.handleRemoveItem}
                         resetCartFunction={this.handleResetCart}
                         submitPromoCodeFunction={this.handleSubmitPromoCode}
-                        changeOrderStepFunction={this.changeOrderStep} />
+                        navigateFunction={this.navigate} />
                 );
             case 2:
                 return (
@@ -222,7 +267,7 @@ class MainPage extends React.Component {
                         standardShippingAllowed={standardShippingAllowed}
                         changeFieldFunction={this.handleShippingFieldChange}
                         blurFieldFunction={this.handleShippingFieldBlur}
-                        changeOrderStepFunction={this.changeOrderStep} />
+                        navigateFunction={this.navigate} />
                 );
             case 3:
                 return (
@@ -235,7 +280,7 @@ class MainPage extends React.Component {
                         fieldData={paymentInfo}
                         changeFieldFunction={this.handlePaymentFieldChange}
                         blurFieldFunction={this.handlePaymentFieldBlur}
-                        changeOrderStepFunction={this.changeOrderStep} />
+                        navigateFunction={this.navigate} />
                 );
             case 4:
                 return (

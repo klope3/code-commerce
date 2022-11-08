@@ -5,17 +5,20 @@ import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import ProductDisplayArea from "../ProductDisplayArea/ProductDisplayArea";
 import SummarySidebar from "../SummarySidebar/SummarySidebar";
 import { shippingStandardDescription, shippingExpressDescription } from "../constants";
+import { validationFunctions } from "../validations";
 import "./ShippingInfo.css";
 
 class ShippingInfo extends React.Component {
     constructor(props) {
         super(props);
-        this.changeOrderStepFunction = props.changeOrderStepFunction;
+        this.navigate = props.navigateFunction;
     }
 
 //#region Builder Functions
     buildFieldRows = (fieldData, changeFieldFunction, blurFieldFunction) => {
         const { 
+            addressTitle,
+            address,
             zipCode, 
             state,
             city,
@@ -30,6 +33,7 @@ class ShippingInfo extends React.Component {
             {
                 name: "addressTitle",
                 id: "addressTitle",
+                value: addressTitle,
                 displayText: "Address Title",
                 label: "address title",
                 type: "text",
@@ -47,6 +51,7 @@ class ShippingInfo extends React.Component {
             {
                 name: "address",
                 id: "address",
+                value: address,
                 displayText: "Your Address",
                 label: "your address",
                 type: "text",
@@ -193,8 +198,8 @@ class ShippingInfo extends React.Component {
 //#endregion
 
     handleNavClick = event => {
-        if (event.target.name === "nav-forward") this.changeOrderStepFunction();
-        else if (event.target.name === "nav-backward") this.changeOrderStepFunction(true);
+        if (event.target.name === "nav-forward") this.navigate("shippingInfo");
+        else if (event.target.name === "nav-backward") this.navigate("shippingInfo", true);
     }
 
     render() {

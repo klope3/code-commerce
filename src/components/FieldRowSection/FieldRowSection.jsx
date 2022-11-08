@@ -15,8 +15,8 @@ class FieldRowSection extends React.Component {
             checked={checkable ? checked : undefined} />);
         if (type === "select") {
             element = (<select name={name} id={name} onChange={changeFieldFunction} onBlur={blurFieldFunction}>
-                {placeholder && <option disabled selected hidden>{placeholder}</option>}
-                {options.map(option => <option key={`${name}-option-${option}`} value={option}>{option}</option>)}
+                {placeholder && <option disabled selected={!value} hidden>{placeholder}</option>}
+                {options.map(option => <option key={`${name}-option-${option}`} value={option} selected={value == option}>{option}</option>)}
             </select>);
         }
         return element;

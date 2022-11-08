@@ -33,8 +33,8 @@ export const validationFunctions = {
         if (!getCardType(noSpaces)) return "Invalid card number.";
         return undefined;
     },
-    expiryMonth: value => value === "Month" ? "Please choose a month." : undefined,
-    expiryYear: value => value === "Year" ? "Please choose a year." : undefined,
+    expiryMonth: value => !value || value === "Month" ? "Please choose a month." : undefined,
+    expiryYear: value => !value || value === "Year" ? "Please choose a year." : undefined,
     securityCode: number => number < 100 || number > 999 ? "Please enter a 3-digit security code." : undefined,
     //shipping
     addressTitle: string => emptyInput(string) ? "Please enter an address title." : undefined,

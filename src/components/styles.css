@@ -19,6 +19,7 @@
     --gray-235: rgb(235, 235, 235);
     --gray-245: rgb(245, 245, 245);
     --error-text-color: red;
+    --success-color: rgb(63, 179, 63);
 }
 
 body {
@@ -108,4 +109,20 @@ select:hover {
     border-left: none;
     margin: 20px 0;
     padding: 10px 0;
+}
+
+.money-base {
+    font-weight: bold;
+}
+
+.money-big {
+    font-size: var(--font-size-14);
+}
+
+.money-discount {
+    color: var(--success-color);
+}
+
+.money-grand-total {
+    color: var(--button-color-1);
 }

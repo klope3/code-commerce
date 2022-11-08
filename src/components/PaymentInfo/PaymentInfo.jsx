@@ -9,10 +9,10 @@ import { numberArray } from "../utility";
 class PaymentInfo extends React.Component {
     constructor(props) {
         super(props);
-        this.changeOrderStepFunction = props.changeOrderStepFunction;
+        this.navigate = props.navigateFunction;
     }
 
-    buildFields = (cardNumber, cardholder, cardType, securityCode, changeFunction, blurFunction, errors) => {
+    buildFields = (cardNumber, cardholder, cardType, expiryMonth, expiryYear, securityCode, changeFunction, blurFunction, errors) => {
         const fieldRows = [
             {
                 displayText: "Cardholder Name",
@@ -37,6 +37,7 @@ class PaymentInfo extends React.Component {
                 displayText: "Exp. Date",
                 name: "expiryMonth",
                 id: "expiryMonth",
+                value: expiryMonth,
                 label: "expiration month",
                 type: "select",
                 placeholder: "Month",
@@ -46,6 +47,7 @@ class PaymentInfo extends React.Component {
             {
                 name: "expiryYear",
                 id: "expiryYear",
+                value: expiryYear,
                 label: "expiration year",
                 type: "select",
                 placeholder: "Year",
@@ -67,8 +69,8 @@ class PaymentInfo extends React.Component {
     }
 
     handleNavClick = event => {
-        if (event.target.name === "nav-forward") this.changeOrderStepFunction();
-        else if (event.target.name === "nav-backward") this.changeOrderStepFunction(true);
+        if (event.target.name === "nav-forward") this.navigate("paymentInfo");
+        else if (event.target.name === "nav-backward") this.navigate("paymentInfo", true);
     }
 
     render() {
@@ -83,6 +85,8 @@ class PaymentInfo extends React.Component {
                 cardholder,
                 cardNumber, 
                 cardType,
+                expiryMonth,
+                expiryYear,
                 securityCode,
                 errors,
             },
@@ -90,14 +94,13 @@ class PaymentInfo extends React.Component {
             blurFieldFunction,
         } = this.props;
         const orderTotalString = (subtotal + shippingHandling - discount).toFixed(2);
-        console.log(shippingInfo);
         return (
             <div className="order-screen-main">
                 <div className="order-screen-left-container">
                     <OrderProgressBar orderStep={2} />
                     <div className="order-screen-left-sub-container" id="payment-info-screen">
                         <h2>PAYMENT INFORMATION</h2>
-                        {this.buildFields(cardNumber, cardholder, cardType, securityCode, changeFieldFunction, blurFieldFunction, errors)}
+                        {this.buildFields(cardNumber, cardholder, cardType, expiryMonth, expiryYear, securityCode, changeFieldFunction, blurFieldFunction, errors)}
                         <button className="nav-forward-button">PAY {`$${orderTotalString}`}</button>
                         <button name="nav-backward" className="nav-backward-button" onClick={this.handleNavClick}>BACK TO SHIPPING</button>
                     </div>

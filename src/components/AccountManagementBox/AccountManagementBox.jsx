@@ -46,7 +46,6 @@ class AccountManagementBox extends React.Component {
             errors: {},
             errorFound: false,
         };
-        let errorFound = false;
         for (const key in this.state) {
             if (!key.startsWith("create")) continue;
             const validationFunction = key === "createAccountPasswordConfirm" ? 

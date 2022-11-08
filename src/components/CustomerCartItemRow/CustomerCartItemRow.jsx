@@ -40,7 +40,7 @@ class CustomerCartItemRow extends React.Component {
                         <div>Stars: {starRating}</div>
                     </div> */}
                 </div>
-                <div>${price}</div>
+                <div className="money-base">${price}</div>
                 <div>
                     <input 
                         type="number" 
@@ -49,7 +49,7 @@ class CustomerCartItemRow extends React.Component {
                         name={`quantityField${id}`}
                         onChange={changeQuantityFunction} />
                 </div>
-                <div>${(price * quantity).toFixed(2)}</div>
+                <div className="money-base">${(price * quantity).toFixed(2)}</div>
             </div>
         )
     }
