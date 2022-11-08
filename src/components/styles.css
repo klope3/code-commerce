@@ -8,7 +8,9 @@
     --font-size-12: 0.75rem;
     --font-size-13: 0.813rem;
     --font-size-14: 0.875rem;
+    --font-size-16: 1rem;
     --font-size-20: 1.25rem;
+    --font-size-24: 1.5rem;
 
     --button-color-1: rgb(215, 39, 72);
     --button-color-1-hover: rgb(255, 64, 99);
@@ -25,7 +27,7 @@ body {
 
 h2 {
     margin-top: 0;
-    font-size: var(--font-size-20);
+    font-size: var(--font-size-16);
 }
 
 input {

@@ -14,6 +14,7 @@ import { formattingFunctions } from "../formatters";
 import { tryVerifyLogin } from "../accounts";
 
 import "../styles.css";
+import OrderConfirmation from "../OrderConfirmation/OrderConfirmation";
 
 class MainPage extends React.Component {
     constructor() {
@@ -193,6 +194,7 @@ class MainPage extends React.Component {
         const { cartItems, shippingInfo, paymentInfo } = this.state;
         const subtotal = this.getCartSubtotal(cartItems);
         const standardShippingAllowed = subtotal >= standardShippingMinimum;
+        console.log(shippingInfo);
 
         switch (orderStep) {
             case 0:
@@ -229,10 +231,21 @@ class MainPage extends React.Component {
                         subtotal={subtotal}
                         shippingHandling={this.getShippingPrice()}
                         discount={this.getTotalDiscount()}
+                        shippingInfo={shippingInfo}
                         fieldData={paymentInfo}
                         changeFieldFunction={this.handlePaymentFieldChange}
                         blurFieldFunction={this.handlePaymentFieldBlur}
                         changeOrderStepFunction={this.changeOrderStep} />
+                );
+            case 4:
+                return (
+                    <OrderConfirmation 
+                        cartItems={cartItems}
+                        subtotal={subtotal}
+                        shippingHandling={this.getShippingPrice()}
+                        discount={this.getTotalDiscount()}
+                        shippingInfo={shippingInfo}
+                        paymentInfo={paymentInfo} />
                 );
             default:
                 return undefined;

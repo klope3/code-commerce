@@ -4,6 +4,7 @@ import FieldRowSection from "../FieldRowSection/FieldRowSection";
 import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import ProductDisplayArea from "../ProductDisplayArea/ProductDisplayArea";
 import SummarySidebar from "../SummarySidebar/SummarySidebar";
+import { shippingStandardDescription, shippingExpressDescription } from "../constants";
 import "./ShippingInfo.css";
 
 class ShippingInfo extends React.Component {
@@ -171,14 +172,14 @@ class ShippingInfo extends React.Component {
             {
                 id: "standard",
                 labelText: "STANDARD",
-                description: "Delivery in 4-6 business days - Free ($40 minimum)",
+                description: `${shippingStandardDescription} - Free ($40 minimum)`,
                 checked: checkedStates[0],
                 disabled: !standardShippingAllowed,
             },
             {
                 id: "express",
                 labelText: "EXPRESS",
-                description: "Delivery in 1-3 business days - $5.00",
+                description: `${shippingExpressDescription} - $5.00`,
                 checked: checkedStates[1],
                 disabled: false,
             },

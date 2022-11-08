@@ -90,6 +90,7 @@ class PaymentInfo extends React.Component {
             blurFieldFunction,
         } = this.props;
         const orderTotalString = (subtotal + shippingHandling - discount).toFixed(2);
+        console.log(shippingInfo);
         return (
             <div className="order-screen-main">
                 <div className="order-screen-left-container">

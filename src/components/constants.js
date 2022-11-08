@@ -49,3 +49,6 @@ export const creditCardLogos = {
     mastercard: mastercardIcon,
     visa: visaIcon,
 };
+
+export const shippingStandardDescription = "Delivery in 4-6 business days";
+export const shippingExpressDescription = "Delivery in 1-3 business days";
