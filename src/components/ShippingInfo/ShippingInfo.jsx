@@ -225,8 +225,10 @@ class ShippingInfo extends React.Component {
                     <div className="order-screen-left-sub-container">
                         <h2>SHIPPING INFORMATION</h2>
                         {this.buildFieldRows(fieldData, changeFieldFunction, blurFieldFunction, errors)}
-                        <h2>SHIPPING METHOD</h2>
-                        {this.buildShippingMethods(shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
+                        <div className="shipping-methods-container">
+                            <h2 className="no-border">SHIPPING METHOD</h2>
+                            {this.buildShippingMethods(shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}
+                        </div>
                         <button name="nav-backward" className="nav-backward-button" onClick={this.handleNavClick}>BACK TO CART</button>
                     </div>
                 </div>

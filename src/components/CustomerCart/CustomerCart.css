@@ -64,17 +64,3 @@
     border: none;
     cursor: pointer;
 }
-
-#promo-code-container {
-    display: flex;
-    gap: 10px;
-}
-
-#promo-code-container input,
-#promo-code-container button {
-    display: block;
-}
-
-#promo-code-container input[type="text"] {
-    width: 100%;
-}

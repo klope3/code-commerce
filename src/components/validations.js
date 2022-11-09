@@ -35,7 +35,7 @@ export const validationFunctions = {
     },
     expiryMonth: value => !value || value === "Month" ? "Please choose a month." : undefined,
     expiryYear: value => !value || value === "Year" ? "Please choose a year." : undefined,
-    securityCode: number => number < 100 || number > 999 ? "Please enter a 3-digit security code." : undefined,
+    securityCode: number => number < 100 || number > 999 ? "Invalid security code." : undefined,
     //shipping
     addressTitle: string => emptyInput(string) ? "Please enter an address title." : undefined,
     nameSurname: string => checkValidFullName(string),
@@ -43,8 +43,8 @@ export const validationFunctions = {
     zipCode: string => emptyInput(string) ? "Please enter a zip code." : undefined,
     state: string => emptyInput(string) ? "Please enter a state." : undefined,
     city: string => emptyInput(string) ? "Please enter a city." : undefined,
-    cellCountryCode: string => emptyInput(string) ? "Please enter a cell country code." : undefined,
+    cellCountryCode: string => emptyInput(string) ? "Please enter a country code." : undefined,
     cellNumber: string => !hasDigitCount(string, 10) ? "Please enter a 10-digit cell number." : undefined,
-    telephoneCountryCode: string => emptyInput(string) ? "Please enter a telephone country code." : undefined,
+    telephoneCountryCode: string => emptyInput(string) ? "Please enter a country code." : undefined,
     telephoneNumber: string => !hasDigitCount(string, 10) ? "Please enter a 10-digit telephone number." : undefined,
 }

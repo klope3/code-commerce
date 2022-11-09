@@ -84,11 +84,6 @@ label {
     margin-right: 170px;
 }
 
-/* #field-row-cellCountryCode, 
-#field-row-telephoneCountryCode {
-    margin-right: var(--space-between-fields-horz);
-} */
-
 #field-row-cellCountryCode input,
 #field-row-telephoneCountryCode input {
     width: var(--field-width-1);
@@ -102,4 +97,8 @@ label {
 .shipping-method-name {
     display: inline-block;
     width: 100px;
+}
+
+.shipping-methods-container {
+    margin-top: 25px;
 }

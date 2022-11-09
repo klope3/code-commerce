@@ -8,4 +8,40 @@
 .sidebar-products-container {
     overflow-y: scroll;
     height: 180px;
+    margin-bottom: 10px;
+}
+
+.cart-counter {
+    padding: 10px 0;
+}
+
+#promo-code-container {
+    padding: 10px 0;
+}
+
+#promo-code-flex-container {
+    display: flex;
+    gap: 10px;
+}
+
+#promo-code-container input,
+#promo-code-container button {
+    display: block;
+}
+
+#promo-code-container input[type="text"] {
+    width: 100%;
+}
+
+.info-review-container {
+    padding: 10px 0;
+}
+
+.info-review-name {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.info-review-description {
+    margin-left: 10px;
 }

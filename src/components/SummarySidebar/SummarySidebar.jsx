@@ -15,9 +15,9 @@ class SummarySidebar extends React.Component {
 
     buildPromoArea = (promoCodeField, handleChangePromoCode, clickPromoSubmitFunction) => {
         return (
-            <div>
+            <div id="promo-code-container">
                 <div>Do you have a promo code?</div>
-                <div id="promo-code-container">
+                <div id="promo-code-flex-container">
                     <label htmlFor="promo-code-field" style={{display: "none"}}>Promo Code</label>
                     <div>
                         <input id="promo-code-field" type="text" value={promoCodeField} onChange={handleChangePromoCode} />
@@ -34,15 +34,15 @@ class SummarySidebar extends React.Component {
         if (alternateDisplay) {
             return (
                 <div>
-                    <div>
-                        <h2>SHIPPING</h2>
-                        <div>{shippingMethodName}</div>
-                        <div>{shippingMethodDescription}</div>
+                    <div className="info-review-container bottom-bordered">
+                        <h2 className="no-border">SHIPPING</h2>
+                        <span className="info-review-name">{shippingMethodName}</span>
+                        <span className="info-review-description">{shippingMethodDescription}</span>
                     </div>
-                    <div>
-                        <h2>PAYMENT</h2>
-                        <div>{paymentInfo.cardType}</div>
-                        <div>{`Total payment: $${totalPayment.toFixed(2)}`}</div>
+                    <div className="info-review-container">
+                        <h2 className="no-border">PAYMENT</h2>
+                        <span className="info-review-name">{paymentInfo.cardType}</span>
+                        <span className="info-review-description">{`Total payment: $${totalPayment.toFixed(2)}`}</span>
                     </div>
                 </div>
             )
@@ -51,16 +51,16 @@ class SummarySidebar extends React.Component {
             <div>
                 {shippingInfo && 
                     <div>
-                        <div>
-                            <h2>SHIPMENT ADDRESS</h2>
+                        <div className="info-review-container bottom-bordered">
+                            <h2 className="no-border">SHIPMENT ADDRESS</h2>
                             <div>{shippingInfo.addressTitle}</div>
                             <div>{shippingInfo.address}</div>
                             <div>{`${shippingInfo.city}, ${shippingInfo.state} ${shippingInfo.zipCode}`}</div>
                             <div>{`${shippingInfo.country}`}</div>
                         </div>
-                        <div>
-                            <h2>SHIPMENT METHOD</h2>
-                            <div>{shippingMethodName}</div>
+                        <div className="info-review-container">
+                            <h2 className="no-border">SHIPMENT METHOD</h2>
+                            <div className="info-review-name">{shippingMethodName}</div>
                             <div>{shippingMethodDescription}</div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@ class SummarySidebar extends React.Component {
                 <h2>SUMMARY</h2>
                 {changePromoCodeFunction && this.buildPromoArea(promoCodeField, changePromoCodeFunction, clickPromoSubmitFunction)}
                 {cartItems && !alternateDisplay && 
-                    <div className="top-bottom-bordered">
+                    <div className="bottom-bordered cart-counter">
                         <strong>{`${cartItems.length} item${cartItems.length > 1 ? "s" : ""}`}</strong> in your bag.
                     </div>
                 }

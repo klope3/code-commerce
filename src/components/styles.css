@@ -1,5 +1,6 @@
 :root {
     --space-between-fields-horz: 20px;
+
     --field-width-1: 80px;
     --field-width-2: 100px;
     --field-width-3: 160px;
@@ -20,6 +21,8 @@
     --gray-245: rgb(245, 245, 245);
     --error-text-color: red;
     --success-color: rgb(63, 179, 63);
+
+    --border-light: 1px solid lightgray;
 }
 
 body {
@@ -27,8 +30,10 @@ body {
 }
 
 h2 {
-    margin-top: 0;
+    margin: 0;
     font-size: var(--font-size-16);
+    border-bottom: var(--border-light);
+    padding-bottom: 10px;
 }
 
 input {
@@ -51,7 +56,7 @@ input {
     box-shadow: 0px 0px 10px lightgray;
     padding: 20px;
     margin-top: 10px;
-    min-height: 580px;
+    min-height: 610px;
     position: relative;
 }
 
@@ -109,6 +114,18 @@ select:hover {
     border-left: none;
     margin: 20px 0;
     padding: 10px 0;
+}
+
+.top-bordered {
+    border-top: var(--border-light);
+}
+
+.bottom-bordered {
+    border-bottom: var(--border-light);
+}
+
+.no-border {
+    border: none;
 }
 
 .money-base {
