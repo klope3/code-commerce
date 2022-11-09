@@ -3,7 +3,7 @@ import "./CartPriceBreakdown.css";
 
 class CartPriceBreakdown extends React.Component {
     render() {
-        const { subtotal } = this.props;
+        const { subtotal, alternateDisplay } = this.props;
         let { shippingHandling, discount } = this.props;
         shippingHandling = shippingHandling ? shippingHandling : 0;
         discount = discount ? discount : 0;
@@ -31,14 +31,16 @@ class CartPriceBreakdown extends React.Component {
         ];
         return (
             <div className="breakdown-container top-bordered bottom-bordered">
-                {rows.map((row, index) => {
-                    return (
-                        <div className="cart-price-breakdown-row" key={index}>
-                            <div>{row.leftText}</div>
-                            <div className={row.rightTextClass}>{row.rightText}</div>
-                        </div>
-                    )})
-                }
+                <div className="breakdown-info-container">
+                    {rows.map((row, index) => {
+                        return (
+                            <div className="cart-price-breakdown-row" key={index}>
+                                <div>{row.leftText}</div>
+                                <div className={row.rightTextClass}>{row.rightText}</div>
+                            </div>
+                        )})
+                    }
+                </div>
             </div>
         )
     }

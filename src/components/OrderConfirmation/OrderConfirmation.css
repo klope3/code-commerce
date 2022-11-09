@@ -20,6 +20,7 @@
 
 .order-confirmation-main .order-screen-left-sub-container {
     text-align: center;
+    margin-top: 0;
 }
 
 .order-confirmation-main h2 {
@@ -33,6 +34,7 @@
 
 .order-confirmation-info-container {
     padding: 40px;
+    padding-top: 80px;
 }
 
 .order-confirmation-announcement {

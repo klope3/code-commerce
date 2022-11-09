@@ -45,3 +45,9 @@
 .info-review-description {
     margin-left: 10px;
 }
+
+#sidebar-card-logo {
+    position: static;
+    vertical-align: middle;
+    margin-right: 3px;
+}

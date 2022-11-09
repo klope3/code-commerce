@@ -101,7 +101,7 @@ class PaymentInfo extends React.Component {
                     <div className="order-screen-left-sub-container" id="payment-info-screen">
                         <h2>PAYMENT INFORMATION</h2>
                         {this.buildFields(cardNumber, cardholder, cardType, expiryMonth, expiryYear, securityCode, changeFieldFunction, blurFieldFunction, errors)}
-                        <button className="nav-forward-button">PAY {`$${orderTotalString}`}</button>
+                        <button name="nav-forward" className="nav-forward-button" onClick={this.handleNavClick}>PAY {`$${orderTotalString}`}</button>
                         <button name="nav-backward" className="nav-backward-button" onClick={this.handleNavClick}>BACK TO SHIPPING</button>
                     </div>
                 </div>

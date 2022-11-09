@@ -21,12 +21,21 @@
 .out-of-stock-notice {
     background: lightgray;
     position: relative;
+    padding: var(--large-container-padding);
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .close-x {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: calc(var(--large-container-padding) - 8px);
+    top: calc(var(--large-container-padding) - 8px);
+    font-size: var(--font-size-20);
+}
+
+.out-of-stock-exclamation {
+    font-size: var(--font-size-24);
 }
 
 .cart-column-labels {

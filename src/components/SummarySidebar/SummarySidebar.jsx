@@ -2,6 +2,7 @@ import React from "react";
 import ProductDisplayArea from "../ProductDisplayArea/ProductDisplayArea";
 import CartPriceBreakdown from "../CartPriceBreakdown/CartPriceBreakdown";
 import { shippingStandardDescription, shippingExpressDescription } from "../constants";
+import { creditCardLogos } from "../constants";
 import "./SummarySidebar.css";
 
 class SummarySidebar extends React.Component {
@@ -41,7 +42,8 @@ class SummarySidebar extends React.Component {
                     </div>
                     <div className="info-review-container">
                         <h2 className="no-border">PAYMENT</h2>
-                        <span className="info-review-name">{paymentInfo.cardType}</span>
+                        <img src={creditCardLogos[paymentInfo.cardType]} className="credit-card-logo" id="sidebar-card-logo"></img>
+                        <span className="info-review-name">{paymentInfo.cardType.replace(/([A-Z])/, " $1")}</span>
                         <span className="info-review-description">{`Total payment: $${totalPayment.toFixed(2)}`}</span>
                     </div>
                 </div>
@@ -96,7 +98,11 @@ class SummarySidebar extends React.Component {
                     </div>
                 }
                 {cartItems && <div className="sidebar-products-container">{this.buildProductAreas(cartItems)}</div>}
-                <CartPriceBreakdown subtotal={subtotal} shippingHandling={shippingHandling} discount={discount} />
+                <CartPriceBreakdown 
+                    subtotal={subtotal} 
+                    shippingHandling={shippingHandling} 
+                    discount={discount} 
+                    alternateDisplay={alternateDisplay} />
                 {this.buildShippingPaymentArea(shippingInfo, paymentInfo, totalPayment, alternateDisplay)}
                 <button name="nav-forward" className="nav-forward-button" disabled={disableNavButton} onClick={navClickFunction}>{navButtonText ? navButtonText : "CHECKOUT"}</button>
             </div>

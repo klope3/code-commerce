@@ -1,5 +1,7 @@
 :root {
     --space-between-fields-horz: 20px;
+    --space-under-progress-bar: 25px;
+    --large-container-padding: 15px;
 
     --field-width-1: 80px;
     --field-width-2: 100px;
@@ -40,6 +42,10 @@ input {
     box-sizing: border-box;
 }
 
+input[type="radio"] {
+    accent-color: var(--button-color-1);
+}
+
 .order-screen-main {
     display: flex;
     max-width: 1024px;
@@ -54,8 +60,8 @@ input {
 
 .order-screen-left-sub-container {
     box-shadow: 0px 0px 10px lightgray;
-    padding: 20px;
-    margin-top: 10px;
+    padding: var(--large-container-padding);
+    margin-top: var(--space-under-progress-bar);
     min-height: 610px;
     position: relative;
 }
