@@ -2,10 +2,77 @@ import React from "react";
 import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import SummarySidebar from "../SummarySidebar/SummarySidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./OrderConfirmation.css";
 
 class OrderConfirmation extends React.Component {
+    constructor() {
+        super();
+        this.state = { modalWindow: undefined }
+    }
+
+    handleModalClick = event => {
+        if (event.target.name === "modalClose") {
+            this.setState(prevState => ({
+                modalWindow: undefined
+            }));
+            return;
+        }
+        this.setState({modalWindow: event.target.name});
+    }
+
+    buildModalWindow = (shippingInfo, paymentInfo) => {
+        const { nameSurname, address, city, state, country } = shippingInfo;
+        const { cardholder, cardType, cardNumber, expiryMonth, expiryYear } = paymentInfo;
+        if (this.state.modalWindow === "shippingDetails") {
+            return (
+                <div className="modal-main">
+                    <div className="modal-window">
+                        <h2>SHIPPING DETAILS</h2>
+                        <div className="modal-info-container">
+                            <div>{nameSurname}</div>
+                            <div>{address}</div>
+                            <div>{`${city}, ${state}`}</div>
+                            <div>{country}</div>
+                        </div>
+                        <button name="modalClose" className="modal-x" onClick={this.handleModalClick}><FontAwesomeIcon icon={faXmark} /></button>
+                    </div>
+                </div>
+            )
+        }
+        if (this.state.modalWindow === "paymentDetails") {
+            return (
+                <div className="modal-main">
+                    <div className="modal-window">
+                        <h2>PAYMENT DETAILS</h2>
+                        <div className="modal-info-container">
+                            <div>{cardholder}</div>
+                            <div>{cardType.toUpperCase()}</div>
+                            <div>{`Card ending in ${cardNumber.replace(/ /g, "").substring(12)}`}</div>
+                            <div>{`Exp. ${expiryMonth}/${expiryYear}`}</div>
+                        </div>
+                        <button name="modalClose" className="modal-x" onClick={this.handleModalClick}><FontAwesomeIcon icon={faXmark} /></button>
+                    </div>
+                </div>
+            )
+        }
+        // <div className="modal-main">
+        //     <div className="modal-window">
+        //         {this.state.modalWindow === "shippingDetails" && 
+        //             <div>
+        //                 <div>addressTitle</div>
+        //             </div>
+        //         }
+        //         {this.state.modalWindow === "paymentDetails" && 
+        //             <div>
+        //                 <div>paymentInfo.cardholder</div>
+        //             </div>
+        //         }
+        //         <button name="modalClose" className="modal-x" onClick={this.handleModalClick}><FontAwesomeIcon icon={faXmark} /></button>
+        //     </div>
+        // </div>
+    }
+
     render() {
         const { 
             cartItems,
@@ -38,8 +105,10 @@ class OrderConfirmation extends React.Component {
                         discount={discount}
                         shippingInfo={shippingInfo} 
                         paymentInfo={paymentInfo}
-                        alternateDisplay={true} />
+                        alternateDisplay={true}
+                        modalClickFunction={this.handleModalClick} />
                 </div>
+                {this.state.modalWindow && this.buildModalWindow(shippingInfo, paymentInfo)}
             </div>
         )
     }

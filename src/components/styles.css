@@ -149,3 +149,37 @@ select:hover {
 .money-grand-total {
     color: var(--button-color-1);
 }
+
+.modal-main {
+    background-color: rgba(0, 0, 0, 0.314);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 10;
+    display: flex;
+}
+
+.modal-window {
+    background-color: white;
+    min-width: 200px;
+    max-width: 315px;
+    margin: auto;
+    padding: var(--large-container-padding);
+    position: relative;
+}
+
+.modal-x {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-info-container {
+    margin-top: 20px;
+    font-size: var(--font-size-16);
+}

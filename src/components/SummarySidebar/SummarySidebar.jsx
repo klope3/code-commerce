@@ -6,6 +6,11 @@ import { creditCardLogos } from "../constants";
 import "./SummarySidebar.css";
 
 class SummarySidebar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleModalClick = props.modalClickFunction;
+    }
+
     buildProductAreas = cartItems => {
         return cartItems.map((item, index) => {
             return (
@@ -39,12 +44,14 @@ class SummarySidebar extends React.Component {
                         <h2 className="no-border">SHIPPING</h2>
                         <span className="info-review-name">{shippingMethodName}</span>
                         <span className="info-review-description">{shippingMethodDescription}</span>
+                        <button name="shippingDetails" className="fake-link-button sidebar-modal-button" onClick={this.handleModalClick}>View Shipping Details</button>
                     </div>
                     <div className="info-review-container">
                         <h2 className="no-border">PAYMENT</h2>
                         <img src={creditCardLogos[paymentInfo.cardType]} className="credit-card-logo" id="sidebar-card-logo"></img>
                         <span className="info-review-name">{paymentInfo.cardType.replace(/([A-Z])/, " $1")}</span>
                         <span className="info-review-description">{`Total payment: $${totalPayment.toFixed(2)}`}</span>
+                        <button name="paymentDetails" className="fake-link-button sidebar-modal-button" onClick={this.handleModalClick}>View Payment Details</button>
                     </div>
                 </div>
             )

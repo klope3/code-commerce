@@ -6,13 +6,25 @@ import FieldRowSection from "../FieldRowSection/FieldRowSection";
 import { creditCardLogos } from "../constants";
 import { numberArray } from "../utility";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+
 class PaymentInfo extends React.Component {
     constructor(props) {
         super(props);
         this.navigate = props.navigateFunction;
+        this.state = {
+            showSecurityCodeInfo: false,
+        };
     }
 
+    toggleSecurityCodeInfo = () => this.setState(prevState => ({ showSecurityCodeInfo: !prevState.showSecurityCodeInfo}));
+
     buildFields = (cardNumber, cardholder, cardType, expiryMonth, expiryYear, securityCode, changeFunction, blurFunction, errors) => {
+        const securityCodeQuestionArea = (<div className="security-code-question-area">
+            <button onClick={this.toggleSecurityCodeInfo}><FontAwesomeIcon icon={faQuestionCircle} /></button>
+            {this.state.showSecurityCodeInfo && <div className="security-code-question-message">The CVV is the 3-digit number on the back of your card.</div>}
+        </div>);
         const fieldRows = [
             {
                 displayText: "Cardholder Name",
@@ -62,7 +74,7 @@ class PaymentInfo extends React.Component {
                 label: "security code",
                 type: "text",
                 errorMessage: errors.securityCode,
-
+                extraInputContent: securityCodeQuestionArea,
             },
         ];
         return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={changeFunction} blurFieldFunction={blurFunction} />
