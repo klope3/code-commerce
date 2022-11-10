@@ -43,6 +43,7 @@ export const validationFunctions = {
     zipCode: string => emptyInput(string) ? "Please enter a zip code." : undefined,
     state: string => emptyInput(string) ? "Please enter a state." : undefined,
     city: string => emptyInput(string) ? "Please enter a city." : undefined,
+    country: value => !value || value === "Country" ? "Please choose a country." : undefined,
     cellCountryCode: string => emptyInput(string) ? "Please enter a country code." : undefined,
     cellNumber: string => !hasDigitCount(string, 10) ? "Please enter a 10-digit cell number." : undefined,
     telephoneCountryCode: string => emptyInput(string) ? "Please enter a country code." : undefined,

@@ -4,7 +4,7 @@ import FieldRowSection from "../FieldRowSection/FieldRowSection";
 import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import ProductDisplayArea from "../ProductDisplayArea/ProductDisplayArea";
 import SummarySidebar from "../SummarySidebar/SummarySidebar";
-import { shippingStandardDescription, shippingExpressDescription } from "../constants";
+import { shippingStandardDescription, shippingExpressDescription, countries } from "../constants";
 import { validationFunctions } from "../validations";
 import "./ShippingInfo.css";
 
@@ -22,6 +22,7 @@ class ShippingInfo extends React.Component {
             zipCode, 
             state,
             city,
+            country,
             nameSurname,
             cellCountryCode,
             cellNumber,
@@ -71,9 +72,13 @@ class ShippingInfo extends React.Component {
             {
                 name: "country",
                 id: "country",
+                value: country,
                 displayText: "Country",
                 label: "country",
-                type: "text",
+                type: "select",
+                placeholder: "Country",
+                options: countries,
+                errorMessage: errors.country,
             },
             {
                 name: "city",

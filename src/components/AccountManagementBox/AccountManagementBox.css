@@ -14,7 +14,8 @@
     display: block;
 }
 
-.account-management-container input[type="text"] {
+.account-management-container input[type="text"], 
+.account-management-container input[type="password"] {
     width: 100%;
 }
 
@@ -53,4 +54,8 @@
 
 #facebook-button:hover {
     background-color: var(--facebook-color-1-hover);
+}
+
+.password-visibility-button {
+    position: absolute;
 }

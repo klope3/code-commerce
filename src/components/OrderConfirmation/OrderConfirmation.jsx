@@ -56,21 +56,6 @@ class OrderConfirmation extends React.Component {
                 </div>
             )
         }
-        // <div className="modal-main">
-        //     <div className="modal-window">
-        //         {this.state.modalWindow === "shippingDetails" && 
-        //             <div>
-        //                 <div>addressTitle</div>
-        //             </div>
-        //         }
-        //         {this.state.modalWindow === "paymentDetails" && 
-        //             <div>
-        //                 <div>paymentInfo.cardholder</div>
-        //             </div>
-        //         }
-        //         <button name="modalClose" className="modal-x" onClick={this.handleModalClick}><FontAwesomeIcon icon={faXmark} /></button>
-        //     </div>
-        // </div>
     }
 
     render() {

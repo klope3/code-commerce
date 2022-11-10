@@ -94,13 +94,7 @@ class MainPage extends React.Component {
         }
         let shippingErrors = this.state.shippingInfo.errors;
         let paymentErrors = this.state.paymentInfo.errors;
-        if (senderName === "shippingInfo" || senderName === "paymentInfo") {
-            console.log("Checking for errors in");
-            console.log(this.state[senderName]);
-        }
         const { errors, errorFound } = this.checkForErrors(this.state[senderName]);
-        console.log("Errors found:");
-        console.log(errors);
         if (senderName === "shippingInfo") shippingErrors = errors;
         if (senderName === "paymentInfo") paymentErrors = errors;
         this.setState(prevState => ({
@@ -198,12 +192,7 @@ class MainPage extends React.Component {
 //#region Blur Functions
     handleFieldBlur = (event, infoObjectKey) => {
         const { name: sender, value } = event.target;
-        console.log("blur called for " + sender);
         const validationFunction = validationFunctions[sender];
-        console.log("value is " );
-        console.log(value);
-        console.log("validation function " );
-        console.log(validationFunction);
         this.setState(prevState => ({
             ...prevState,
             [infoObjectKey]: {

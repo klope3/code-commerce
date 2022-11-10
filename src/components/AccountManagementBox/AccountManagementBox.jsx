@@ -7,6 +7,8 @@ import FieldRowSection from "../FieldRowSection/FieldRowSection";
 //import { addAccount, doesAccountExist, tryVerifyLogin } from "../accounts";
 import { formattingFunctions } from "../formatters";
 import { validationFunctions } from "../validations";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 import "./AccountManagementBox.css";
 
 class AccountManagementBox extends React.Component {
@@ -14,6 +16,9 @@ class AccountManagementBox extends React.Component {
         super(props);
         this.state = {
             accountModeToggle: "",
+            loginPasswordVisible: false,
+            createPasswordVisible: false,
+            confirmPasswordVisible: false,
 
             signInEmail: "",
             signInPassword: "",
@@ -74,6 +79,13 @@ class AccountManagementBox extends React.Component {
         if (!errorFound && !doesAccountExist(this.state.createAccountEmail)) {
             addAccount(email, password, firstName, surname, zipCode);
         }
+    }
+
+    togglePasswordVisibility = event => {
+        this.setState(prevState => ({
+            ...prevState,
+            [event.target.name]: !prevState[event.target.name],
+        }));
     }
 
 //#region Handle Functions
@@ -158,7 +170,8 @@ class AccountManagementBox extends React.Component {
                 displayText: "Password",
                 name: "signInPassword",
                 label: "password",
-                type: "text",
+                type: this.state.loginPasswordVisible ? "text" : "password",
+                extraInputContent: <button name="loginPasswordVisible" className="password-visibility-button" onClick={this.togglePasswordVisibility}><FontAwesomeIcon icon={faEye} /></button>,
             },
         ];
         return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={this.handleChange} blurFieldFunction={this.handleBlur} />
@@ -182,14 +195,16 @@ class AccountManagementBox extends React.Component {
                 displayText: "Create Password",
                 name: "createAccountPassword",
                 label: "create password",
-                type: "text",
+                type: this.state.createPasswordVisible ? "text" : "password",
+                extraInputContent: <button name="createPasswordVisible" className="password-visibility-button" onClick={this.togglePasswordVisibility}><FontAwesomeIcon icon={faEye} /></button>,
                 errorMessage: errors.createAccountPassword,
             },
             {
                 displayText: "Confirm Password",
                 name: "createAccountPasswordConfirm",
                 label: "confirm password",
-                type: "text",
+                type: this.state.confirmPasswordVisible ? "text" : "password",
+                extraInputContent: <button name="confirmPasswordVisible" className="password-visibility-button" onClick={this.togglePasswordVisibility}><FontAwesomeIcon icon={faEye} /></button>,
                 errorMessage: errors.createAccountPasswordConfirm,
             },
             {

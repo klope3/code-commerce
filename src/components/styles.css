@@ -99,6 +99,7 @@ input[type="radio"] {
 
 input[type="text"],
 input[type="number"],
+input[type="password"],
 select {
     height: 40px;
 }
@@ -108,10 +109,15 @@ select {
     border: none;
     padding: 10px;
     height: 40px;
+    width: var(--field-width-2);
 }
 
 select:hover {
     background: var(--gray-245);
+}
+
+button svg {
+    pointer-events: none;
 }
 
 .top-bottom-bordered {

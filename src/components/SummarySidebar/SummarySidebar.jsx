@@ -111,7 +111,7 @@ class SummarySidebar extends React.Component {
                     discount={discount} 
                     alternateDisplay={alternateDisplay} />
                 {this.buildShippingPaymentArea(shippingInfo, paymentInfo, totalPayment, alternateDisplay)}
-                <button name="nav-forward" className="nav-forward-button" disabled={disableNavButton} onClick={navClickFunction}>{navButtonText ? navButtonText : "CHECKOUT"}</button>
+                {!alternateDisplay && <button name="nav-forward" className="nav-forward-button" disabled={disableNavButton} onClick={navClickFunction}>{navButtonText ? navButtonText : "CHECKOUT"}</button>}
             </div>
         )
     }
