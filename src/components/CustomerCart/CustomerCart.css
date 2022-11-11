@@ -38,6 +38,10 @@
     font-size: var(--font-size-24);
 }
 
+.out-of-stock-product-name {
+    color: var(--button-color-1);
+}
+
 .cart-column-labels {
     border-bottom: 1px solid lightgray;
     padding-bottom: 10px;

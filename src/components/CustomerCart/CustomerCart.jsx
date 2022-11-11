@@ -46,7 +46,7 @@ class CustomerCart extends React.Component {
             <div className="order-screen-left-container">
                 <div className="out-of-stock-notice">
                     <FontAwesomeIcon icon={faTriangleExclamation} className="out-of-stock-exclamation" />
-                    <div>One out of stock item removed:<br></br> Product name here</div>
+                    <div>One out of stock item removed:<div className="out-of-stock-product-name">Product name here</div></div>
                     <FontAwesomeIcon icon={faXmark} className="close-x" />
                 </div>
                 <div className="order-screen-left-sub-container" id="cart-screen-left-sub-container">

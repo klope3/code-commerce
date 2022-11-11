@@ -7,6 +7,11 @@
 #field-row-modeSignIn,
 #field-row-modeCreateAccount {
     display: inline-flex;
+    font-size: var(--font-size-16);
+}
+
+#field-row-modeCreateAccount {
+    margin-left: 20px;
 }
 
 .account-management-container .field-row-input-container {
@@ -59,4 +64,28 @@
     border: none;
     font-size: var(--font-size-16);
     transform: translateY(50%);
+}
+
+.styled-or {
+    background-color: lightgray;
+    height: 1px;
+    margin: 20px 0;
+}
+
+.styled-or div {
+    transform: translateY(-11px);
+    background-color: white;
+    width: 35px;
+    margin: auto;
+}
+
+.account-management-container .fake-link-button {
+    position: initial;
+    color: gray;
+    margin: 10px 0;
+}
+
+.fake-link-container {
+    margin-top: 10px;
+    color: gray;
 }

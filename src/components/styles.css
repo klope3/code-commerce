@@ -104,6 +104,11 @@ input[type="radio"] {
     background: lightgray;
 }
 
+.nav-forward-button:disabled {
+    background: lightgray;
+    cursor: initial;
+}
+
 input[type="text"],
 input[type="number"],
 input[type="password"],

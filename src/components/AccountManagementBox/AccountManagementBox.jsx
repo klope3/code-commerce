@@ -190,8 +190,16 @@ class AccountManagementBox extends React.Component {
                 {this.state.duplicateAccountAttempt && creatingAccount && <div className="error-text">An account with that email address already exists.</div>}
                 {this.state.signInAttempt && !creatingAccount && <div className="error-text">Invalid username and/or password.</div>}
                 <button className="nav-forward-button account-button" name={creatingAccount ? "signUp" : "signIn"} onClick={this.handleButton}>{firstButtonText}</button>
-                <div>or</div>
+                <div className="styled-or"><div>or</div></div>
                 <button className="nav-forward-button account-button" id="facebook-button">{secondButtonText}</button>
+                <div className="fake-link-container">
+                    <button className="fake-link-button">Cancel</button>
+                    <div>
+                        <button className="fake-link-button">Privacy Policy and Cookies</button>
+                        <span>|</span>
+                        <button className="fake-link-button">Terms of Sale and Use</button>
+                    </div>
+                </div>
             </div>
         )
     }
