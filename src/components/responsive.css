@@ -1,0 +1,170 @@
+@media screen and (max-width: 1024px) {
+    .order-screen-left-sub-container {
+        min-height: 770px;
+    }
+
+    #shipping-section-2 {
+        display: block;
+    }
+
+    #field-row-city .field-row-display-text,
+    #field-row-country .field-row-display-text,
+    #field-row-state .field-row-display-text {
+        width: var(--field-label-width);
+        margin-right: initial;
+    }
+
+    #field-row-zipCode input,
+    #field-row-city input,
+    #field-row-country select,
+    #field-row-state input {
+        width: var(--field-width-4);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-only {
+        display: initial;
+    }
+
+    .non-mobile {
+        display: none;
+    }
+
+    .order-screen-left-sub-container {
+        min-height: 1000px;
+    }
+
+    .order-screen-main {
+        display: block;
+    }
+
+    .cart-items-container {
+        height: initial;
+        overflow-y: initial;
+    }
+
+    .summary-sidebar-main {
+        width: initial;
+        margin-top: 20px;
+    }
+
+    .sidebar-products-container {
+        overflow-y: initial;
+        height: initial;
+    }
+
+    .nav-forward-button {
+        position: initial;
+        width: 100%;
+    }
+
+    .field-row-display-text {
+        display: block;
+    }
+
+    .field-row-input-container {
+        width: 100%;
+    }
+
+    .account-management-container .field-row-input-container {
+        width: initial;
+    }
+
+    #cart-screen-left-sub-container {
+        padding-left: 0;
+    }
+
+    .cart-products-flex {
+        align-items: baseline;
+    }
+
+    .cart-products-flex.cart-item-row {
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .product-display-container {
+        align-items: flex-start;
+    }
+
+    .product-display-container img {
+        width: 120px;
+    }
+
+    .cart-column-labels {
+        display: none;
+    }
+
+    .remove-cart-item-x {
+        top: 40px;
+        font-size: var(--font-size-20);
+    }
+
+    .reset-cart-button {
+        width: 250px;
+    }
+
+    #field-row-addressTitle input,
+    #field-row-nameSurname input,
+    #field-row-zipCode input,
+    #field-row-country select,
+    #field-row-city input,
+    #field-row-state input {
+        width: 100%;
+    }
+
+    #field-row-address {
+        display: initial;
+    }
+
+    #shipping-section-3, 
+    #shipping-section-4 {
+        display: block;
+    }
+
+    #field-row-cellNumber, 
+    #field-row-cellCountryCode,
+    #field-row-telephoneNumber, 
+    #field-row-telephoneCountryCode {
+        display: inline-block;
+        width: 100px;
+    }
+
+    #field-row-cellNumber,
+    #field-row-telephoneNumber {
+        width: 170px;
+    }
+
+    .shipping-method-description {
+        display: block;
+        margin-bottom: 15px;
+        margin-left: 20px;
+    }
+
+    #field-row-cardholder .field-row-input-container,
+    #field-row-cardNumber .field-row-input-container {
+        width: 100%;
+    }
+
+    #field-row-securityCode {
+        margin-bottom: 40px;
+    }
+
+    #payment-info-screen {
+        min-height: 580px;
+    }
+
+    #payment-info-screen .nav-forward-button {
+        margin: initial;
+    }
+
+    .order-confirmation-main .order-screen-left-sub-container {
+        min-height: initial;
+    }
+
+    #order-confirmation-main {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

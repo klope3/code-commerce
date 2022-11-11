@@ -58,4 +58,11 @@
 
 .password-visibility-button {
     position: absolute;
+    right: 0;
+    top: 0;
+    background: none;
+    cursor: pointer;
+    border: none;
+    font-size: var(--font-size-16);
+    transform: translateY(50%);
 }

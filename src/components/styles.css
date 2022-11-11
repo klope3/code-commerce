@@ -7,6 +7,7 @@
     --field-width-2: 100px;
     --field-width-3: 160px;
     --field-width-4: 300px;
+    --field-label-width: 115px;
 
     --font-size-12: 0.75rem;
     --font-size-13: 0.813rem;
@@ -50,8 +51,9 @@ input[type="radio"] {
     display: flex;
     max-width: 1024px;
     margin: auto;
+    margin-top: 20px;
     gap: 20px;
-    padding: 20px;
+    /* padding: 20px; */
 }
 
 .order-screen-left-container {
@@ -189,3 +191,13 @@ button svg {
     margin-top: 20px;
     font-size: var(--font-size-16);
 }
+
+.mobile-only {
+    display: none;
+}
+/* 
+@media screen and (max-width: 1024px) {
+    .order-screen-left-sub-container {
+        min-height: 770px;
+    }
+} */

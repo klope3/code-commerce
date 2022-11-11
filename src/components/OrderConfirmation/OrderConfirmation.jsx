@@ -68,7 +68,7 @@ class OrderConfirmation extends React.Component {
             paymentInfo,
         } = this.props;
         return (
-            <div className="order-confirmation-main">
+            <div className="order-confirmation-main" id="order-confirmation-main">
                 <OrderProgressBar orderStep={3} />
                 <div className="order-screen-main">
                     <div className="order-screen-left-sub-container">

@@ -17,6 +17,6 @@
 
 .field-row-display-text {
     display: inline-block;
-    width: 115px;
+    width: var(--field-label-width);
     font-weight: bold;
 }

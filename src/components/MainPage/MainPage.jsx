@@ -14,6 +14,7 @@ import { formattingFunctions } from "../formatters";
 import { tryVerifyLogin } from "../accounts";
 
 import "../styles.css";
+import "../responsive.css";
 import OrderConfirmation from "../OrderConfirmation/OrderConfirmation";
 
 class MainPage extends React.Component {
@@ -90,6 +91,7 @@ class MainPage extends React.Component {
                 ...prevState,
                 orderStep: prevState.orderStep - 1,
             }));
+            window.scroll(0, 0);
             return;
         }
         let shippingErrors = this.state.shippingInfo.errors;
@@ -109,6 +111,7 @@ class MainPage extends React.Component {
                 errors: paymentErrors,
             },
         }));
+        window.scroll(0, 0);
     }
 
     handleChangeItemQuantity = event => {

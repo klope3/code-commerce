@@ -20,23 +20,6 @@ label {
     display: inline;
 }
 
-/* #field-row-cellCountryCode,
-#field-row-cellNumber,
-#field-row-telephoneCountryCode,
-#field-row-telephoneNumber,
-#field-row-zipCode,
-#field-row-city,
-#field-row-country,
-#field-row-state {
-    display: inline-block;
-} */
-
-/* #field-row-city,
-#field-row-country,
-#field-row-state {
-    margin-left: var(--space-between-fields-horz);
-} */
-
 #shipping-section-2,
 #shipping-section-3,
 #shipping-section-4 {
@@ -80,9 +63,9 @@ label {
     box-sizing: border-box;
 }
 
-#field-row-cellNumber {
+/* #field-row-cellNumber {
     margin-right: 170px;
-}
+} */
 
 #field-row-cellCountryCode input,
 #field-row-telephoneCountryCode input {
@@ -102,3 +85,23 @@ label {
 .shipping-methods-container {
     margin-top: 25px;
 }
+
+/* @media screen and (max-width: 1024px) {
+    #shipping-section-2 {
+        display: block;
+    }
+
+    #field-row-city .field-row-display-text,
+    #field-row-country .field-row-display-text,
+    #field-row-state .field-row-display-text {
+        width: var(--field-label-width);
+        margin-right: initial;
+    }
+
+    #field-row-zipCode input,
+    #field-row-city input,
+    #field-row-country select,
+    #field-row-state input {
+        width: var(--field-width-4);
+    }
+} */

@@ -25,31 +25,33 @@ class CustomerCartItemRow extends React.Component {
             changeQuantityFunction,
             removeItemFunction,
         } = this.props;
+        const quantityInputName=`quantityField${id}`;
         return (
             <div className="cart-products-flex cart-item-row">
                 <div className="product-display-container">
                     <button className="remove-cart-item-x" name={`removeItem${id}`} onClick={removeItemFunction}>
                         <FontAwesomeIcon icon={faCircleXmark} />
                     </button>
+                    {/* <button>Remove</button> */}
                     <img src={imgUrl} alt="Product" />
-                    <ProductDataText productData={product} />
-                    {/* <div>
-                        <div>{description}</div>
-                        <div>{name}</div>
-                        <div>Filesize: {fileSize}kb</div>
-                        <div>Stars: {starRating}</div>
-                    </div> */}
+                    <ProductDataText 
+                        productData={product} 
+                        quantity={quantity}
+                        showQuantity={false}
+                        changeQuantityFunction={changeQuantityFunction} 
+                        quantityInputName={quantityInputName} />
+                    
                 </div>
-                <div className="money-base">${price}</div>
-                <div>
+                <div className="money-base non-mobile">${price}</div>
+                <div className="non-mobile">
                     <input 
                         type="number" 
                         className="product-quantity-input" 
                         value={quantity} 
-                        name={`quantityField${id}`}
+                        name={quantityInputName}
                         onChange={changeQuantityFunction} />
                 </div>
-                <div className="money-base">${(price * quantity).toFixed(2)}</div>
+                <div className="money-base non-mobile">${(price * quantity).toFixed(2)}</div>
             </div>
         )
     }

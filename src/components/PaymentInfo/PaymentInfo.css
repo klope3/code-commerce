@@ -27,8 +27,7 @@
 }
 
 #field-row-cardholder .field-row-input-container,
-#field-row-cardNumber .field-row-input-container,
-#field-row-securityCode .field-row-input-container {
+#field-row-cardNumber .field-row-input-container {
     display: inline-block;
     width: 300px;
 }

@@ -171,7 +171,7 @@ class ShippingInfo extends React.Component {
                 <label>
                     <input type="radio" name={inputName} id={inputId} checked={defaultChecked} disabled={disabled} onChange={changeFieldFunction} />
                     <span className="shipping-method-name">{labelText}</span>
-                    <span>{descriptionText}</span>
+                    <span className="shipping-method-description">{descriptionText}</span>
                 </label>
             </div>
         )
