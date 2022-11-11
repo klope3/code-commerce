@@ -8,8 +8,8 @@ export const addAccount = (email, password, firstName, surname, postcode) => {
         surname: surname,
         postcode: postcode,
     });
-    console.log("Added");
-    console.log(accounts);
+    // console.log("Added");
+    // console.log(accounts);
 };
 
 export const doesAccountExist = email => {
@@ -22,7 +22,7 @@ export const doesAccountExist = email => {
 };
 
 export const tryVerifyLogin = (email, password) => {
-    console.log("Trying to verify login " + email + " " + password);
+    // console.log("Trying to verify login " + email + " " + password);
     for (const account of accounts) {
         if (account.email === email && account.password === password) {
             return true;

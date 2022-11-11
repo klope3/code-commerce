@@ -1,8 +1,6 @@
 .field-row-input-error {
     position: absolute;
     left: 0;
-    color: var(--error-text-color);
-    font-size: 0.8rem;
     top: 40px;
 }
 

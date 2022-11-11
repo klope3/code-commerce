@@ -111,7 +111,7 @@ class MainPage extends React.Component {
                 errors: paymentErrors,
             },
         }));
-        window.scroll(0, 0);
+        if (!errorFound) window.scroll(0, 0);
     }
 
     handleChangeItemQuantity = event => {

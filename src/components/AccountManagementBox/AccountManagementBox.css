@@ -32,12 +32,6 @@
     width: initial;
 }
 
-.error-text {
-    right: 0;
-    top: 0;
-    color: red;
-}
-
 .account-buttons-container {
     position: relative;
     text-align: center;

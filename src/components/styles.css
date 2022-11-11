@@ -47,6 +47,11 @@ input[type="radio"] {
     accent-color: var(--button-color-1);
 }
 
+.error-text {
+    color: var(--error-text-color);
+    font-size: var(--font-size-13);
+}
+
 .order-screen-main {
     display: flex;
     max-width: 1024px;

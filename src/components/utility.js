@@ -16,3 +16,5 @@ export const numberArray = (first, last) => {
 }
 
 export const fileSizeToString = kilobytes => `${kilobytes <= 999 ? kilobytes + " KB" : (kilobytes / 100).toFixed(2) + " MB"}`;
+
+export const formatCamelCase = str => str.replace(/([A-Z])/, " $1");

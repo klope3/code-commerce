@@ -22,6 +22,7 @@ class AccountManagementBox extends React.Component {
 
             signInEmail: "",
             signInPassword: "",
+            signInAttempt: false,
 
             createAccountEmail: "",
             createAccountPassword: "",
@@ -29,6 +30,7 @@ class AccountManagementBox extends React.Component {
             createAccountFirstName: "",
             createAccountSurname: "",
             createAccountZipCode: "",
+            duplicateAccountAttempt: false,
 
             errors: {
                 createAccountEmail: undefined,
@@ -72,13 +74,43 @@ class AccountManagementBox extends React.Component {
             createAccountZipCode: zipCode,
         } = this.state;
         const { errors, errorFound } = this.checkForErrors();
-        this.setState(prevState => ({
-            ...prevState,
+        let newState = {
+            ...this.state,
             errors: errors,
-        }));
+            duplicateAccountAttempt: false,
+        };
+        if (errorFound) {
+            this.setState(newState);
+        }
+        if (doesAccountExist(this.state.createAccountEmail)) {
+            newState.duplicateAccountAttempt = true;
+        }
         if (!errorFound && !doesAccountExist(this.state.createAccountEmail)) {
             addAccount(email, password, firstName, surname, zipCode);
+            newState = {
+                ...newState,
+                createAccountEmail: "",
+                createAccountPassword: "",
+                createAccountPasswordConfirm: "",
+                createAccountFirstName: "",
+                createAccountSurname: "",
+                createAccountZipCode: "",
+            };
         }
+        this.setState(newState);
+    }
+
+    clearFields = () => {
+        console.log("clearing");
+        this.setState(prevState => ({
+            ...prevState,
+            createAccountEmail: "",
+            createAccountPassword: "",
+            createAccountPasswordConfirm: "",
+            createAccountFirstName: "",
+            createAccountSurname: "",
+            createAccountZipCode: "",
+        }));
     }
 
     togglePasswordVisibility = event => {
@@ -98,6 +130,10 @@ class AccountManagementBox extends React.Component {
                 signInPassword: password,
             } = this.state;
             this.signInFunction(email, password);
+            this.setState(prevState => ({
+                ...prevState,
+                signInAttempt: true,
+            }));
         }
     }
 
@@ -151,6 +187,8 @@ class AccountManagementBox extends React.Component {
         const secondButtonText = `SIGN ${creatingAccount ? "UP" : "IN"} WITH FACEBOOK`;
         return (
             <div className="account-buttons-container">
+                {this.state.duplicateAccountAttempt && creatingAccount && <div className="error-text">An account with that email address already exists.</div>}
+                {this.state.signInAttempt && !creatingAccount && <div className="error-text">Invalid username and/or password.</div>}
                 <button className="nav-forward-button account-button" name={creatingAccount ? "signUp" : "signIn"} onClick={this.handleButton}>{firstButtonText}</button>
                 <div>or</div>
                 <button className="nav-forward-button account-button" id="facebook-button">{secondButtonText}</button>
@@ -178,7 +216,11 @@ class AccountManagementBox extends React.Component {
     }
 
     buildCreateAccountFields = () => {
-        const { createAccountFirstName, 
+        const { 
+            createAccountEmail,
+            createAccountPassword,
+            createAccountPasswordConfirm,
+            createAccountFirstName, 
             createAccountSurname, 
             createAccountZipCode,
             errors,
@@ -186,6 +228,7 @@ class AccountManagementBox extends React.Component {
         const fieldRows = [
             {
                 displayText: "Your E-Mail Address",
+                value: createAccountEmail,
                 name: "createAccountEmail",
                 label: "e-mail address",
                 type: "text",
@@ -193,6 +236,7 @@ class AccountManagementBox extends React.Component {
             },
             {
                 displayText: "Create Password",
+                value: createAccountPassword,
                 name: "createAccountPassword",
                 label: "create password",
                 type: this.state.createPasswordVisible ? "text" : "password",
@@ -201,6 +245,7 @@ class AccountManagementBox extends React.Component {
             },
             {
                 displayText: "Confirm Password",
+                value: createAccountPasswordConfirm,
                 name: "createAccountPasswordConfirm",
                 label: "confirm password",
                 type: this.state.confirmPasswordVisible ? "text" : "password",

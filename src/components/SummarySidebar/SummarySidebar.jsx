@@ -3,6 +3,7 @@ import ProductDisplayArea from "../ProductDisplayArea/ProductDisplayArea";
 import CartPriceBreakdown from "../CartPriceBreakdown/CartPriceBreakdown";
 import { shippingStandardDescription, shippingExpressDescription } from "../constants";
 import { creditCardLogos } from "../constants";
+import { formatCamelCase } from "../utility";
 import "./SummarySidebar.css";
 
 class SummarySidebar extends React.Component {
@@ -49,7 +50,7 @@ class SummarySidebar extends React.Component {
                     <div className="info-review-container">
                         <h2 className="no-border">PAYMENT</h2>
                         <img src={creditCardLogos[paymentInfo.cardType]} className="credit-card-logo" id="sidebar-card-logo"></img>
-                        <span className="info-review-name">{paymentInfo.cardType.replace(/([A-Z])/, " $1")}</span>
+                        <span className="info-review-name">{formatCamelCase(paymentInfo.cardType)}</span>
                         <span className="info-review-description">{`Total payment: $${totalPayment.toFixed(2)}`}</span>
                         <button name="paymentDetails" className="fake-link-button sidebar-modal-button" onClick={this.handleModalClick}>View Payment Details</button>
                     </div>

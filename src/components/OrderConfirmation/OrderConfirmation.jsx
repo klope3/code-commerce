@@ -3,6 +3,7 @@ import OrderProgressBar from "../OrderProgressBar/OrderProgressBar";
 import SummarySidebar from "../SummarySidebar/SummarySidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { formatCamelCase } from "../utility";
 import "./OrderConfirmation.css";
 
 class OrderConfirmation extends React.Component {
@@ -47,7 +48,7 @@ class OrderConfirmation extends React.Component {
                         <h2>PAYMENT DETAILS</h2>
                         <div className="modal-info-container">
                             <div>{cardholder}</div>
-                            <div>{cardType.toUpperCase()}</div>
+                            <div>{formatCamelCase(cardType).toUpperCase()}</div>
                             <div>{`Card ending in ${cardNumber.replace(/ /g, "").substring(12)}`}</div>
                             <div>{`Exp. ${expiryMonth}/${expiryYear}`}</div>
                         </div>
