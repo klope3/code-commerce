@@ -136,6 +136,10 @@ class MainPage extends React.Component {
         const itemToRemove = this.state.cartItems.find(item => item.id === itemId);
         const newState = { ...this.state };
         newState.cartItems = newState.cartItems.filter(item => item !== itemToRemove);
+        newState.shippingInfo = {
+            ...newState.shippingInfo,
+            shippingMethod: this.getCartSubtotal(newState.cartItems) >= standardShippingMinimum ? newState.shippingMethod : "express",
+        }
         this.setState(newState);
     }
 

@@ -1,3 +1,8 @@
 .breakdown-container {
     padding: 10px 0;
 }
+
+.breakdown-info-container {
+    width: 250px;
+    margin-left: auto;
+}

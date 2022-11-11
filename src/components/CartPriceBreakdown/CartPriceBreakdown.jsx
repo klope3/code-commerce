@@ -20,7 +20,7 @@ class CartPriceBreakdown extends React.Component {
             },
             {
                 leftText: "Discount:",
-                rightText: discount <= 0 ? "--" : `$${discount.toFixed(2)}`,
+                rightText: discount <= 0 ? "--" : `-$${discount.toFixed(2)}`,
                 rightTextClass: "money-base money-discount",
             },
             {
