@@ -1,4 +1,4 @@
-export const products = [
+const products = [
     {
         name: "Epic URL",
         description: "Library",
@@ -48,3 +48,11 @@ export const products = [
         imgUrl: "https://images.pexels.com/photos/5380618/pexels-photo-5380618.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
 ];
+
+export const getInitialCartItems = () => {
+    return products.map((product, index) => ({
+        product: product,
+        quantity: 1,
+        id: index,
+    }));
+}

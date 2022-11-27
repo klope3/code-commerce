@@ -5,7 +5,7 @@ import CustomerCart from "../CustomerCart/CustomerCart";
 import ShippingInfo from "../ShippingInfo/ShippingInfo";
 import PaymentInfo from "../PaymentInfo/PaymentInfo";
 
-import { products } from "../products";
+import { getInitialCartItems } from "../products";
 import { promoCodes } from "../promoCodes";
 import { getCardType } from "../utility";
 import { expressShippingPrice, standardShippingMinimum } from "../constants";
@@ -20,7 +20,7 @@ import OrderConfirmation from "../OrderConfirmation/OrderConfirmation";
 class MainPage extends React.Component {
     constructor() {
         super();
-        const initialItems = this.getInitialCartItems();
+        const initialItems = getInitialCartItems();
         const standardShippingAllowed = this.getCartSubtotal(initialItems) >= standardShippingMinimum;
         this.state = {
             activeBox: "",
@@ -41,10 +41,6 @@ class MainPage extends React.Component {
                 telephoneCountryCode: "",
                 telephoneNumber: "",
                 shippingMethod: standardShippingAllowed ? undefined : "express",
-                errors: {
-                    nameSurname: undefined,
-                    zipCode: undefined,
-                }
             },
             paymentInfo: {
                 cardholder: "",
@@ -53,23 +49,9 @@ class MainPage extends React.Component {
                 expiryMonth: "",
                 expiryYear: "",
                 securityCode: "",
-                errors: {
-                    cardholder: undefined,
-                    cardNumber: undefined,
-                    securityCode: undefined,
-                }
             },
         }
     }
-
-    getInitialCartItems = () => {
-        return products.map((product, index) => ({
-            product: product,
-            quantity: 1,
-            id: index,
-        }));
-    }
-
 //#region Calculation
     getCartSubtotal = cartItems => cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.product.price * cartItem.quantity, 0);
 
@@ -85,33 +67,29 @@ class MainPage extends React.Component {
     getShippingPrice = () => this.state.shippingInfo.shippingMethod === "express" ? expressShippingPrice : 0;
 //#endregion
 //#region Change Functions
-    navigate = (senderName, backwards) => {
+    navigate = (backwards, errorCallback) => {
         if (backwards) {
-            this.setState(prevState => ({
-                ...prevState,
-                orderStep: prevState.orderStep - 1,
-            }));
-            window.scroll(0, 0);
+            this.navBackwards();
             return;
         }
-        let shippingErrors = this.state.shippingInfo.errors;
-        let paymentErrors = this.state.paymentInfo.errors;
-        const { errors, errorFound } = this.checkForErrors(this.state[senderName]);
-        if (senderName === "shippingInfo") shippingErrors = errors;
-        if (senderName === "paymentInfo") paymentErrors = errors;
+        const { errors, errorFound } = this.checkForErrors();
+        if (errorCallback) {
+            errorCallback(errors);
+        }
         this.setState(prevState => ({
             ...prevState,
             orderStep: errorFound ? prevState.orderStep : prevState.orderStep + 1,
-            shippingInfo: {
-                ...prevState.shippingInfo,
-                errors: shippingErrors,
-            },
-            paymentInfo: {
-                ...prevState.paymentInfo,
-                errors: paymentErrors,
-            },
         }));
         if (!errorFound) window.scroll(0, 0);
+    }
+
+    navBackwards = () => {
+        this.setState(prevState => ({
+            ...prevState,
+            orderStep: prevState.orderStep - 1,
+        }));
+        window.scroll(0, 0);
+        return;
     }
 
     handleChangeItemQuantity = event => {
@@ -146,7 +124,7 @@ class MainPage extends React.Component {
     handleResetCart = () => {
         this.setState(prevState => ({
             ...prevState,
-            cartItems: this.getInitialCartItems(),
+            cartItems: getInitialCartItems(),
         }));
     }
 
@@ -198,6 +176,7 @@ class MainPage extends React.Component {
 //#endregion
 //#region Blur Functions
     handleFieldBlur = (event, infoObjectKey) => {
+        console.log("reached");
         const { name: sender, value } = event.target;
         const validationFunction = validationFunctions[sender];
         this.setState(prevState => ({
@@ -216,11 +195,15 @@ class MainPage extends React.Component {
     handleShippingFieldBlur = event => this.handleFieldBlur(event, "shippingInfo");
 //#endregion
     
-    checkForErrors = (fieldData) => {
+    checkForErrors = () => {
         const results = {
             errors: {},
             errorFound: false,
         };
+        let fieldData;
+        if (this.state.orderStep === 2) fieldData = this.state.shippingInfo;
+        if (this.state.orderStep === 3) fieldData = this.state.paymentInfo;
+        // const fieldData = this.state.orderStep === 2 ? this.state.shippingInfo : this.state.paymentInfo;
         for (const key in fieldData) {
             const validationFunction = validationFunctions[key];
             if (validationFunction) {

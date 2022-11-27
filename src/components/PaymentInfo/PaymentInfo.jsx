@@ -15,6 +15,7 @@ class PaymentInfo extends React.Component {
         this.navigate = props.navigateFunction;
         this.state = {
             showSecurityCodeInfo: false,
+            errors: {},
         };
     }
 
@@ -80,9 +81,13 @@ class PaymentInfo extends React.Component {
         return <FieldRowSection fieldRows={fieldRows} changeFieldFunction={changeFunction} blurFieldFunction={blurFunction} />
     }
 
+    setErrors = errors => {
+        this.setState(prevState => ({...prevState, errors}));
+    }
+
     handleNavClick = event => {
-        if (event.target.name === "nav-forward") this.navigate("paymentInfo");
-        else if (event.target.name === "nav-backward") this.navigate("paymentInfo", true);
+        if (event.target.name === "nav-forward") this.navigate(false, this.setErrors);
+        else if (event.target.name === "nav-backward") this.navigate(true);
     }
 
     render() {
@@ -92,7 +97,7 @@ class PaymentInfo extends React.Component {
             shippingHandling, 
             discount, 
             shippingInfo,
-            paymentInfo,
+            // paymentInfo,
             fieldData: {
                 cardholder,
                 cardNumber, 
@@ -100,7 +105,7 @@ class PaymentInfo extends React.Component {
                 expiryMonth,
                 expiryYear,
                 securityCode,
-                errors,
+                // errors,
             },
             changeFieldFunction,
             blurFieldFunction,
@@ -112,7 +117,7 @@ class PaymentInfo extends React.Component {
                     <OrderProgressBar orderStep={2} />
                     <div className="order-screen-left-sub-container" id="payment-info-screen">
                         <h2>PAYMENT INFORMATION</h2>
-                        {this.buildFields(cardNumber, cardholder, cardType, expiryMonth, expiryYear, securityCode, changeFieldFunction, blurFieldFunction, errors)}
+                        {this.buildFields(cardNumber, cardholder, cardType, expiryMonth, expiryYear, securityCode, changeFieldFunction, blurFieldFunction, this.state.errors)}
                         <button name="nav-forward" className="nav-forward-button" onClick={this.handleNavClick}>PAY {`$${orderTotalString}`}</button>
                         <button name="nav-backward" className="nav-backward-button" onClick={this.handleNavClick}>BACK TO SHIPPING</button>
                     </div>
@@ -123,7 +128,7 @@ class PaymentInfo extends React.Component {
                     shippingHandling={shippingHandling} 
                     discount={discount}
                     shippingInfo={shippingInfo} 
-                    paymentInfo={paymentInfo}
+                    // paymentInfo={paymentInfo}
                     navClickFunction={this.handleNavClick}
                     navButtonText={`PAY $${orderTotalString}`} />
             </div>

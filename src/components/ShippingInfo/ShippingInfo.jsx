@@ -12,10 +12,11 @@ class ShippingInfo extends React.Component {
     constructor(props) {
         super(props);
         this.navigate = props.navigateFunction;
+        this.state = { errors: {} };
     }
 
 //#region Builder Functions
-    buildFieldRows = (fieldData, changeFieldFunction, blurFieldFunction) => {
+    buildFieldRows = (fieldData, changeFieldFunction, blurFieldFunction, errors) => {
         const { 
             addressTitle,
             address,
@@ -28,7 +29,7 @@ class ShippingInfo extends React.Component {
             cellNumber,
             telephoneCountryCode,
             telephoneNumber,
-            errors
+            // errors
         } = fieldData;
         const fieldRows1 = [
             {
@@ -202,9 +203,11 @@ class ShippingInfo extends React.Component {
     }
 //#endregion
 
+    setErrors = errors => this.setState(prevState => ({errors: errors}));
+
     handleNavClick = event => {
-        if (event.target.name === "nav-forward") this.navigate("shippingInfo");
-        else if (event.target.name === "nav-backward") this.navigate("shippingInfo", true);
+        if (event.target.name === "nav-forward") this.navigate(false, this.setErrors);
+        else if (event.target.name === "nav-backward") this.navigate(true);
     }
 
     render() {
@@ -216,7 +219,7 @@ class ShippingInfo extends React.Component {
             fieldData,
             fieldData: {
                 shippingMethod,
-                errors,
+                // errors,
             },
             standardShippingAllowed,
             changeFieldFunction,
@@ -229,7 +232,7 @@ class ShippingInfo extends React.Component {
                     <OrderProgressBar orderStep={1} />
                     <div className="order-screen-left-sub-container">
                         <h2>SHIPPING INFORMATION</h2>
-                        {this.buildFieldRows(fieldData, changeFieldFunction, blurFieldFunction, errors)}
+                        {this.buildFieldRows(fieldData, changeFieldFunction, blurFieldFunction, this.state.errors)}
                         <div className="shipping-methods-container">
                             <h2 className="no-border">SHIPPING METHOD</h2>
                             {this.buildShippingMethods(shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}

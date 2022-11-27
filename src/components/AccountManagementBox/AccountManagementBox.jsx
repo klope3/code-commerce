@@ -1,14 +1,13 @@
 import React from "react";
-import { addAccount, doesAccountExist, tryVerifyLogin } from "../accounts";
 import FieldRowSection from "../FieldRowSection/FieldRowSection";
-//import AccountInputArea from "../AccountInputArea/AccountInputArea";
-//import { checkLettersOnly, checkValidEmail, checkValidPassword, checkValidPostcode } from "../validations";
-//import { fieldNamesCreate, fieldNamesLogin } from "../constants";
-//import { addAccount, doesAccountExist, tryVerifyLogin } from "../accounts";
+
+import { addAccount, doesAccountExist } from "../accounts";
 import { formattingFunctions } from "../formatters";
 import { validationFunctions } from "../validations";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+
 import "./AccountManagementBox.css";
 
 class AccountManagementBox extends React.Component {
