@@ -73,9 +73,7 @@ class MainPage extends React.Component {
             return;
         }
         const { errors, errorFound } = this.checkForErrors();
-        if (errorCallback) {
-            errorCallback(errors);
-        }
+        if (errorCallback) errorCallback(errors);
         this.setState(prevState => ({
             ...prevState,
             orderStep: errorFound ? prevState.orderStep : prevState.orderStep + 1,
@@ -165,34 +163,21 @@ class MainPage extends React.Component {
     }
 
     trySignIn = (email, password) => {
-        if (tryVerifyLogin(email, password)) {
-            this.setState(prevState => ({
-                ...prevState,
-                loggedInEmail: email,
-                orderStep: prevState.orderStep + 1,
-            }));
-        }
+        if (!tryVerifyLogin(email, password)) return;
+        this.setState(prevState => ({
+            ...prevState,
+            loggedInEmail: email,
+            orderStep: prevState.orderStep + 1,
+        }));
     }
 //#endregion
 //#region Blur Functions
-    handleFieldBlur = (event, infoObjectKey) => {
-        console.log("reached");
+    handleFieldBlur = (event, errorCallback) => {
         const { name: sender, value } = event.target;
         const validationFunction = validationFunctions[sender];
-        this.setState(prevState => ({
-            ...prevState,
-            [infoObjectKey]: {
-                ...prevState[infoObjectKey],
-                errors: {
-                    ...prevState[infoObjectKey].errors,
-                    [sender]: validationFunction ? validationFunction(value) : undefined,
-                }
-            }
-        }));
+        const validationResult = validationFunction ? validationFunction(value) : undefined;
+        if (errorCallback) errorCallback(sender, validationResult);
     }
-
-    handlePaymentFieldBlur = event => this.handleFieldBlur(event, "paymentInfo");
-    handleShippingFieldBlur = event => this.handleFieldBlur(event, "shippingInfo");
 //#endregion
     
     checkForErrors = () => {
@@ -201,9 +186,9 @@ class MainPage extends React.Component {
             errorFound: false,
         };
         let fieldData;
-        if (this.state.orderStep === 2) fieldData = this.state.shippingInfo;
-        if (this.state.orderStep === 3) fieldData = this.state.paymentInfo;
-        // const fieldData = this.state.orderStep === 2 ? this.state.shippingInfo : this.state.paymentInfo;
+        const { orderStep } = this.state;
+        if (orderStep === 2) fieldData = this.state.shippingInfo;
+        if (orderStep === 3) fieldData = this.state.paymentInfo;
         for (const key in fieldData) {
             const validationFunction = validationFunctions[key];
             if (validationFunction) {
@@ -245,7 +230,7 @@ class MainPage extends React.Component {
                         fieldData={shippingInfo}
                         standardShippingAllowed={standardShippingAllowed}
                         changeFieldFunction={this.handleShippingFieldChange}
-                        blurFieldFunction={this.handleShippingFieldBlur}
+                        blurFieldFunction={this.handleFieldBlur}
                         navigateFunction={this.navigate} />
                 );
             case 3:
@@ -258,7 +243,7 @@ class MainPage extends React.Component {
                         shippingInfo={shippingInfo}
                         fieldData={paymentInfo}
                         changeFieldFunction={this.handlePaymentFieldChange}
-                        blurFieldFunction={this.handlePaymentFieldBlur}
+                        blurFieldFunction={this.handleFieldBlur}
                         navigateFunction={this.navigate} />
                 );
             case 4:

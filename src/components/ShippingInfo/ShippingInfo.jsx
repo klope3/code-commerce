@@ -12,6 +12,7 @@ class ShippingInfo extends React.Component {
     constructor(props) {
         super(props);
         this.navigate = props.navigateFunction;
+        this.blurField = props.blurFieldFunction;
         this.state = { errors: {} };
     }
 
@@ -29,7 +30,6 @@ class ShippingInfo extends React.Component {
             cellNumber,
             telephoneCountryCode,
             telephoneNumber,
-            // errors
         } = fieldData;
         const fieldRows1 = [
             {
@@ -179,6 +179,7 @@ class ShippingInfo extends React.Component {
     }
 
     buildShippingMethods = (checkedStates, standardShippingAllowed, changeFieldFunction) => {
+        console.log(standardShippingAllowed);
         const radios = [
             {
                 id: "standard",
@@ -210,6 +211,17 @@ class ShippingInfo extends React.Component {
         else if (event.target.name === "nav-backward") this.navigate(true);
     }
 
+    handleBlur = event => this.blurField(event, this.setBlurError);
+
+    setBlurError = (fieldName, error) => {
+        this.setState(prevState => ({
+            errors: {
+                ...prevState.errors,
+                [fieldName]: error,
+            }
+        }));
+    }
+
     render() {
         const { 
             cartItems, 
@@ -219,11 +231,9 @@ class ShippingInfo extends React.Component {
             fieldData,
             fieldData: {
                 shippingMethod,
-                // errors,
             },
             standardShippingAllowed,
             changeFieldFunction,
-            blurFieldFunction,
         } = this.props;
         const shippingMethodCheckedStates = [shippingMethod === "standard", shippingMethod === "express"];
         return (
@@ -232,7 +242,7 @@ class ShippingInfo extends React.Component {
                     <OrderProgressBar orderStep={1} />
                     <div className="order-screen-left-sub-container">
                         <h2>SHIPPING INFORMATION</h2>
-                        {this.buildFieldRows(fieldData, changeFieldFunction, blurFieldFunction, this.state.errors)}
+                        {this.buildFieldRows(fieldData, changeFieldFunction, this.handleBlur, this.state.errors)}
                         <div className="shipping-methods-container">
                             <h2 className="no-border">SHIPPING METHOD</h2>
                             {this.buildShippingMethods(shippingMethodCheckedStates, standardShippingAllowed, changeFieldFunction)}

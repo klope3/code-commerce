@@ -8,9 +8,6 @@ import { faTriangleExclamation, faXmark } from "@fortawesome/free-solid-svg-icon
 
 import "./CustomerCart.css";
 
-const exclamation = <FontAwesomeIcon icon={faTriangleExclamation} />;
-const xMark = <FontAwesomeIcon icon={faXmark} className="close-x" />;
-
 class CustomerCart extends React.Component {
     constructor(props) {
         super(props);

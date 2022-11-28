@@ -3,7 +3,7 @@ import "./CartPriceBreakdown.css";
 
 class CartPriceBreakdown extends React.Component {
     render() {
-        const { subtotal, alternateDisplay } = this.props;
+        const { subtotal } = this.props;
         let { shippingHandling, discount } = this.props;
         shippingHandling = shippingHandling ? shippingHandling : 0;
         discount = discount ? discount : 0;

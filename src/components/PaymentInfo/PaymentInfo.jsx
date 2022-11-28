@@ -13,6 +13,7 @@ class PaymentInfo extends React.Component {
     constructor(props) {
         super(props);
         this.navigate = props.navigateFunction;
+        this.blurField = props.blurFieldFunction;
         this.state = {
             showSecurityCodeInfo: false,
             errors: {},
@@ -90,6 +91,17 @@ class PaymentInfo extends React.Component {
         else if (event.target.name === "nav-backward") this.navigate(true);
     }
 
+    handleBlur = event => this.blurField(event, this.setBlurError);
+
+    setBlurError = (fieldName, error) => {
+        this.setState(prevState => ({
+            errors: {
+                ...prevState.errors,
+                [fieldName]: error,
+            }
+        }));
+    }
+
     render() {
         const { 
             cartItems, 
@@ -97,7 +109,6 @@ class PaymentInfo extends React.Component {
             shippingHandling, 
             discount, 
             shippingInfo,
-            // paymentInfo,
             fieldData: {
                 cardholder,
                 cardNumber, 
@@ -105,10 +116,8 @@ class PaymentInfo extends React.Component {
                 expiryMonth,
                 expiryYear,
                 securityCode,
-                // errors,
             },
             changeFieldFunction,
-            blurFieldFunction,
         } = this.props;
         const orderTotalString = (subtotal + shippingHandling - discount).toFixed(2);
         return (
@@ -117,7 +126,7 @@ class PaymentInfo extends React.Component {
                     <OrderProgressBar orderStep={2} />
                     <div className="order-screen-left-sub-container" id="payment-info-screen">
                         <h2>PAYMENT INFORMATION</h2>
-                        {this.buildFields(cardNumber, cardholder, cardType, expiryMonth, expiryYear, securityCode, changeFieldFunction, blurFieldFunction, this.state.errors)}
+                        {this.buildFields(cardNumber, cardholder, cardType, expiryMonth, expiryYear, securityCode, changeFieldFunction, this.handleBlur, this.state.errors)}
                         <button name="nav-forward" className="nav-forward-button" onClick={this.handleNavClick}>PAY {`$${orderTotalString}`}</button>
                         <button name="nav-backward" className="nav-backward-button" onClick={this.handleNavClick}>BACK TO SHIPPING</button>
                     </div>
@@ -128,7 +137,6 @@ class PaymentInfo extends React.Component {
                     shippingHandling={shippingHandling} 
                     discount={discount}
                     shippingInfo={shippingInfo} 
-                    // paymentInfo={paymentInfo}
                     navClickFunction={this.handleNavClick}
                     navButtonText={`PAY $${orderTotalString}`} />
             </div>

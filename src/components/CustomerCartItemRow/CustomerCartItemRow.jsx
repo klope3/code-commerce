@@ -4,19 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import ProductDataText from "../ProductDataText/ProductDataText";
 
-// const circleXMark = <FontAwesomeIcon icon={faCircleXmark} className="remove-cart-item-x" />;
-
 class CustomerCartItemRow extends React.Component {
     render() {
         const { 
             itemData: {
                 product,
                 product: {
-                    name,
-                    description,
                     price,
-                    fileSize,
-                    starRating,
                     imgUrl,
                 },
                 quantity,
@@ -32,7 +26,6 @@ class CustomerCartItemRow extends React.Component {
                     <button className="remove-cart-item-x" name={`removeItem${id}`} onClick={removeItemFunction}>
                         <FontAwesomeIcon icon={faCircleXmark} />
                     </button>
-                    {/* <button>Remove</button> */}
                     <img src={imgUrl} alt="Product" />
                     <ProductDataText 
                         productData={product} 
